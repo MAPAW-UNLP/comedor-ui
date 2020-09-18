@@ -1,0 +1,16 @@
+{
+	// List of extensions which should be recommended for users of this workspace.
+	"recommendations": [
+		"angular.ng-template",
+		"eamodio.gitlens",
+		"eg2.vscode-npm-script",
+		"christian-kohler.npm-intellisense",
+		"gruntfuggly.todo-tree",
+		"mrmlnc.vscode-scss",
+		"ms-vscode.vscode-typescript-tslint-plugin"
+	],
+	// List of extensions recommended by VS Code that should not be recommended for users of this workspace.
+	"unwantedRecommendations": [
+
+	],
+}

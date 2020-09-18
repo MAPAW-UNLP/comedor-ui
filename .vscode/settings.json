@@ -1,0 +1,67 @@
+{
+	"workbench.colorCustomizations": {
+		"statusBar.background": "#9047b8",
+		"activityBar.activeBorder": "#c8a4dbc0",
+		"activityBar.activeBackground": "#9047b840",
+		"activityBarBadge.background": "#9047b8"
+	},
+	"todo-tree.general.tags": [
+		"DO",
+		"EXPLAIN",
+		"FIX",
+		"REFACTOR",
+		"REMOVE",
+		"TEST"
+	],
+	"todo-tree.highlights.defaultHighlight": {
+		"type": "tag-and-comment",
+		"foreground": "white",
+		"opacity": "100",
+		"fontWeight": "bold"
+	},
+	"todo-tree.highlights.customHighlight": {
+		"DO": {
+			"icon": "check",
+			"iconColour": "blue",
+			"rulerColour": "blue",
+			"background": "0000ff"
+		},
+		"EXPLAIN": {
+			"icon": "info",
+			"iconColour": "yellow",
+			"rulerColour": "yellow",
+			"background": "a08000"
+		},
+		"FIX": {
+			"icon": "flame",
+			"iconColour": "red",
+			"rulerColour": "red",
+			"background": "ff0000"
+		},
+		"REFACTOR": {
+			"icon": "settings",
+			"iconColour": "orange",
+			"rulerColour": "orange",
+			"background": "ff8000"
+		},
+		"REMOVE": {
+			"icon": "trashcan",
+			"iconColour": "purple",
+			"rulerColour": "purple",
+			"background": "800080"
+		},
+		"TEST": {
+			"icon": "beaker",
+			"iconColour": "green",
+			"rulerColour": "green",
+			"background": "008000"
+		},
+	},
+	"todo-tree.tree.expanded": true,
+	"todo-tree.tree.grouped": true,
+	"todo-tree.tree.tagsOnly": true,
+	"todo-tree.tree.showCountsInTree": true,
+	"todo-tree.tree.labelFormat": "${after}",
+	"todo-tree.tree.autoRefresh": true,
+	"vsicons.presets.angular": true
+}
