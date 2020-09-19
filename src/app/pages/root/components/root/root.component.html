@@ -1,5 +1,5 @@
-<header class="app_bar">
-	<h1 class="app_bar__site_title">Comedor Universitario</h1>
+<mat-toolbar class="app_bar">
+	<span class="app_bar__site_title">Comedor Universitario</span>
 	<span class="app_bar__user_name">
 		<ng-container *ngIf="userIsAuthenticated">
 			Hola, <strong>{{ userFullName }}</strong>
@@ -8,28 +8,26 @@
 			Hola, invitado
 		</ng-container>
 	</span>
-	<cu-button
+	<button
+		mat-flat-button
+		color="accent"
 		class="app_bar__action_button login_button"
 		*ngIf="!userIsAuthenticated"
 		(click)="authenticate( )"
 	>
 		Ingresar
-	</cu-button>
-	<cu-button
+	</button>
+	<button
+		mat-flat-button
+		color="accent"
 		class="app_bar__action_button logout_button"
 		*ngIf="userIsAuthenticated"
 		(click)="deauthenticate( )"
 	>
 		Salir
-	</cu-button>
-</header>
+	</button>
+</mat-toolbar>
 
 <main class="router_outlet_container">
 	<router-outlet></router-outlet>
 </main>
-
-<footer class="app_footer">
-	<span class="app_footer__environment_indicator">
-		Entorno actual: <strong>{{ environmentName }}</strong>
-	</span>
-</footer>

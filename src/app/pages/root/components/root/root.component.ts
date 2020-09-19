@@ -20,13 +20,6 @@ export class RootComponent {
 	}
 
 	/**
-	 * The name of the current environment.
-	 */
-	public get environmentName( ): string {
-		return environment.name;
-	}
-
-	/**
 	 * It's _true_ if there's a user currently authenticated and _false_ otherwise.
 	 */
 	public get userIsAuthenticated( ): boolean {

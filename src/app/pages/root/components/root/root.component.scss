@@ -19,7 +19,6 @@
 	text-shadow: 0 0 1px hsla( 0, 0%, 0%, 0.5 );
 
 	&__site_title {
-		font-size: 32px;
 		margin-right: auto;
 	}
 
@@ -29,27 +28,13 @@
 	}
 }
 
+.app_bar__action_button {
+	text-transform: uppercase;
+}
+
 .router_outlet_container {
 	flex: 1 1 auto;
 	display: flex;
 	flex-flow: column nowrap;
 	position: relative;
-}
-
-.app_footer {
-	flex: 0 0 auto;
-	display: flex;
-	flex-flow: row nowrap;
-	align-items: center;
-	justify-content: flex-end;
-	position: relative;
-	padding: 1rem 1.5rem;
-	background-color: hsl( 0, 0%, 90% );
-	box-shadow: 0 0.25rem 0.5rem 0 hsla( 0, 0%, 0%, 0.25 );
-	text-shadow: 0 0 1px hsla( 0, 0%, 0%, 0.5 );
-	color: hsla( 0, 0%, 0%, 0.25 );
-
-	&__environment_indicator {
-		font-size: 16px;
-	}
 }

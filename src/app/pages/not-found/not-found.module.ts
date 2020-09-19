@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ButtonModule } from 'src/app/widgets/button/button.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 
 /**
@@ -14,7 +14,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 	imports: [
 		CommonModule,
 		RouterModule,
-		ButtonModule,
+		SharedModule,
 	],
 	exports: [
 		NotFoundComponent,

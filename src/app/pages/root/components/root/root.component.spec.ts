@@ -1,7 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, StaticProvider } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { AuthService } from 'src/app/auth/services/auth/auth.service';
-import { environment } from 'src/environments/environment';
 import { RootComponent } from './root.component';
 
 // tslint:disable: no-magic-numbers no-any
@@ -54,10 +53,6 @@ describe( 'RootComponent', ( ) => {
 
 		expect( component.userFullName ).toEqual( undefined );
 		expect( component.userFullName ).toEqual( 'Fulano De Tal' );
-	});
-
-	test( 'should expose the environment name', async ( ) => {
-		expect( component.environmentName ).toEqual( environment.name );
 	});
 
 	test( 'should expose whether the user is authenticated or not', async ( ) => {

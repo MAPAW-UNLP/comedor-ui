@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule } from 'src/app/auth/auth.module';
-import { ButtonModule } from 'src/app/widgets/button/button.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { RootComponent } from './components/root/root.component';
 import { RootRoutingModule } from './root-routing.module';
 
@@ -16,7 +17,8 @@ import { RootRoutingModule } from './root-routing.module';
 		BrowserModule,
 		AuthModule.forRoot( ),
 		RootRoutingModule,
-		ButtonModule,
+		BrowserAnimationsModule,
+		SharedModule,
 	],
 	providers: [
 

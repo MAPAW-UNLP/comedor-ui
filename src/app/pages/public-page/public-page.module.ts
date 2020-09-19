@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { PublicPageComponent } from './components/public-page/public-page.component';
 import { RouterModule } from '@angular/router';
-import { ButtonModule } from 'src/app/widgets/button/button.module';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { PublicPageComponent } from './components/public-page/public-page.component';
 
 /**
  * Dummy module representing a page that's not protected by the authentication guard, thus publically accessible.
@@ -14,7 +14,7 @@ import { ButtonModule } from 'src/app/widgets/button/button.module';
 	imports: [
 		CommonModule,
 		RouterModule,
-		ButtonModule,
+		SharedModule,
 	],
 	exports: [
 		PublicPageComponent,
