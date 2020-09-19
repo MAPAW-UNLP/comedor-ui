@@ -2,15 +2,15 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import { Environment } from 'src/interfaces/environment.interface';
+import { EntornoDeEjecución } from 'src/app/interfaces/entorno-de-ejecución';
 
 /**
- * Object for the default execution environment.
+ * Objeto demostrativo de un entorno de ejecución.
  *
- * It's always replaced by webpack with the object for the current execution environment (testing, local, etc).
+ * Siempre es reemplazado por Webpack por el objeto correspondiente al entorno de ejecución actual.
  */
-export const environment: Environment = {
-	name: 'default',
+export const environment: EntornoDeEjecución = {
+	nombre: 'default',
 };
 
 /*
