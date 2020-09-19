@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { MaterialModule } from './modules/material/material.module';
+import { MaterialModule } from './modulos/material/material.module';
 
 /**
- * Module containing all the reusable dependencies of the app.
+ * Modulo que exporta todas las dependencias reutilizables de la app.
  */
 @NgModule({
 	imports: [

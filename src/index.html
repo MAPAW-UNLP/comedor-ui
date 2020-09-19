@@ -7,15 +7,17 @@
 		<base href="/">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="icon" type="image/x-icon" href="favicon.ico">
+		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<style>
-			cu-root {
+			cu-raiz {
 				flex: 1 1 100%;
 				display: flex;
 				flex-flow: column nowrap;
 				position: relative;
 			}
 
-			.loading-screen {
+			.pantalla-de-carga-raiz {
 				flex: 1 1 100%;
 				display: flex;
 				flex-flow: column nowrap;
@@ -28,18 +30,16 @@
 				font-size: 22px;
 			}
 		</style>
-		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	</head>
 
 	<body class="mat-typography">
-		<cu-root>
-			<div class="loading-screen">
-				<span class="loading-screen__text">
+		<cu-raiz>
+			<div class="pantalla-de-carga-raiz">
+				<span class="pantalla-de-carga-raiz__texto">
 					Cargando...
 				</span>
 			</div>
-		</cu-root>
+		</cu-raiz>
 	</body>
 
 </html>

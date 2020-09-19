@@ -1,10 +1,10 @@
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { RootModule } from './app/pages/root/root.module';
+import { RaizModule } from './app/paginas/raiz/raiz.module';
 
 // tslint:disable: no-console
 
 platformBrowserDynamic( )
-	.bootstrapModule( RootModule )
+	.bootstrapModule( RaizModule )
 	.catch( ( error: unknown ) => {
 		console.error( error );
 	});

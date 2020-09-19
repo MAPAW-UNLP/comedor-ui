@@ -1,8 +1,8 @@
-import { Environment } from 'src/interfaces/environment.interface';
+import { EntornoDeEjecución } from 'src/app/interfaces/entorno-de-ejecución';
 
 /**
- * Object for the local execution environment.
+ * Objeto correspondiente al entorno de ejecución local.
  */
-export const environment: Environment = {
-	name: 'local',
+export const environment: EntornoDeEjecución = {
+	nombre: 'local',
 };

@@ -24,9 +24,9 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
-import { goToRoute } from '../utils/go-to-route';
+import { visitarRuta } from '../utils/visitar-ruta';
 
-Cypress.Commands.add( 'goToRoute', ( routeName ) => {
-	goToRoute( routeName );
+Cypress.Commands.add( 'visitarRuta', ( nombreDeRuta ) => {
+	visitarRuta( nombreDeRuta );
 	return cy;
 });
