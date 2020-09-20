@@ -1,10 +1,9 @@
-import { Modelo } from './modelo.model';
+import { Usuario } from './usuario.model';
 
 /**
  * Modelo que representa a un empleado del comedor.
  */
-export class EmpleadoDeComedor extends Modelo {
-	private readonly _nombreCompleto: string;
+export class EmpleadoDeComedor extends Usuario {
 	private readonly _idSede: string;
 
 	/**
@@ -18,7 +17,14 @@ export class EmpleadoDeComedor extends Modelo {
 	 * El nombre completo del empleado del comedor.
 	 */
 	public get nombreCompleto( ): string {
-		return this._nombreCompleto;
+		return super.nombreCompleto;
+	}
+
+	/**
+	 * El Documento Nacional de Identidad del empleado del comedor.
+	 */
+	public get dni( ): string {
+		return super.dni;
 	}
 
 	/**
@@ -31,10 +37,10 @@ export class EmpleadoDeComedor extends Modelo {
 	public constructor(
 		id: string,
 		nombreCompleto: string,
+		dni: string,
 		idSede: string,
 	) {
-		super( id );
-		this._nombreCompleto = nombreCompleto;
+		super( id, nombreCompleto, dni );
 		this._idSede = idSede;
 	}
 

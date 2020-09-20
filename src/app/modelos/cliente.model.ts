@@ -1,12 +1,10 @@
 import { TipoDeCliente } from '../enumerativos/tipo-de-cliente';
-import { Modelo } from './modelo.model';
+import { Usuario } from './usuario.model';
 
 /**
  * Modelo que representa un usuario del sistema que compra tickets para comidas en una sede del comedor.
  */
-export class Cliente extends Modelo {
-	private readonly _nombreCompleto: string;
-	private readonly _dni: string;
+export class Cliente extends Usuario {
 	private readonly _correoElectronico: string;
 	private readonly _tipo: TipoDeCliente;
 	private readonly _idFacultad: string;
@@ -22,15 +20,14 @@ export class Cliente extends Modelo {
 	 * El nombre completo del cliente.
 	 */
 	public get nombreCompleto( ): string {
-		return this._nombreCompleto;
+		return super.nombreCompleto;
 	}
 
-	// DO: Corroborar que este campo esté bien definido porque pueden haber clientes con otros tipos de documento.
 	/**
 	 * El Documento Nacional de Identidad del cliente.
 	 */
 	public get dni( ): string {
-		return this._dni;
+		return super.dni;
 	}
 
 	/**
@@ -63,9 +60,7 @@ export class Cliente extends Modelo {
 		tipo: TipoDeCliente,
 		idFacultad: string,
 	) {
-		super( id );
-		this._nombreCompleto = nombreCompleto;
-		this._dni = dni;
+		super( id, nombreCompleto, dni );
 		this._correoElectronico = correoElectronico;
 		this._tipo = tipo;
 		this._idFacultad = idFacultad;
