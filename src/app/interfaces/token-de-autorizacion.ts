@@ -13,4 +13,9 @@ export interface TokenDeAutorizacion {
 	 */
 	readonly nombreCompleto: string;
 
+	/**
+	 * El Documento Nacional de Identidad del usuario autenticado.
+	 */
+	readonly dni: string;
+
 }

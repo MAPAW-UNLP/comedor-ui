@@ -1,9 +1,14 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
 /**
  * Módulo responsable de la autenticación y autorización de los usuarios de la aplicación.
  */
-@NgModule( )
+@NgModule({
+	imports: [
+		HttpClientModule,
+	],
+})
 export class AuthModule {
 
 	/**

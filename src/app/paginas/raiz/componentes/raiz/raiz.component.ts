@@ -17,14 +17,14 @@ export class RaizComponent {
 	 * Si no hay un usuario autenticado, es _undefined_.
 	 */
 	public get nombreCompletoDeUsuario( ): string | undefined {
-		return this.authService.obtenerPrivilegio( 'nombreCompleto' );
+		return this.authService.usuarioAutenticadoSnapshot?.nombreCompleto;
 	}
 
 	/**
 	 * Es _true_ si existe un usuario autenticado y _falso_ en caso contrario.
 	 */
 	public get hayUsuarioAutenticado( ): boolean {
-		return this.authService.userIsAuthenticated;
+		return this.authService.hayUnUsuarioAutenticadoSnapshot;
 	}
 
 	public constructor(
@@ -32,17 +32,17 @@ export class RaizComponent {
 	) { }
 
 	/**
-	 * Attempts to authenticate the user with the provided credentials.
+	 * Redirige al usuario a la página de ingreso para poder autenticarse.
 	 */
-	public autenticar( ): void {
-		// DO: Implementar lógica para autenticación de usuarios.
+	public redirigirAPaginaDeIngreso( ): void {
+		// DO: Implementar lógica para redirección a página de ingreso.
 	}
 
 	/**
-	 * Deauthenticates the user.
+	 * Desautentica al usuario actualmente autenticado en la aplicación.
 	 */
 	public desautenticar( ): void {
-		// DO: Implementar lógica para desautenticación de usuarios.
+		this.authService.desautenticar( );
 	}
 
 }

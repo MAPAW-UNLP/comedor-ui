@@ -1,6 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, StaticProvider } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { AuthService } from 'src/app/auth/servicios/auth/auth.service';
+import { Usuario } from 'src/app/modelos/usuario.model';
 import { RaizComponent } from './raiz.component';
 
 // tslint:disable: no-magic-numbers no-any
@@ -20,14 +21,15 @@ describe( 'RaizComponent', ( ) => {
 					{
 						provide: AuthService,
 						useFactory: ( ): Partial<AuthService> => {
-							const _authService: Partial<AuthService> = {
-								obtenerPrivilegio: jest.fn( ),
-							};
-							Object.defineProperty( _authService, 'userIsAuthenticated', {
+							const _authService: Partial<AuthService> = { };
+							Object.defineProperty( _authService, 'hayUnUsuarioAutenticadoSnapshot', {
+								get: jest.fn( ),
+							});
+							Object.defineProperty( _authService, 'usuarioAutenticadoSnapshot', {
 								get: jest.fn( ),
 							});
 							return _authService;
-						}
+						},
 					},
 				],
 				schemas: [
@@ -47,16 +49,16 @@ describe( 'RaizComponent', ( ) => {
 	});
 
 	test( 'debería publicar el nombre completo del usuario autenticado', async ( ) => {
-		jest.spyOn( authServiceStub, 'obtenerPrivilegio' )
-			.mockReturnValueOnce( undefined )
-			.mockReturnValueOnce( 'Fulano De Tal' );
+		jest.spyOn( authServiceStub, 'usuarioAutenticadoSnapshot', 'get' )
+			.mockReturnValueOnce( null )
+			.mockReturnValueOnce( new Usuario( '', 'Fulano De Tal', '99999999' ) );
 
 		expect( component.nombreCompletoDeUsuario ).toEqual( undefined );
 		expect( component.nombreCompletoDeUsuario ).toEqual( 'Fulano De Tal' );
 	});
 
 	test( 'debería publicar si hay o no un usuario autenticado', async ( ) => {
-		jest.spyOn( authServiceStub, 'userIsAuthenticated', 'get' )
+		jest.spyOn( authServiceStub, 'hayUnUsuarioAutenticadoSnapshot', 'get' )
 			.mockReturnValueOnce( true )
 			.mockReturnValueOnce( false );
 

@@ -1,8 +1,11 @@
-import { EntornoDeEjecución } from 'src/app/interfaces/entorno-de-ejecución';
+import { EntornoDeEjecucion } from 'src/app/interfaces/entorno-de-ejecucion';
 
 /**
  * Objeto correspondiente al entorno de ejecución local.
  */
-export const environment: EntornoDeEjecución = {
+export const environment: EntornoDeEjecucion = {
 	nombre: 'local',
+	endpoints: {
+		autenticar: '/autenticar',
+	},
 };
