@@ -8,7 +8,7 @@ export interface Magnitud {
 	/**
 	 * El valor numérico de la magnitud, expresado en el número de unidades de medida obtenidos en la medición.
 	 */
-	cantidad: number;
+	medida: number;
 
 	/**
 	 * La unidad de medida utilizada en la medición de la magnitud.

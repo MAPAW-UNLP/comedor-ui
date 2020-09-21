@@ -1,4 +1,4 @@
-import { EntornoDeEjecucion } from 'src/app/interfaces/entorno-de-ejecucion';
+import { EntornoDeEjecucion } from 'src/app/interfaces/entorno-de-ejecucion.interface';
 
 /**
  * Objeto correspondiente al entorno de ejecución local.

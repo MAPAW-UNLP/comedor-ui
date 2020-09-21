@@ -2,7 +2,7 @@ import { TipoDeCliente } from '../enumerativos/tipo-de-cliente';
 import { Usuario } from './usuario.model';
 
 /**
- * Modelo que representa un usuario del sistema que compra tickets para comidas en una sede del comedor.
+ * Modelo que representa un usuario del sistema que compra tickets para combos en una sede del comedor.
  */
 export class Cliente extends Usuario {
 	private readonly _correoElectronico: string;
@@ -44,7 +44,7 @@ export class Cliente extends Usuario {
 		return this._tipo;
 	}
 
-	// DO: Corroborar la cardinalidad de este campo, un cliente puede pertenecer simultáneamente a varias facultades
+	// DO: Corroborar la cardinalidad, un cliente puede pertenecer simultáneamente a varias facultades
 	/**
 	 * El identificador único de la facultad a la que el cliente pertenece.
 	 */

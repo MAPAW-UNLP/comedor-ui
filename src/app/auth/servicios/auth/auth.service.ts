@@ -1,10 +1,10 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { BehaviorSubject, Observable, of, timer } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, mapTo, shareReplay, tap } from 'rxjs/operators';
 import { clavesDeLocalStorage } from 'src/app/constantes/claves-de-local-storage.constant';
-import { TokenDeAutorizacion } from 'src/app/interfaces/token-de-autorizacion';
+import { TokenDeAutorizacion } from 'src/app/interfaces/token-de-autorizacion.interface';
 import { Usuario } from 'src/app/modelos/usuario.model';
 import { environment } from 'src/environments/environment.local';
 import { AuthModule } from '../../auth.module';

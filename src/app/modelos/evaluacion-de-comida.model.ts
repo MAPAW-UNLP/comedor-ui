@@ -1,6 +1,5 @@
 import { Modelo } from './modelo.model';
 
-// DO: Validar si las opciones de puntuación son cerradas, en cuyo caso podemos usar un enumerativo.
 /**
  * Modelo que representa la evaluación de una comida por parte de un cliente.
  */
@@ -37,6 +36,7 @@ export class EvaluacionDeComida extends Modelo {
 		return this._puntuacion;
 	}
 
+	// DO: Validar si las opciones de puntuación son cerradas, en cuyo caso podemos usar un enumerativo.
 	public constructor(
 		id: string,
 		idCliente: string,
