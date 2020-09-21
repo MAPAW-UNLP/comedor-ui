@@ -54,7 +54,7 @@ export class Comida extends Modelo {
 	 * Se considera que la comida es apta para vegetarianos si todos sus ingredientes lo son.
 	 */
 	public get esAptaParaVegetarianos( ): boolean {
-		return this.ingredientes.every( ( ingrediente ) => ingrediente.esAptoParaCeliacos );
+		return this.ingredientes.every( ( ingrediente ) => ingrediente.esAptoParaVegetarianos );
 	}
 
 	public constructor(
