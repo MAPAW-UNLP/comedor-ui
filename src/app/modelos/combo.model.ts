@@ -1,3 +1,4 @@
+import { Comida } from './comida.model';
 import { Modelo } from './modelo.model';
 
 /**
@@ -5,7 +6,7 @@ import { Modelo } from './modelo.model';
  */
 export class Combo extends Modelo {
 	private readonly _nombre: string;
-	private readonly _idsComidas: string[ ];
+	private readonly _comidas: Comida[ ];
 
 	/**
 	 * El identificador único del combo.
@@ -22,35 +23,37 @@ export class Combo extends Modelo {
 	}
 
 	/**
-	 * Una colección de los identificadores únicos de las comidas que componen el combo.
+	 * Colección de las comidas que componen el combo.
 	 */
-	public get idsComidas( ): string[ ] {
-		return this._idsComidas;
+	public get comidas( ): Comida[ ] {
+		return this._comidas;
 	}
 
 	/**
 	 * Valor que equivale a _true_ si el combo es apto para celíacos y a _falso_ en caso contrario.
+	 *
+	 * Se considera que el combo es apto para celíacos si todas las comidas que incluye lo son.
 	 */
 	public get esAptoParaCeliacos( ): boolean {
-		// DO: Agregar lógica para determinar si es apto para celíacos en funcion de las comidas.
-		return false;
+		return this.comidas.every( ( comida ) => comida.esAptaParaCeliacos );
 	}
 
 	/**
 	 * Valor que equivale a _true_ si el combo es apto para vegetarianos y a _falso_ en caso contrario.
+	 *
+	 * Se considera que el combo es apto para vegetarianos si todas las comidas que incluye lo son.
 	 */
 	public get esAptoParaVegetarianos( ): boolean {
-		// DO: Agregar lógica para determinar si es apto para vegetarianos en funcion de las comidas.
-		return false;
+		return this.comidas.every( ( comida ) => comida.esAptaParaVegetarianos );
 	}
 
 	public constructor(
 		id: string,
 		nombre: string,
-		idsComidas: string[ ],
+		comidas: Comida[ ],
 	) {
 		super( id );
 		this._nombre = nombre;
-		this._idsComidas = idsComidas;
+		this._comidas = comidas;
 	}
 }

@@ -1,5 +1,7 @@
 import { TipoDeTicket } from '../enumerativos/tipo-de-ticket';
+import { Combo } from './combo.model';
 import { Modelo } from './modelo.model';
+import { Sede } from './sede.model';
 
 /**
  * Modelo que representa un ticket comprado por un cliente.
@@ -7,8 +9,8 @@ import { Modelo } from './modelo.model';
  * El cliente puede canjearlo solo por el combo que tiene asociado en una sede del comedor y fecha específicas.
  */
 export class Ticket extends Modelo {
-	private readonly _idCombo: string;
-	private readonly _idSede: string;
+	private readonly _combo: Combo;
+	private readonly _sede: Sede;
 	private readonly _fecha: string;
 	private readonly _tipo: TipoDeTicket;
 	private readonly _precio: number;
@@ -21,17 +23,17 @@ export class Ticket extends Modelo {
 	}
 
 	/**
-	 * El identificador único del combo para el que el ticket fue comprado.
+	 * El combo para el que el ticket fue comprado.
 	 */
-	public get idCombo( ): string {
-		return this._idCombo;
+	public get combo( ): Combo {
+		return this._combo;
 	}
 
 	/**
-	 * El identificador único de la sede del comedor donde el ticket es válido.
+	 * La sede del comedor donde el ticket es válido.
 	 */
-	public get idSede( ): string {
-		return this._idSede;
+	public get sede( ): Sede {
+		return this._sede;
 	}
 
 	/**
@@ -57,15 +59,15 @@ export class Ticket extends Modelo {
 
 	public constructor(
 		id: string,
-		idCombo: string,
-		idSede: string,
+		combo: Combo,
+		sede: Sede,
 		fecha: string,
 		tipo: TipoDeTicket,
 		precio: number,
 	) {
 		super( id );
-		this._idCombo = idCombo;
-		this._idSede = idSede;
+		this._combo = combo;
+		this._sede = sede;
 		this._fecha = fecha;
 		this._tipo = tipo;
 		this._precio = precio;

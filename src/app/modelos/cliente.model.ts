@@ -1,4 +1,5 @@
 import { TipoDeCliente } from '../enumerativos/tipo-de-cliente';
+import { Facultad } from './facultad.model';
 import { Usuario } from './usuario.model';
 
 /**
@@ -7,10 +8,10 @@ import { Usuario } from './usuario.model';
 export class Cliente extends Usuario {
 	private readonly _correoElectronico: string;
 	private readonly _tipo: TipoDeCliente;
-	private readonly _idFacultad: string;
+	private readonly _facultad: Facultad;
 
 	/**
-	 * El ID único del cliente.
+	 * El identificador único del cliente.
 	 */
 	public get id( ): string {
 		return super.id;
@@ -46,10 +47,10 @@ export class Cliente extends Usuario {
 
 	// DO: Corroborar la cardinalidad, un cliente puede pertenecer simultáneamente a varias facultades
 	/**
-	 * El identificador único de la facultad a la que el cliente pertenece.
+	 * La facultad a la que el cliente pertenece.
 	 */
-	public get idFacultad( ): string {
-		return this._idFacultad;
+	public get facultad( ): Facultad {
+		return this._facultad;
 	}
 
 	public constructor(
@@ -58,12 +59,12 @@ export class Cliente extends Usuario {
 		dni: string,
 		correoElectronico: string,
 		tipo: TipoDeCliente,
-		idFacultad: string,
+		facultad: Facultad,
 	) {
 		super( id, nombreCompleto, dni );
 		this._correoElectronico = correoElectronico;
 		this._tipo = tipo;
-		this._idFacultad = idFacultad;
+		this._facultad = facultad;
 	}
 
 }

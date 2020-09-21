@@ -1,12 +1,14 @@
+import { Combo } from '../modelos/combo.model';
+
 /**
  * Representa una opción de un menú que describe un combo junto con su precio y stock.
  */
 export interface OpcionDeMenu {
 
 	/**
-	 * Identificador único del combo asociado a la opción de menú.
+	 * El combo asociado a la opción de menú.
 	 */
-	idCombo: string;
+	combo: Combo;
 
 	/**
 	 * Precio unitario de la comida para esta opción de menú en particular.
