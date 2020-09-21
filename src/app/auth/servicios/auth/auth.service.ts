@@ -96,24 +96,17 @@ export class AuthService {
 	 */
 	public autenticar( nombreDeUsuario: string, contraseña: string ): Observable<boolean> {
 		// Retorna _true_ inmediatamente si el usuario ya está autenticado.
-		if ( this._tokenDeAutorizacionSubject.value !== null ) {
+		if ( this.hayUnUsuarioAutenticadoSnapshot ) {
 			return of( true );
 		}
 
-		const url: string = environment.endpoints.autenticar;
-		const credencialesDeAutenticacionDTO: CredencialesDeAutenticacionDTO = {
-			nombreDeUsuario: nombreDeUsuario,
-			contraseña: contraseña,
-		};
-
-		return this.clienteHttp
-			.post<RespuestaDeAutenticacionDTO>( url, credencialesDeAutenticacionDTO )
+		return this.solicitarAutenticacionEnServidor( nombreDeUsuario, contraseña )
 			.pipe(
 				// Actualizar usuario autenticado y retornar _true_ en caso de éxito.
 				tap( ( respuestaDeAutenticacionDTO ) => {
 					const tokenDeAutorizacion = respuestaDeAutenticacionDTO.tokenDeAutorizacion;
 					this.almacenarTokenDeAutorizacionEnLocalStorage( tokenDeAutorizacion );
-					this.actualizarUsuarioAutenticado( tokenDeAutorizacion );
+					this.cargarUsuarioAutenticadoEnServicio( tokenDeAutorizacion );
 				}),
 				mapTo( true ),
 
@@ -132,8 +125,7 @@ export class AuthService {
 	 */
 	public desautenticar( ): void {
 		this.eliminarTokenDeAutorizacionDeLocalStorage( );
-		this._tokenDeAutorizacionSubject.next( null );
-		this._usuarioAutenticadoSubject.next( null );
+		this.anularUsuarioAutenticadoEnServicio( );
 	}
 
 	/**
@@ -143,7 +135,7 @@ export class AuthService {
 	private recargarUsuarioAutenticadoDesdeLocalStorage( ): void {
 		const tokenDeAutorizacion = this.obtenerTokenDeAutorizacionDesdeLocalStorage( );
 		if ( tokenDeAutorizacion !== null ) {
-			this.actualizarUsuarioAutenticado( tokenDeAutorizacion );
+			this.cargarUsuarioAutenticadoEnServicio( tokenDeAutorizacion );
 		}
 	}
 
@@ -157,9 +149,10 @@ export class AuthService {
 	}
 
 	/**
-	 * Actualiza el token de autorización y el usuario autenticado en el servicio.
+	 * Actualiza el token de autorización y el usuario autenticado en el servicio con el token de autorización
+	 * provisto.
 	 */
-	private actualizarUsuarioAutenticado( tokenDeAutorizacion: string ): void {
+	private cargarUsuarioAutenticadoEnServicio( tokenDeAutorizacion: string ): void {
 		const usuarioAutenticado: Usuario = this.obtenerUsuarioDesdeTokenDeAutorizacion( tokenDeAutorizacion );
 
 		this._tokenDeAutorizacionSubject.next( tokenDeAutorizacion );
@@ -170,14 +163,34 @@ export class AuthService {
 	 * Retorna una instancia de usuario a partir de los privilegios contenidos en el token de autorización.
 	 */
 	private obtenerUsuarioDesdeTokenDeAutorizacion( tokenDeAutorizacion: string ): Usuario {
-		const jwtHelperService = new JwtHelperService( );
-		const tokenDeserializado = <TokenDeAutorizacion> jwtHelperService.decodeToken( tokenDeAutorizacion );
+		const helperDeJWT = new JwtHelperService( );
+		const tokenDeserializado = <TokenDeAutorizacion> helperDeJWT.decodeToken( tokenDeAutorizacion );
 
 		return new Usuario(
 			tokenDeserializado.id,
 			tokenDeserializado.nombreCompleto,
 			tokenDeserializado.dni
 		);
+	}
+
+	/**
+	 * Envía una petición HTTP al servidor para autenticar al usuario con el nombre de usuario y contraseña provistos,
+	 * y retorna un observable que emite la respuesta del servidor.
+	 *
+	 * @param nombreDeUsuario el nombre de usuario a utilizar en la solicitud de autenticación.
+	 * @param contraseña la contraseña a utilizar en la solicitud de autenticación.
+	 */
+	private solicitarAutenticacionEnServidor(
+		nombreDeUsuario: string,
+		contraseña: string,
+	): Observable<RespuestaDeAutenticacionDTO> {
+		const url: string = environment.endpoints.autenticar;
+		const credencialesDeAutenticacionDTO: CredencialesDeAutenticacionDTO = {
+			nombreDeUsuario: nombreDeUsuario,
+			contraseña: contraseña,
+		};
+
+		return this.clienteHttp.post<RespuestaDeAutenticacionDTO>( url, credencialesDeAutenticacionDTO );
 	}
 
 	/**
@@ -192,6 +205,14 @@ export class AuthService {
 	 */
 	private eliminarTokenDeAutorizacionDeLocalStorage( ): void {
 		localStorage.removeItem( clavesDeLocalStorage.tokenDeAutorizacion );
+	}
+
+	/**
+	 * Anula el token de autorización y usuario autenticado en el servicio y los retorna a los valores iniciales.
+	 */
+	private anularUsuarioAutenticadoEnServicio( ) {
+		this._tokenDeAutorizacionSubject.next( null );
+		this._usuarioAutenticadoSubject.next( null );
 	}
 
 }
