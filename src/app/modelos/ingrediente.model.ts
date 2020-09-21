@@ -23,14 +23,14 @@ export class Ingrediente extends Modelo {
 	}
 
 	/**
-	 * Valor que equivale a _true_ si el combo es apto para celíacos y a _falso_ en caso contrario.
+	 * Valor que equivale a _true_ si el combo es apto para celíacos y a _false_ en caso contrario.
 	 */
 	public get esAptoParaCeliacos( ): boolean {
 		return this._esAptoParaCeliacos;
 	}
 
 	/**
-	 * Valor que equivale a _true_ si el combo es apto para vegetarianos y a _falso_ en caso contrario.
+	 * Valor que equivale a _true_ si el combo es apto para vegetarianos y a _false_ en caso contrario.
 	 */
 	public get esAptoParaVegetarianos( ): boolean {
 		return this._esAptoParaVegetarianos;

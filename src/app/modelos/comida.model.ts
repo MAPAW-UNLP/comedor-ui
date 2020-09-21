@@ -40,7 +40,7 @@ export class Comida extends Modelo {
 	}
 
 	/**
-	 * Valor que equivale a _true_ si la comida es apta para celíacos y a _falso_ en caso contrario.
+	 * Valor que equivale a _true_ si la comida es apta para celíacos y a _false_ en caso contrario.
 	 *
 	 * Se considera que la comida es apta para celíacos si todos sus ingredientes lo son.
 	 */
@@ -49,7 +49,7 @@ export class Comida extends Modelo {
 	}
 
 	/**
-	 * Valor que equivale a _true_ si la comida es apta para vegetarianos y a _falso_ en caso contrario.
+	 * Valor que equivale a _true_ si la comida es apta para vegetarianos y a _false_ en caso contrario.
 	 *
 	 * Se considera que la comida es apta para vegetarianos si todos sus ingredientes lo son.
 	 */

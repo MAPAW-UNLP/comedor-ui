@@ -21,7 +21,7 @@ export class RaizComponent {
 	}
 
 	/**
-	 * Es _true_ si existe un usuario autenticado y _falso_ en caso contrario.
+	 * Es _true_ si existe un usuario autenticado y _false_ en caso contrario.
 	 */
 	public get hayUsuarioAutenticado( ): boolean {
 		return this.authService.hayUnUsuarioAutenticadoSnapshot;
