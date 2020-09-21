@@ -1,10 +1,11 @@
+import { Sede } from './sede.model';
 import { Usuario } from './usuario.model';
 
 /**
  * Modelo que representa a un empleado del comedor.
  */
 export class EmpleadoDeComedor extends Usuario {
-	private readonly _idSede: string;
+	private readonly _sede: Sede;
 
 	/**
 	 * El identificador único del empleado del comedor.
@@ -28,20 +29,20 @@ export class EmpleadoDeComedor extends Usuario {
 	}
 
 	/**
-	 * El identificador único de la sede donde trabaja el empleado del comedor.
+	 * La sede donde trabaja el empleado del comedor.
 	 */
-	public get idSede( ): string {
-		return this._idSede;
+	public get sede( ): Sede {
+		return this._sede;
 	}
 
 	public constructor(
 		id: string,
 		nombreCompleto: string,
 		dni: string,
-		idSede: string,
+		sede: Sede,
 	) {
 		super( id, nombreCompleto, dni );
-		this._idSede = idSede;
+		this._sede = sede;
 	}
 
 }

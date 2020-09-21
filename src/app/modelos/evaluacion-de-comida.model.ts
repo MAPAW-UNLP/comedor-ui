@@ -1,12 +1,13 @@
+import { Cliente } from './cliente.model';
+import { Comida } from './comida.model';
 import { Modelo } from './modelo.model';
 
-// DO: Validar si las opciones de puntuación son cerradas, en cuyo caso podemos usar un enumerativo.
 /**
  * Modelo que representa la evaluación de una comida por parte de un cliente.
  */
 export class EvaluacionDeComida extends Modelo {
-	private readonly _idCliente: string;
-	private readonly _idComida: string;
+	private readonly _cliente: Cliente;
+	private readonly _comida: Comida;
 	private readonly _puntuacion: number;
 
 	/**
@@ -17,17 +18,17 @@ export class EvaluacionDeComida extends Modelo {
 	}
 
 	/**
-	 * El identificador único del cliente que creó la evaluación de comida.
+	 * El cliente que creó la evaluación de comida.
 	 */
-	public get idCliente( ): string {
-		return this._idCliente;
+	public get cliente( ): Cliente {
+		return this._cliente;
 	}
 
 	/**
-	 * El identificador único de la comida evaluada por el cliente.
+	 * La comida evaluada por el cliente.
 	 */
-	public get idComida( ): string {
-		return this._idComida;
+	public get comida( ): Comida {
+		return this._comida;
 	}
 
 	/**
@@ -37,15 +38,16 @@ export class EvaluacionDeComida extends Modelo {
 		return this._puntuacion;
 	}
 
+	// DO: Validar si las opciones de puntuación son cerradas, en cuyo caso podemos usar un enumerativo.
 	public constructor(
 		id: string,
-		idCliente: string,
-		idComida: string,
+		cliente: Cliente,
+		comida: Comida,
 		puntuacion: number,
 	) {
 		super( id );
-		this._idCliente = idCliente;
-		this._idComida = idComida;
+		this._cliente = cliente;
+		this._comida = comida;
 		this._puntuacion = puntuacion;
 	}
 

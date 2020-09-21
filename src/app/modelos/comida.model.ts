@@ -1,16 +1,13 @@
-import { Plato } from '../interfaces/plato';
-import { IngredienteDeComida } from '../interfaces/ingrediente-de-comida';
 import { Modelo } from './modelo.model';
+import { Receta } from '../interfaces/receta.interface';
+import { Ingrediente } from './ingrediente.model';
 
 /**
- * Modelo que representa una comida ofrecida dentro del menú de una sede del comedor.
+ * Modelo que representa una comida asociada a una receta particular.
  */
 export class Comida extends Modelo {
 	private readonly _nombre: string;
-	private readonly _platos: Plato[ ];
-	private readonly _esAptaParaCeliacos: boolean;
-	private readonly _esAptaParaVegetarianos: boolean;
-	private readonly _ingredientes: IngredienteDeComida[ ];
+	private readonly _receta: Receta;
 
 	/**
 	 * El identificador único de la comida.
@@ -27,50 +24,47 @@ export class Comida extends Modelo {
 	}
 
 	/**
-	 * La lista de platos que componen la comida.
+	 * La receta de la comida.
 	 *
-	 * Ej: pechuga de pollo (principal), ensalada (guarnición) y manzana (postre)
+	 * Indica todos los ingredientes incluídos en la comida junto con la cantidad de cada uno.
 	 */
-	public get platos( ): Plato[ ] {
-		return this._platos;
+	public get receta( ): Receta {
+		return this._receta;
+	}
+
+	/**
+	 * La lista de ingredientes incluídos en la comida.
+	 */
+	public get ingredientes( ): Ingrediente[ ] {
+		return this.receta.map( ( entrada ) => entrada.ingrediente );
 	}
 
 	/**
 	 * Valor que equivale a _true_ si la comida es apta para celíacos y a _falso_ en caso contrario.
+	 *
+	 * Se considera que la comida es apta para celíacos si todos sus ingredientes lo son.
 	 */
 	public get esAptaParaCeliacos( ): boolean {
-		return this._esAptaParaCeliacos;
+		return this.ingredientes.every( ( ingrediente ) => ingrediente.esAptoParaCeliacos );
 	}
 
 	/**
 	 * Valor que equivale a _true_ si la comida es apta para vegetarianos y a _falso_ en caso contrario.
-	 */
-	public get esAptaParaVegatarianos( ): boolean {
-		return this._esAptaParaVegetarianos;
-	}
-
-	/**
-	 * La lista de los ingredientes que componen la comida, con sus respectivas cantidades dentro de la misma.
 	 *
-	 * Ej: pechuga de pollo (1 unidad), lechuga (100 gramos), tomate (100 gramos), manzana (1 unidad)
+	 * Se considera que la comida es apta para vegetarianos si todos sus ingredientes lo son.
 	 */
-	public get ingredientes( ): IngredienteDeComida[ ] {
-		return this._ingredientes;
+	public get esAptaParaVegetarianos( ): boolean {
+		return this.ingredientes.every( ( ingrediente ) => ingrediente.esAptoParaVegetarianos );
 	}
 
 	public constructor(
 		id: string,
 		nombre: string,
-		platos: Plato[ ],
-		esAptaParaCeliacos: boolean,
-		esAptaParaVegatarianos: boolean,
-		ingredientes: IngredienteDeComida[ ],
+		receta: Receta,
 	) {
 		super( id );
 		this._nombre = nombre;
-		this._platos = platos;
-		this._esAptaParaCeliacos = esAptaParaCeliacos;
-		this._esAptaParaVegetarianos = esAptaParaVegatarianos;
-		this._ingredientes = ingredientes;
+		this._receta = receta;
 	}
+
 }

@@ -1,15 +1,19 @@
 import { TipoDeTicket } from '../enumerativos/tipo-de-ticket';
+import { Combo } from './combo.model';
 import { Modelo } from './modelo.model';
+import { Sede } from './sede.model';
 
 /**
- * Modelo que representa un ticket asociado a una entrada del menú en una sede del comedor.
+ * Modelo que representa un ticket comprado por un cliente.
+ *
+ * El cliente puede canjearlo solo por el combo que tiene asociado en una sede del comedor y fecha específicas.
  */
 export class Ticket extends Modelo {
-	private readonly _idEntradaDeMenu: string;
-	private readonly _precio: number;
+	private readonly _combo: Combo;
+	private readonly _sede: Sede;
 	private readonly _fecha: string;
 	private readonly _tipo: TipoDeTicket;
-	private readonly _idSede: string;
+	private readonly _precio: number;
 
 	/**
 	 * El identificador único del ticket.
@@ -19,17 +23,17 @@ export class Ticket extends Modelo {
 	}
 
 	/**
-	 * El identificador único de la entrada del menú para la que el ticket fue comprado.
+	 * El combo para el que el ticket fue comprado.
 	 */
-	public get idComida( ): string {
-		return this._idEntradaDeMenu;
+	public get combo( ): Combo {
+		return this._combo;
 	}
 
 	/**
-	 * El precio del ticket, en ARS.
+	 * La sede del comedor donde el ticket es válido.
 	 */
-	public get precio( ): number {
-		return this._precio;
+	public get sede( ): Sede {
+		return this._sede;
 	}
 
 	/**
@@ -47,26 +51,26 @@ export class Ticket extends Modelo {
 	}
 
 	/**
-	 * El identificador único de la sede del comedor donde el ticket es válido.
+	 * El precio del ticket, en ARS.
 	 */
-	public get idSede( ): string {
-		return this._idSede;
+	public get precio( ): number {
+		return this._precio;
 	}
 
 	public constructor(
 		id: string,
-		idEntradaDeMenu: string,
-		precio: number,
+		combo: Combo,
+		sede: Sede,
 		fecha: string,
 		tipo: TipoDeTicket,
-		idSede: string,
+		precio: number,
 	) {
 		super( id );
-		this._idEntradaDeMenu = idEntradaDeMenu;
-		this._precio = precio;
+		this._combo = combo;
+		this._sede = sede;
 		this._fecha = fecha;
 		this._tipo = tipo;
-		this._idSede = idSede;
+		this._precio = precio;
 	}
 
 }

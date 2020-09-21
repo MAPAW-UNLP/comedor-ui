@@ -1,12 +1,15 @@
 import { Modelo } from './modelo.model';
+import { OpcionDeMenu } from '../interfaces/opcion-de-menu.interface';
+import { Sede } from './sede.model';
+import { Combo } from './combo.model';
 
 /**
  * Modelo que representa el menú del día para una sede del comedor en una fecha específica.
  */
 export class Menu extends Modelo {
-	private readonly _idSede: string;
-	private readonly _idsEntradasDeMenu: string[ ];
+	private readonly _sede: Sede;
 	private readonly _fecha: string;
+	private readonly _opciones: OpcionDeMenu[ ];
 
 	/**
 	 * El identificador único del menú.
@@ -16,17 +19,10 @@ export class Menu extends Modelo {
 	}
 
 	/**
-	 * El identificador único de la sede que ofrece el menú.
+	 * La sede que ofrece el menú.
 	 */
-	public get idSede( ): string {
-		return this._idSede;
-	}
-
-	/**
-	 * Una colección de los identificadores únicos de las entradas que componen el menú.
-	 */
-	public get idsEntradasDeMenu( ): string[ ] {
-		return this._idsEntradasDeMenu;
+	public get sede( ): Sede {
+		return this._sede;
 	}
 
 	/**
@@ -36,16 +32,58 @@ export class Menu extends Modelo {
 		return this._fecha;
 	}
 
+	/**
+	 * Lista de las opciones que componen el menú.
+	 */
+	public get opciones( ): OpcionDeMenu[ ] {
+		return this._opciones;
+	}
+
+	/**
+	 * La lista de los combos incluídos entre las opciones del menú.
+	 */
+	public get combos( ): Combo[ ] {
+		return this.opciones.map( ( opcion ) => opcion.combo );
+	}
+
+	/**
+	 * Valor que es igual a _true_ si alguna opción del combo es apta para celíacos y _false_ en caso
+	 * contrario.
+	 */
+	public get contieneOpcionesAptasParaCeliacos( ): boolean {
+		return this.combos.some( ( combo ) => combo.esAptoParaCeliacos );
+	}
+
+	/**
+	 * Valor que es igual a _true_ si alguna opción del combo es apta para vegetarianos y _false_ en caso
+	 * contrario.
+	 */
+	public get contieneOpcionesAptasParaVegetarianos( ): boolean {
+		return this.combos.some( ( combo ) => combo.esAptoParaVegetarianos );
+	}
+
+	/**
+	 * El precio de la opción más barata del menú, en ARS.
+	 */
+	public get precioMinimo( ): number {
+		// Se copia la lista de opciones para no alterar la lista original en este método.
+		const copiaDeOpciones = [ ...this.opciones ];
+
+		copiaDeOpciones.sort( ( opcionA, opcionB ) => opcionA.precioUnitario - opcionB.precioUnitario );
+		const opcionMasBarata = copiaDeOpciones[ 0 ];
+		return opcionMasBarata.precioUnitario;
+	}
+
 	public constructor(
 		id: string,
-		idSede: string,
-		idsEntradasDeMenu: string[ ],
-		fecha: string
+		sede: Sede,
+		fecha: string,
+		opciones: OpcionDeMenu[ ],
 	) {
 		super( id );
-		this._idSede = idSede;
-		this._idsEntradasDeMenu = idsEntradasDeMenu;
+		this._sede = sede;
 		this._fecha = fecha;
+		this._opciones = opciones;
 	}
 
 }
