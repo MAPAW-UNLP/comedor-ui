@@ -1,5 +1,5 @@
 
-# ComedorUniversitarioUI
+# ComedorUI
 
 This is a base template for Angular projects used by the Rapid team in Argentina.
 

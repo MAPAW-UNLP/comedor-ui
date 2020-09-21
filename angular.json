@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "comedor-universitario-ui": {
+    "comedor-ui": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/comedor-universitario-ui",
+            "outputPath": "dist/comedor-ui",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -52,18 +52,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "comedor-universitario-ui:build"
+            "browserTarget": "comedor-ui:build"
           },
           "configurations": {
             "local": {
-              "browserTarget": "comedor-universitario-ui:build:local"
+              "browserTarget": "comedor-ui:build:local"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "comedor-universitario-ui:build"
+            "browserTarget": "comedor-ui:build"
           }
         },
         "test": {
@@ -104,7 +104,7 @@
       }
     }
   },
-  "defaultProject": "comedor-universitario-ui",
+  "defaultProject": "comedor-ui",
   "cli": {
     "analytics": false
   }
