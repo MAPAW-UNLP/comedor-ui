@@ -1,4 +1,4 @@
-import { UnidadDeMedida } from '../enumerativos/unidad-de-medida';
+import { UnidadDeMedida } from '../enumerativos/unidad-de-medida.enum';
 
 /**
  * Una medida de una propiedad física de un objeto, compuesta de un número y una unidad de medida.

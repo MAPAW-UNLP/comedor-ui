@@ -1,15 +1,18 @@
-import { Modelo } from './modelo.model';
-import { OpcionDeMenu } from '../interfaces/opcion-de-menu.interface';
-import { Sede } from './sede.model';
+import { SedeDeComedor } from '../enumerativos/sede-de-comedor.enum';
 import { Combo } from './combo.model';
+import { Modelo } from './modelo.model';
 
 /**
- * Modelo que representa el menú del día para una sede del comedor en una fecha específica.
+ * Modelo que representa uno de los menús disponibles en una determinada fecha y sede.
+ *
+ * Cada menú está asociado a un combo, del cual se conoce el precio y stock actual.
  */
 export class Menu extends Modelo {
-	private readonly _sede: Sede;
+	private readonly _sede: SedeDeComedor;
 	private readonly _fecha: string;
-	private readonly _opciones: OpcionDeMenu[ ];
+	private readonly _combo: Combo;
+	private readonly _precioUnitario: number;
+	private readonly _stockActual: number;
 
 	/**
 	 * El identificador único del menú.
@@ -21,7 +24,7 @@ export class Menu extends Modelo {
 	/**
 	 * La sede que ofrece el menú.
 	 */
-	public get sede( ): Sede {
+	public get sede( ): SedeDeComedor {
 		return this._sede;
 	}
 
@@ -33,57 +36,40 @@ export class Menu extends Modelo {
 	}
 
 	/**
-	 * Lista de las opciones que componen el menú.
+	 * El combo asociado al menú.
 	 */
-	public get opciones( ): OpcionDeMenu[ ] {
-		return this._opciones;
+	public get combo( ): Combo {
+		return this._combo;
 	}
 
 	/**
-	 * La lista de los combos incluídos entre las opciones del menú.
+	 * El precio unitario del menú, en ARS.
 	 */
-	public get combos( ): Combo[ ] {
-		return this.opciones.map( ( opcion ) => opcion.combo );
+	public get precioUnitario( ): number {
+		return this._precioUnitario;
 	}
 
 	/**
-	 * Valor que es igual a _true_ si alguna opción del combo es apta para celíacos y _false_ en caso
-	 * contrario.
+	 * La cantidad de unidades actualmente disponibles en stock del combo asociado al menú.
 	 */
-	public get contieneOpcionesAptasParaCeliacos( ): boolean {
-		return this.combos.some( ( combo ) => combo.esAptoParaCeliacos );
-	}
-
-	/**
-	 * Valor que es igual a _true_ si alguna opción del combo es apta para vegetarianos y _false_ en caso
-	 * contrario.
-	 */
-	public get contieneOpcionesAptasParaVegetarianos( ): boolean {
-		return this.combos.some( ( combo ) => combo.esAptoParaVegetarianos );
-	}
-
-	/**
-	 * El precio de la opción más barata del menú, en ARS.
-	 */
-	public get precioMinimo( ): number {
-		// Se copia la lista de opciones para no alterar la lista original en este método.
-		const copiaDeOpciones = [ ...this.opciones ];
-
-		copiaDeOpciones.sort( ( opcionA, opcionB ) => opcionA.precioUnitario - opcionB.precioUnitario );
-		const opcionMasBarata = copiaDeOpciones[ 0 ];
-		return opcionMasBarata.precioUnitario;
+	public get stockActual( ): number {
+		return this._stockActual;
 	}
 
 	public constructor(
 		id: string,
-		sede: Sede,
+		sede: SedeDeComedor,
 		fecha: string,
-		opciones: OpcionDeMenu[ ],
+		combo: Combo,
+		precioUnitario: number,
+		stockActual: number,
 	) {
 		super( id );
 		this._sede = sede;
 		this._fecha = fecha;
-		this._opciones = opciones;
+		this._combo = combo;
+		this._precioUnitario = precioUnitario;
+		this._stockActual = stockActual;
 	}
 
 }

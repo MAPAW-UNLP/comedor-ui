@@ -8,6 +8,8 @@ import { Modelo } from './modelo.model';
  */
 export class Combo extends Modelo {
 	private readonly _nombre: string;
+	private readonly _esAptoParaCeliacos: boolean;
+	private readonly _esAptoParaVegetarianos: boolean;
 	private readonly _items: ItemDeCombo[ ];
 
 	/**
@@ -25,6 +27,20 @@ export class Combo extends Modelo {
 	}
 
 	/**
+	 * Valor que equivale a _true_ si el combo es apto para celíacos y a _false_ en caso contrario.
+	 */
+	public get esAptoParaCeliacos( ): boolean {
+		return this._esAptoParaCeliacos;
+	}
+
+	/**
+	 * Valor que equivale a _true_ si el combo es apto para vegetarianos y a _false_ en caso contrario.
+	 */
+	public get esAptoParaVegetarianos( ): boolean {
+		return this._esAptoParaVegetarianos;
+	}
+
+	/**
 	 * Colección de los ítems que componen el combo.
 	 */
 	public get items( ): ItemDeCombo[ ] {
@@ -38,31 +54,17 @@ export class Combo extends Modelo {
 		return this.items.map( ( item ) => item.comida );
 	}
 
-	/**
-	 * Valor que equivale a _true_ si el combo es apto para celíacos y a _false_ en caso contrario.
-	 *
-	 * Se considera que el combo es apto para celíacos si todas las comidas que incluye lo son.
-	 */
-	public get esAptoParaCeliacos( ): boolean {
-		return this.comidas.every( ( comida ) => comida.esAptaParaCeliacos );
-	}
-
-	/**
-	 * Valor que equivale a _true_ si el combo es apto para vegetarianos y a _false_ en caso contrario.
-	 *
-	 * Se considera que el combo es apto para vegetarianos si todas las comidas que incluye lo son.
-	 */
-	public get esAptoParaVegetarianos( ): boolean {
-		return this.comidas.every( ( comida ) => comida.esAptaParaVegetarianos );
-	}
-
 	public constructor(
 		id: string,
 		nombre: string,
+		esAptoParaCeliacos: boolean,
+		esAptoParaVegetarianos: boolean,
 		items: ItemDeCombo[ ],
 	) {
 		super( id );
 		this._nombre = nombre;
+		this._esAptoParaCeliacos = esAptoParaCeliacos;
+		this._esAptoParaVegetarianos = esAptoParaVegetarianos;
 		this._items = items;
 	}
 }
