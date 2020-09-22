@@ -1,11 +1,11 @@
-import { Sede } from './sede.model';
+import { SedeDeComedor } from '../enumerativos/sede-de-comedor.enum';
 import { Usuario } from './usuario.model';
 
 /**
  * Modelo que representa a un empleado del comedor.
  */
 export class EmpleadoDeComedor extends Usuario {
-	private readonly _sede: Sede;
+	private readonly _sede: SedeDeComedor;
 
 	/**
 	 * El identificador único del empleado del comedor.
@@ -31,7 +31,7 @@ export class EmpleadoDeComedor extends Usuario {
 	/**
 	 * La sede donde trabaja el empleado del comedor.
 	 */
-	public get sede( ): Sede {
+	public get sede( ): SedeDeComedor {
 		return this._sede;
 	}
 
@@ -39,7 +39,7 @@ export class EmpleadoDeComedor extends Usuario {
 		id: string,
 		nombreCompleto: string,
 		dni: string,
-		sede: Sede,
+		sede: SedeDeComedor,
 	) {
 		super( id, nombreCompleto, dni );
 		this._sede = sede;

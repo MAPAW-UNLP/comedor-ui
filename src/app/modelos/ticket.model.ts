@@ -1,19 +1,18 @@
-import { TipoDeTicket } from '../enumerativos/tipo-de-ticket';
+import { SedeDeComedor } from '../enumerativos/sede-de-comedor.enum';
+import { TipoDeTicket } from '../enumerativos/tipo-de-ticket.enum';
 import { Combo } from './combo.model';
+import { Menu } from './menu.model';
 import { Modelo } from './modelo.model';
-import { Sede } from './sede.model';
 
 /**
- * Modelo que representa un ticket comprado por un cliente.
+ * Modelo que representa un ticket comprado por un cliente a cambio de un menú.
  *
- * El cliente puede canjearlo solo por el combo que tiene asociado en una sede del comedor y fecha específicas.
+ * El cliente puede canjearlo solo por el combo de menú que tiene asociado en una sede del comedor y fecha
+ * específicas.
  */
 export class Ticket extends Modelo {
-	private readonly _combo: Combo;
-	private readonly _sede: Sede;
-	private readonly _fecha: string;
+	private readonly _menu: Menu;
 	private readonly _tipo: TipoDeTicket;
-	private readonly _precio: number;
 
 	/**
 	 * El identificador único del ticket.
@@ -23,24 +22,31 @@ export class Ticket extends Modelo {
 	}
 
 	/**
-	 * El combo para el que el ticket fue comprado.
+	 * El menú para el que el ticket fue comprado.
+	 */
+	public get menu( ): Menu {
+		return this._menu;
+	}
+
+	/**
+	 * El combo asociado al menú para el que el ticket fue comprado.
 	 */
 	public get combo( ): Combo {
-		return this._combo;
+		return this.menu.combo;
 	}
 
 	/**
 	 * La sede del comedor donde el ticket es válido.
 	 */
-	public get sede( ): Sede {
-		return this._sede;
+	public get sede( ): SedeDeComedor {
+		return this.menu.sede;
 	}
 
 	/**
-	 * La fecha para la que es válido el ticket, formateada en ISO 8601.
+	 * La fecha para la el ticket es válido, formateada en ISO 8601.
 	 */
 	public get fecha( ): string {
-		return this._fecha;
+		return this.menu.fecha;
 	}
 
 	/**
@@ -54,23 +60,17 @@ export class Ticket extends Modelo {
 	 * El precio del ticket, en ARS.
 	 */
 	public get precio( ): number {
-		return this._precio;
+		return this.menu.precioUnitario;
 	}
 
 	public constructor(
 		id: string,
-		combo: Combo,
-		sede: Sede,
-		fecha: string,
+		menu: Menu,
 		tipo: TipoDeTicket,
-		precio: number,
 	) {
 		super( id );
-		this._combo = combo;
-		this._sede = sede;
-		this._fecha = fecha;
+		this._menu = menu;
 		this._tipo = tipo;
-		this._precio = precio;
 	}
 
 }

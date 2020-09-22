@@ -1,6 +1,5 @@
 import { Modelo } from './modelo.model';
 import { Receta } from '../interfaces/receta.interface';
-import { Ingrediente } from './ingrediente.model';
 
 /**
  * Modelo que representa una comida asociada a una receta particular.
@@ -35,26 +34,8 @@ export class Comida extends Modelo {
 	/**
 	 * La lista de ingredientes incluídos en la comida.
 	 */
-	public get ingredientes( ): Ingrediente[ ] {
+	public get ingredientes( ): string[ ] {
 		return this.receta.map( ( entrada ) => entrada.ingrediente );
-	}
-
-	/**
-	 * Valor que equivale a _true_ si la comida es apta para celíacos y a _false_ en caso contrario.
-	 *
-	 * Se considera que la comida es apta para celíacos si todos sus ingredientes lo son.
-	 */
-	public get esAptaParaCeliacos( ): boolean {
-		return this.ingredientes.every( ( ingrediente ) => ingrediente.esAptoParaCeliacos );
-	}
-
-	/**
-	 * Valor que equivale a _true_ si la comida es apta para vegetarianos y a _false_ en caso contrario.
-	 *
-	 * Se considera que la comida es apta para vegetarianos si todos sus ingredientes lo son.
-	 */
-	public get esAptaParaVegetarianos( ): boolean {
-		return this.ingredientes.every( ( ingrediente ) => ingrediente.esAptoParaVegetarianos );
 	}
 
 	public constructor(

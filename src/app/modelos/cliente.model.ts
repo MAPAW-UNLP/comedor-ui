@@ -1,5 +1,5 @@
-import { TipoDeCliente } from '../enumerativos/tipo-de-cliente';
-import { Facultad } from './facultad.model';
+import { Facultad } from '../enumerativos/facultad.enum';
+import { TipoDeCliente } from '../enumerativos/tipo-de-cliente.enum';
 import { Usuario } from './usuario.model';
 
 /**

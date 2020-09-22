@@ -1,4 +1,4 @@
-import { RolDeComidaEnCombo } from '../enumerativos/rol-de-comida-en-combo';
+import { RolDeComidaEnCombo } from '../enumerativos/rol-de-comida-en-combo.enum';
 import { Comida } from '../modelos/comida.model';
 
 /**

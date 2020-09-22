@@ -1,4 +1,3 @@
-import { Ingrediente } from '../modelos/ingrediente.model';
 import { Magnitud } from './magnitud.interface';
 
 /**
@@ -9,7 +8,7 @@ type EntradaDeReceta = {
 	/**
 	 * El ingrediente asociado a la entrada de la receta.
 	 */
-	ingrediente: Ingrediente;
+	ingrediente: string;
 
 	/**
 	 * Cantidad del ingrediente dentro de la receta, expresada como una magnitud.
