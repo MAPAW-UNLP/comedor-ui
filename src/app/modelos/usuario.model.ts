@@ -1,9 +1,9 @@
-import { Modelo } from './modelo.model';
+import { Entidad } from './entidad.model';
 
 /**
  * Modelo que representa a un usuario de la aplicación.
  */
-export class Usuario extends Modelo {
+export class Usuario extends Entidad {
 	private readonly _nombreCompleto: string;
 	private readonly _dni: string;
 
