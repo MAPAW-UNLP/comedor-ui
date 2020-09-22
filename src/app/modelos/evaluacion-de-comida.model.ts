@@ -1,11 +1,11 @@
 import { Cliente } from './cliente.model';
 import { Comida } from './comida.model';
-import { Modelo } from './modelo.model';
+import { Entidad } from './entidad.model';
 
 /**
  * Modelo que representa la evaluación de una comida por parte de un cliente.
  */
-export class EvaluacionDeComida extends Modelo {
+export class EvaluacionDeComida extends Entidad {
 	private readonly _cliente: Cliente;
 	private readonly _comida: Comida;
 	private readonly _puntuacion: number;

@@ -1,13 +1,13 @@
 import { SedeDeComedor } from '../enumerativos/sede-de-comedor.enum';
 import { Combo } from './combo.model';
-import { Modelo } from './modelo.model';
+import { Entidad } from './entidad.model';
 
 /**
  * Modelo que representa uno de los menús disponibles en una determinada fecha y sede.
  *
  * Cada menú está asociado a un combo, del cual se conoce el precio y stock actual.
  */
-export class Menu extends Modelo {
+export class Menu extends Entidad {
 	private readonly _sede: SedeDeComedor;
 	private readonly _fecha: string;
 	private readonly _combo: Combo;

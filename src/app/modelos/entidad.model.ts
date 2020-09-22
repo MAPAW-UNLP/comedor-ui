@@ -1,7 +1,7 @@
 /**
  * Clase abstracta que representa una entidad del dominio identificada unívocamente.
  */
-export abstract class Modelo {
+export abstract class Entidad {
 	private readonly _id: string;
 
 	/**

@@ -1,17 +1,17 @@
 import { SedeDeComedor } from '../enumerativos/sede-de-comedor.enum';
 import { TipoDeTicket } from '../enumerativos/tipo-de-ticket.enum';
+import { Cliente } from './cliente.model';
 import { Combo } from './combo.model';
 import { Menu } from './menu.model';
-import { Modelo } from './modelo.model';
+import { Entidad } from './entidad.model';
 
 /**
- * Modelo que representa un ticket comprado por un cliente a cambio de un menú.
- *
- * El cliente puede canjearlo solo por el combo de menú que tiene asociado en una sede del comedor y fecha
- * específicas.
+ * Modelo que representa un ticket comprado por un cliente específico, el cual puede canjearlo por un combo
+ * específico en una sede específica del comedor en una fecha específica.
  */
-export class Ticket extends Modelo {
+export class Ticket extends Entidad {
 	private readonly _menu: Menu;
+	private readonly _cliente: Cliente;
 	private readonly _tipo: TipoDeTicket;
 
 	/**
@@ -26,6 +26,13 @@ export class Ticket extends Modelo {
 	 */
 	public get menu( ): Menu {
 		return this._menu;
+	}
+
+	/**
+	 * El cliente dueño del ticket.
+	 */
+	public get cliente( ): Cliente {
+		return this._cliente;
 	}
 
 	/**
@@ -66,10 +73,12 @@ export class Ticket extends Modelo {
 	public constructor(
 		id: string,
 		menu: Menu,
+		cliente: Cliente,
 		tipo: TipoDeTicket,
 	) {
 		super( id );
 		this._menu = menu;
+		this._cliente = cliente;
 		this._tipo = tipo;
 	}
 

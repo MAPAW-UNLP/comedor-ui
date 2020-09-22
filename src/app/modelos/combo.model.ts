@@ -1,12 +1,12 @@
 import { ItemDeCombo } from '../interfaces/item-de-combo.interface';
 import { Comida } from './comida.model';
-import { Modelo } from './modelo.model';
+import { Entidad } from './entidad.model';
 
 /**
  * Modelo que representa un combo de comidas disponible como opción en el menú de una sede del comedor, con cada comida
  * asociada a un rol específico (ej: plato principal, guarnición, postre).
  */
-export class Combo extends Modelo {
+export class Combo extends Entidad {
 	private readonly _nombre: string;
 	private readonly _esAptoParaCeliacos: boolean;
 	private readonly _esAptoParaVegetarianos: boolean;

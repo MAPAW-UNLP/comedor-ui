@@ -1,10 +1,10 @@
-import { Modelo } from './modelo.model';
+import { Entidad } from './entidad.model';
 import { Receta } from '../interfaces/receta.interface';
 
 /**
  * Modelo que representa una comida asociada a una receta particular.
  */
-export class Comida extends Modelo {
+export class Comida extends Entidad {
 	private readonly _nombre: string;
 	private readonly _receta: Receta;
 

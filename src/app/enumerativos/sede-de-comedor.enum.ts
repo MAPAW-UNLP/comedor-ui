@@ -2,8 +2,8 @@
  * Enumerativo que declara los nombres todas las sedes del Comedor Univesitario de la UNLP.
  */
 export enum SedeDeComedor {
-	BosqueOeste = 'Sede I: Bosque Oeste',
-	BosqueEste = 'Sede II: Bosque Este',
-	ATULP = 'Sede III: Asociación de Trabajadores de la UNLP',
-	ClubEverton = 'Sede IV: Club Everton',
+	BosqueOeste = 'Sede Bosque Oeste',
+	BosqueEste = 'Sede Bosque Este',
+	ATULP = 'Sede ATULP',
+	ClubEverton = 'Sede Club Everton',
 }
