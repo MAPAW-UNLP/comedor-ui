@@ -2,7 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
 /**
- * Módulo responsable de la autenticación y autorización de los usuarios de la aplicación.
+ * Module responsible for the authentication and authorization of the application's users.
  */
 @NgModule({
 	imports: [
@@ -12,15 +12,14 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 export class AuthModule {
 
 	/**
-	 * Retorna una instancia de AuthModule cargada con los _providers_ requeridos en el entorno de ejecución
-	 * actual.
+	 * Returns an instance of AuthModule loaded with the providers required in the current environment.
 	 */
 	public static forRoot( ): ModuleWithProviders<AuthModule> {
 		return {
 			ngModule: AuthModule,
 			providers: [
-				// DO: Agregar interceptor para incluír el token de autorización en peticiones HTTP salientes
-				// DO: Agregar guardias para verificación de autorización
+				// DO: Add interceptor to include the access token in outbound HTTP requests
+				// DO: Add guards for validation of authorization
 			],
 		};
 	}
