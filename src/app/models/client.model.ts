@@ -8,7 +8,7 @@ import { User } from './user.model';
 export class Client extends User {
 	private readonly _email: string;
 	private readonly _condition: ClientCondition;
-	private readonly _faculty: Faculty;
+	private readonly _faculties: Faculty[ ];
 
 	/**
 	 * The unique identifier of the client.
@@ -45,12 +45,11 @@ export class Client extends User {
 		return this._condition;
 	}
 
-	// DO: Check the cardinality, as one client can belong to several faculties simultaneously
 	/**
-	 * The faculty to which the client belongs.
+	 * The faculties to which the client belongs.
 	 */
-	public get faculty( ): Faculty {
-		return this._faculty;
+	public get faculties( ): Faculty[ ] {
+		return this._faculties;
 	}
 
 	public constructor(
@@ -59,12 +58,12 @@ export class Client extends User {
 		dni: string,
 		email: string,
 		condition: ClientCondition,
-		faculty: Faculty,
+		faculties: Faculty[ ],
 	) {
 		super( id, fullName, dni );
 		this._email = email;
 		this._condition = condition;
-		this._faculty = faculty;
+		this._faculties = faculties;
 	}
 
 }
