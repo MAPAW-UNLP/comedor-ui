@@ -184,7 +184,8 @@ export class AuthService {
 		username: string,
 		password: string,
 	): Observable<AuthenticationResponseDTO> {
-		const url: string = environment.endpoints.authenticate;
+		const baseUrl: string = `${ environment.baseUrl.protocol }://${ environment.baseUrl.domain }`;
+		const url: string = baseUrl + environment.resourcePaths.authenticate;
 		const authenticationCredentialsDTO: AuthenticationCredentialsDTO = {
 			username: username,
 			password: password,
