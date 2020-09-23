@@ -1,7 +1,7 @@
 /**
- * Enum that defines the possible types of client.
+ * Enum that defines the possible conditions of a client.
  */
-export enum ClientType {
+export enum ClientCondition {
 	Student = 'student',
 	Teacher = 'teacher',
 	NonTeacher = 'non-teacher',

@@ -1,4 +1,4 @@
-import { ClientType } from '../enums/client-type.enum';
+import { ClientCondition } from '../enums/client-type.enum';
 import { Faculty } from '../enums/faculty.enum';
 import { User } from './user.model';
 
@@ -7,7 +7,7 @@ import { User } from './user.model';
  */
 export class Client extends User {
 	private readonly _email: string;
-	private readonly _type: ClientType;
+	private readonly _type: ClientCondition;
 	private readonly _faculty: Faculty;
 
 	/**
@@ -41,7 +41,7 @@ export class Client extends User {
 	/**
 	 * The type of the client: it can be either "student", "teacher" or "non-teacher".
 	 */
-	public get type( ): ClientType {
+	public get type( ): ClientCondition {
 		return this._type;
 	}
 
@@ -58,7 +58,7 @@ export class Client extends User {
 		fullName: string,
 		dni: string,
 		email: string,
-		type: ClientType,
+		type: ClientCondition,
 		faculty: Faculty,
 	) {
 		super( id, fullName, dni );
