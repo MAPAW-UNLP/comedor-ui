@@ -1,15 +1,15 @@
-type rutas = typeof import( '../utils/rutas' ).rutas;
+type routes = typeof import( '../utils/routes' ).routes;
 
 declare namespace Cypress {
 
 	interface Chainable {
 
 		/**
-		 * Visita la ruta del sitio provista.
+		 * Visits the route with the provided name.
 		 *
-		 * @param nombreDeRuta el nombre de la ruta del sitio a visitar.
+		 * @param routeName the name of the route to visit.
 		 */
-		visitarRuta( nombreDeRuta: keyof rutas ): Chainable;
+		visitRoute( routeName: keyof routes ): Chainable;
 
 	}
 

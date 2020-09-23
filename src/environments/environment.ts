@@ -1,13 +1,13 @@
-import { EntornoDeEjecucion } from 'src/app/interfaces/entorno-de-ejecucion.interface';
+import { Environment } from 'src/app/interfaces/environment.interface';
 
 /**
- * Objeto demostrativo de un entorno de ejecución.
+ * Object that represents a default execution environment.
  *
- * Siempre es reemplazado por Webpack por el objeto correspondiente al entorno de ejecución actual.
+ * This file is always replaced with the one associated to the correct execution environment by Webpack.
  */
-export const environment: EntornoDeEjecucion = {
-	nombre: 'default',
+export const environment: Environment = {
+	name: 'default',
 	endpoints: {
-		autenticar: '/autenticar',
+		authenticate: '/authenticate',
 	},
 };
