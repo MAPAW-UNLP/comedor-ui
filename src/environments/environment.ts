@@ -7,11 +7,11 @@ import { Environment } from 'src/app/interfaces/environment.interface';
  */
 export const environment: Environment = {
 	name: 'default',
-	baseUrl: {
+	serverUrl: {
 		protocol: 'http',
 		domain: 'localhost:3000'
 	},
 	resourcePaths: {
-		authenticate: '/authenticate',
+		authenticate: 'authenticate',
 	},
 };

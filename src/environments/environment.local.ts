@@ -5,11 +5,11 @@ import { Environment } from 'src/app/interfaces/environment.interface';
  */
 export const environment: Environment = {
 	name: 'local',
-	baseUrl: {
+	serverUrl: {
 		protocol: 'http',
 		domain: 'localhost:3000'
 	},
 	resourcePaths: {
-		authenticate: '/authenticate',
+		authenticate: 'authenticate',
 	},
 };

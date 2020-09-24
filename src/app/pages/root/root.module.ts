@@ -22,7 +22,7 @@ import { RootRoutingModule } from './root-routing.module';
 		JwtModule.forRoot({
 			config: {
 				tokenGetter: ( ): string | null => localStorage.getItem( localStorageKeys.accessToken ),
-				allowedDomains: [ environment.baseUrl.domain ],
+				allowedDomains: [ environment.serverUrl.domain ],
 			},
 		}),
 		RootRoutingModule,

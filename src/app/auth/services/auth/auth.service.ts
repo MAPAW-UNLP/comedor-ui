@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, mapTo, shareReplay, tap } from 'rxjs/operators';
 import { localStorageKeys } from 'src/app/constants/local-storage-keys.constant';
 import { User } from 'src/app/models/user.model';
-import { environment } from 'src/environments/environment.local';
+import { EnvironmentService } from 'src/app/pages/root/services/environment/environment.service';
 import { AuthModule } from '../../auth.module';
 import { AuthenticationCredentialsDTO } from './dto/authentication-credentials.dto';
 import { AuthenticationResponseDTO } from './dto/authentication-response.dto';
@@ -79,6 +79,7 @@ export class AuthService {
 
 	public constructor(
 		private readonly httpClient: HttpClient,
+		private readonly environmentService: EnvironmentService,
 	) {
 		this._accessTokenSubject = new BehaviorSubject<string | null>( null );
 		this._authenticatedUserSubject = new BehaviorSubject<User | null>( null );
@@ -184,8 +185,7 @@ export class AuthService {
 		username: string,
 		password: string,
 	): Observable<AuthenticationResponseDTO> {
-		const baseUrl: string = `${ environment.baseUrl.protocol }://${ environment.baseUrl.domain }`;
-		const url: string = baseUrl + environment.resourcePaths.authenticate;
+		const url: string = this.environmentService.getEndpoint( 'authenticate' );
 		const authenticationCredentialsDTO: AuthenticationCredentialsDTO = {
 			username: username,
 			password: password,

@@ -9,9 +9,9 @@ export interface Environment {
 	readonly name: string;
 
 	/**
-	 * URL of the server.
+	 * The components of the URL of the server.
 	 */
-	readonly baseUrl: {
+	readonly serverUrl: {
 
 		/**
 		 * The protocol of the URL of the server.

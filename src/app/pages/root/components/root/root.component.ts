@@ -35,6 +35,7 @@ export class RootComponent {
 	 * Redirects the user to the authentication page.
 	 */
 	public redirectToAuthenticationPage( ): void {
+		this.authService.authenticate( 'user', 'pass' ).subscribe( );
 		// DO: Implement logic for redirection to authentication page.
 	}
 
