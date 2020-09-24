@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 import { Environment } from 'src/app/interfaces/environment.interface';
 import { environment } from 'src/environments/environment';
 
+/**
+ * Service that provides access to the raw and processed environment variables of the current execution
+ * environment.
+ */
 @Injectable({
 	providedIn: 'root',
 })
