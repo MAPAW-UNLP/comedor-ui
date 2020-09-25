@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NotFoundPageComponent } from '../not-found-page/components/not-found-page/not-found-page.component';
 import { NotFoundPageModule } from '../not-found-page/not-found-page.module';
 import { PublicPageComponent } from '../public-page/components/public-page/public-page.component';
-import { PublicPageModule } from '../public-page/pagina-publica.module';
+import { PublicPageModule } from '../public-page/public-page.module';
 
 const routes: Routes = [
 	{
