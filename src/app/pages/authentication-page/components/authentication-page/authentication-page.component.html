@@ -1,0 +1,78 @@
+<mat-card class="authentication_form_card">
+	<form class="authentication_form" [formGroup]="authenticationForm">
+		<mat-form-field class="authentication_form_field" appearance="standard">
+
+			<mat-label>DNI</mat-label>
+
+			<input
+				matInput
+				[formControlName]="dniFieldName"
+				maxlength="8"
+				inputmode="numeric"
+				pattern="[0-9]*"
+				digitOnly
+			>
+
+			<mat-hint align="end">
+				{{ dniDigitCountToExpected }}
+			</mat-hint>
+
+			<mat-error
+				*ngIf="hasRequiredDniError"
+				class="authentication_form_field__error_message_container"
+				align="end"
+			>
+				<span>{{ requiredDniErrorMessage }}</span>
+				<span>{{ dniDigitCountToExpected }}</span>
+			</mat-error>
+
+			<mat-error
+				*ngIf="hasDniLengthError"
+				class="authentication_form_field__error_message_container"
+				align="end"
+			>
+				<span>{{ dniLengthErrorMessage }}</span>
+				<span>{{ dniDigitCountToExpected }}</span>
+			</mat-error>
+
+		</mat-form-field>
+
+		<mat-form-field class="authentication_form_field" appearance="standard">
+
+			<mat-label>Contraseña</mat-label>
+
+			<input
+				matInput
+				type="password"
+				[formControlName]="passwordFieldName"
+				appearance="fill"
+			>
+
+			<mat-error
+				*ngIf="hasRequiredPasswordError"
+				class="authentication_form_field__error_message_container"
+				align="end"
+			>
+				<span>{{ requiredPasswordErrorMessage }}</span>
+			</mat-error>
+
+		</mat-form-field>
+
+		<mat-error
+			*ngIf="hasInvalidCredentialsError"
+			class="authentication_form_field__form_error"
+		>
+			El usuario y la contraseña que ingresaste no coinciden.
+		</mat-error>
+
+		<button
+			mat-raised-button
+			class="authentication_form_field__submit_button"
+			[disabled]="submitButtonIsDisabled"
+			color="accent"
+			(click)="authenticate( )"
+		>
+			{{ submitbuttonText }}
+		</button>
+	</form>
+</mat-card>

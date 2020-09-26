@@ -1,17 +1,19 @@
 import { StaticProvider } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
 import { DeepPartial } from 'tsdef';
 import { AuthService } from '../../services/auth/auth.service';
-import { AuthGuard } from './auth.guard';
+import { AuthenticatedUserRequiredGuard } from './authenticated-user-required';
 
-describe( 'AuthGuard', ( ) => {
-	let guard: AuthGuard;
-	let authServiceStub: DeepPartial<AuthService>;
+describe( 'AuthenticatedUserRequiredGuard', ( ) => {
+	let guard: AuthenticatedUserRequiredGuard;
+	let authServiceStub: AuthService;
+	let routerStub: Router;
 
 	beforeEach( ( ) => {
 		TestBed.configureTestingModule({
 			providers: <StaticProvider[ ]> [
-				AuthGuard,
+				AuthenticatedUserRequiredGuard,
 				{
 					provide: AuthService,
 					useFactory: ( ): DeepPartial<AuthService> => {
@@ -22,11 +24,21 @@ describe( 'AuthGuard', ( ) => {
 						return _authService;
 					},
 				},
+				{
+					provide: Router,
+					useFactory: ( ): DeepPartial<Router> => {
+						const _router: DeepPartial<Router> = {
+							navigate: jest.fn( ),
+						};
+						return _router;
+					},
+				},
 			],
 		});
 
-		guard = TestBed.inject( AuthGuard );
+		guard = TestBed.inject( AuthenticatedUserRequiredGuard );
 		authServiceStub = TestBed.inject( AuthService );
+		routerStub = TestBed.inject( Router );
 	});
 
 	test( 'should be created', async ( ) => {
@@ -45,7 +57,8 @@ describe( 'AuthGuard', ( ) => {
 			.mockReturnValueOnce( false );
 
 		expect( guard.canActivate( ) ).toEqual( false );
-		// DO: Verify that the router is asked to redirect to the authentication page.
+		expect( routerStub.navigate ).toHaveBeenCalledTimes( 1 );
+		expect( routerStub.navigate ).toHaveBeenCalledWith([ '/ingresar' ]);
 	});
 
 });

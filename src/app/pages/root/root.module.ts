@@ -18,7 +18,7 @@ import { RootRoutingModule } from './root-routing.module';
 	],
 	imports: [
 		BrowserModule,
-		AuthModule.forRoot( ),
+		AuthModule,
 		JwtModule.forRoot({
 			config: {
 				tokenGetter: ( ): string | null => localStorage.getItem( localStorageKeys.accessToken ),

@@ -24,6 +24,8 @@
     "@angular/platform-browser-dynamic": "~10.1.2",
     "@angular/router": "~10.1.2",
     "@auth0/angular-jwt": "^5.0.1",
+    "@uiowa/digit-only": "^2.2.0",
+    "http-status-codes": "^2.1.4",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { StaticProvider } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
 import { EnvironmentService } from 'src/app/pages/root/services/environment/environment.service';
 import { DeepPartial } from 'tsdef';
 import { AuthService } from './auth.service';
@@ -10,6 +11,8 @@ import { AuthService } from './auth.service';
 describe( 'AuthService', ( ) => {
 	let service: AuthService;
 	let httpClientStub: HttpClient;
+	let environmentServiceStub: EnvironmentService;
+	let routerStub: Router;
 
 	beforeEach( ( ) => {
 		TestBed.configureTestingModule({
@@ -33,11 +36,22 @@ describe( 'AuthService', ( ) => {
 						return _environmentService;
 					},
 				},
+				{
+					provide: Router,
+					useFactory: ( ): DeepPartial<Router> => {
+						const _router: DeepPartial<Router> = {
+							navigate: jest.fn( ),
+						};
+						return _router;
+					},
+				},
 			],
 		});
 
 		service = TestBed.inject( AuthService );
 		httpClientStub = TestBed.inject( HttpClient );
+		environmentServiceStub = TestBed.inject( EnvironmentService );
+		routerStub = TestBed.inject( Router );
 	});
 
 	test( 'should be created', async ( ) => {

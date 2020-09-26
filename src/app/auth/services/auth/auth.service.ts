@@ -1,7 +1,9 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { StatusCodes } from 'http-status-codes';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError, map, mapTo, shareReplay, tap } from 'rxjs/operators';
 import { localStorageKeys } from 'src/app/constants/local-storage-keys.constant';
 import { User } from 'src/app/models/user.model';
@@ -134,6 +136,7 @@ export class AuthService {
 
 	public constructor(
 		private readonly httpClient: HttpClient,
+		private readonly router: Router,
 		private readonly environmentService: EnvironmentService,
 	) {
 		this._accessTokenSubject = new BehaviorSubject<string | null>( null );
@@ -162,7 +165,7 @@ export class AuthService {
 
 		return this.requestAuthenticationFromServer( username, password )
 			.pipe(
-				// Update the authenticated user and return _true_ in case of success.
+				// Update the authenticated user and return a _true_ emitting observable in case of success.
 				tap( ( authenticationResponseDTO ) => {
 					const accessToken = authenticationResponseDTO.accessToken;
 					this.storeAccessTokenInLocalStorage( accessToken );
@@ -170,10 +173,14 @@ export class AuthService {
 				}),
 				mapTo( true ),
 
-				// Return _false_ in case of error.
+				// Return a _false_ emitting observable in case of invalid credentials.
+				// Return an error throwing observable in case of server failure.
 				catchError( ( error: HttpErrorResponse ) => {
-					// DO: Display some kind of error or retry the attempt
-					return of( false );
+					return ( error.status === StatusCodes.UNAUTHORIZED )
+						? of( false )
+						: throwError(
+							new Error( 'The server failed to process the authentication request.' ),
+						);
 				}),
 
 				// Avoid sending multiple concurrent authentication requests.
@@ -187,6 +194,7 @@ export class AuthService {
 	public deauthenticate( ): void {
 		this.deleteAccessTokenFromLocalStorage( );
 		this.clearAuthenticatedUserInService( );
+		this.redirectUserToAuthenticationPage( );
 	}
 
 	/**
@@ -287,9 +295,16 @@ export class AuthService {
 	/**
 	 * Clears the access token and authenticated user in the service and sets them to their default values.
 	 */
-	private clearAuthenticatedUserInService( ) {
+	private clearAuthenticatedUserInService( ): void {
 		this._accessTokenSubject.next( null );
 		this._authenticatedUserSubject.next( null );
+	}
+
+	/**
+	 * Redirects the user to the authentication page.
+	 */
+	private redirectUserToAuthenticationPage( ): void {
+		this.router.navigate([ '/ingresar' ]);
 	}
 
 }

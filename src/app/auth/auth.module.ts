@@ -1,5 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 /**
  * Module responsible for the authentication and authorization of the application's users.
@@ -7,21 +8,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 @NgModule({
 	imports: [
 		HttpClientModule,
+		RouterModule,
 	],
 })
-export class AuthModule {
-
-	/**
-	 * Returns an instance of AuthModule loaded with the providers required in the current environment.
-	 */
-	public static forRoot( ): ModuleWithProviders<AuthModule> {
-		return {
-			ngModule: AuthModule,
-			providers: [
-				// DO: Add interceptor to include the access token in outbound HTTP requests
-				// DO: Add guards for validation of authorization
-			],
-		};
-	}
-
-}
+export class AuthModule { }
