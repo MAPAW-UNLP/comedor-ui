@@ -9,6 +9,7 @@ import { EnvironmentService } from 'src/app/pages/root/services/environment/envi
 import { AuthModule } from '../../auth.module';
 import { AuthenticationCredentialsDTO } from './dto/authentication-credentials.dto';
 import { AuthenticationResponseDTO } from './dto/authentication-response.dto';
+import { UserRole } from './enums/user-role.enum';
 import { AccessToken } from './interfaces/access-token.interface';
 
 // TEST: Update AuthService's unit tests
@@ -21,9 +22,13 @@ import { AccessToken } from './interfaces/access-token.interface';
 })
 export class AuthService {
 	private readonly _accessTokenSubject: BehaviorSubject<string | null>;
-	private readonly _authenticatedUserSubject: BehaviorSubject<User | null>;
 	private readonly _accessTokenObservable: Observable<string | null>;
+
+	private readonly _authenticatedUserSubject: BehaviorSubject<User | null>;
 	private readonly _authenticatedUserObservable: Observable<User | null>;
+
+	private readonly _authenticatedUserRoleSubject: BehaviorSubject<UserRole | null>;
+	private readonly _authenticatedUserRoleObservable: Observable<UserRole | null>;
 
 	/**
 	 * The serialized access token.
@@ -44,22 +49,6 @@ export class AuthService {
 	}
 
 	/**
-	 * Observable that emits _true_ if there is a user authenticated and _false_ otherwise.
-	 */
-	public get aUserIsAuthenticated( ): Observable<boolean> {
-		return this._accessTokenObservable.pipe(
-			map( ( token ) => token !== null ),
-		);
-	}
-
-	/**
-	 * Value that is equal to _true_ if there is a user authenticated and _false_ otherwise.
-	 */
-	public get aUserIsAuthenticatedSnapshot( ): boolean {
-		return this._accessTokenSubject.value !== null;
-	}
-
-	/**
 	 * Observable that emits the currently authenticated user.
 	 *
 	 * If there is no user authenticated, it emits _null_.
@@ -77,14 +66,84 @@ export class AuthService {
 		return this._authenticatedUserSubject.value;
 	}
 
+	/**
+	 * Observable that emits the role of the currently authenticated user.
+	 *
+	 * If there is no user authenticated, it emits _null_.
+	 */
+	public get authenticatedUserRole( ): Observable<UserRole | null> {
+		return this._authenticatedUserRoleObservable;
+	}
+
+	/**
+	 * The role of the currently authenticated user.
+	 *
+	 * If there is no user authenticated, it is equal to _null_.
+	 */
+	public get authenticatedUserRoleSnapshot( ): UserRole | null {
+		return this._authenticatedUserRoleSubject.value;
+	}
+
+	/**
+	 * Observable that emits _true_ if there is a user authenticated and _false_ otherwise.
+	 */
+	public get aUserIsAuthenticated( ): Observable<boolean> {
+		return this._accessTokenObservable.pipe(
+			map( ( token ) => token !== null ),
+		);
+	}
+
+	/**
+	 * Value that is equal to _true_ if there is a user authenticated and _false_ otherwise.
+	 */
+	public get aUserIsAuthenticatedSnapshot( ): boolean {
+		return this._accessTokenSubject.value !== null;
+	}
+
+	/**
+	 * Observable that emits _true_ if there is a client authenticated and _false_ otherwise.
+	 */
+	public get aClientIsAuthenticated( ): Observable<boolean> {
+		return this._authenticatedUserRoleObservable.pipe(
+			map( ( role ) => role === UserRole.Client ),
+		);
+	}
+
+	/**
+	 * Value that is equal to _true_ if there is a client authenticated and _false_ otherwise.
+	 */
+	public get aClientIsAuthenticatedSnapshot( ): boolean {
+		return this._authenticatedUserRoleSubject.value === UserRole.Client;
+	}
+
+	/**
+	 * Observable that emits _true_ if there is a kitchen site employee authenticated and _false_ otherwise.
+	 */
+	public get aKitchenSiteEmployeeIsAuthenticated( ): Observable<boolean> {
+		return this._authenticatedUserRoleObservable.pipe(
+			map( ( role ) => role === UserRole.KitchenSiteEmployee ),
+		);
+	}
+
+	/**
+	 * Value that is equal to _true_ if there is a kitchen site employee authenticated and _false_ otherwise.
+	 */
+	public get aKitchenSiteEmployeeIsAuthenticatedSnapshot( ): boolean {
+		return this._authenticatedUserRoleSubject.value === UserRole.KitchenSiteEmployee;
+	}
+
 	public constructor(
 		private readonly httpClient: HttpClient,
 		private readonly environmentService: EnvironmentService,
 	) {
 		this._accessTokenSubject = new BehaviorSubject<string | null>( null );
-		this._authenticatedUserSubject = new BehaviorSubject<User | null>( null );
 		this._accessTokenObservable = this._accessTokenSubject.asObservable( );
+
+		this._authenticatedUserSubject = new BehaviorSubject<User | null>( null );
 		this._authenticatedUserObservable = this._authenticatedUserSubject.asObservable( );
+
+		this._authenticatedUserRoleSubject = new BehaviorSubject<UserRole | null>( null );
+		this._authenticatedUserRoleObservable = this._authenticatedUserRoleSubject.asObservable( );
 
 		this.reloadAuthenticatedUserFromLocalStorage( );
 	}
@@ -151,27 +210,44 @@ export class AuthService {
 	}
 
 	/**
-	 * Updates the access token and authenticated user in the service with the provided access token.
+	 * Updates the access token, authenticated user and role of the authenticated user in the service with the
+	 * provided access token.
 	 */
 	private loadAuthenticatedUserInService( accessToken: string ): void {
-		const authenticatedUser: User = this.getUserFromAccessToken( accessToken );
+		const deserializedAccessToken: AccessToken = this.deserializeAccessToken( accessToken );
+
+		const authenticatedUser: User = this.getUserFromAccessToken( deserializedAccessToken );
+		const authenticatedUserRole: UserRole = this.getUserRoleFromAccessToken( deserializedAccessToken );
 
 		this._accessTokenSubject.next( accessToken );
 		this._authenticatedUserSubject.next( authenticatedUser );
+		this._authenticatedUserRoleSubject.next( authenticatedUserRole );
 	}
 
 	/**
-	 * Returns an instance of User from the claims contained in the access token.
+	 * Deserializes and returns the access token as an object.
 	 */
-	private getUserFromAccessToken( accessToken: string ): User {
+	private deserializeAccessToken( accessToken: string ): AccessToken {
 		const jwtHelperService = new JwtHelperService( );
-		const deserializedAccessToken = <AccessToken> jwtHelperService.decodeToken( accessToken );
+		return jwtHelperService.decodeToken( accessToken );
+	}
 
+	/**
+	 * Returns an instance of User from the claims contained in the deserialized access token.
+	 */
+	private getUserFromAccessToken( deserializedAccessToken: AccessToken ): User {
 		return new User(
 			deserializedAccessToken.id,
 			deserializedAccessToken.fullName,
-			deserializedAccessToken.dni
+			deserializedAccessToken.dni,
 		);
+	}
+
+	/**
+	 * Extracts and returns the role of the authenticated user from the deserialized access token.
+	 */
+	private getUserRoleFromAccessToken( deserializedAccessToken: AccessToken ): UserRole {
+		return deserializedAccessToken.role;
 	}
 
 	/**

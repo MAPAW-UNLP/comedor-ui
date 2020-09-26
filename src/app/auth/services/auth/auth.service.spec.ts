@@ -50,6 +50,8 @@ describe( 'AuthService', ( ) => {
 
 	test.todo( 'should expose whether or not a user is authenticated' );
 
+	test.todo( 'should expose the role of the authenticated user' );
+
 	// DO: Add tests for authentication and deauthentication logic
 
 });
