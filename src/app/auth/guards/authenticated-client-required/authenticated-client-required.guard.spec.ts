@@ -1,5 +1,6 @@
 import { StaticProvider } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
 import { DeepPartial } from 'tsdef';
 import { AuthService } from '../../services/auth/auth.service';
 import { UserRole } from '../../services/auth/enums/user-role.enum';
@@ -8,6 +9,7 @@ import { AuthenticatedClientRequiredGuard } from './authenticated-client-require
 describe( 'AuthenticatedClientRequiredGuard', ( ) => {
 	let guard: AuthenticatedClientRequiredGuard;
 	let authServiceStub: AuthService;
+	let routerStub: Router;
 
 	beforeEach( ( ) => {
 		TestBed.configureTestingModule({
@@ -23,11 +25,21 @@ describe( 'AuthenticatedClientRequiredGuard', ( ) => {
 						return _authService;
 					},
 				},
+				{
+					provide: Router,
+					useFactory: ( ): DeepPartial<Router> => {
+						const _router: DeepPartial<Router> = {
+							navigate: jest.fn( ),
+						};
+						return _router;
+					},
+				},
 			],
 		});
 
 		guard = TestBed.inject( AuthenticatedClientRequiredGuard );
 		authServiceStub = TestBed.inject( AuthService );
+		routerStub = TestBed.inject( Router );
 	});
 
 	test( 'should be created', async ( ) => {
@@ -41,11 +53,13 @@ describe( 'AuthenticatedClientRequiredGuard', ( ) => {
 		expect( guard.canActivate( ) ).toEqual( true );
 	});
 
-	test( 'should forbid the navigation if there is not a client authenticated', async ( ) => {
+	test( 'should redirect to the error page if there is no client authenticated', async ( ) => {
 		jest.spyOn( authServiceStub, 'authenticatedUserRoleSnapshot', 'get' )
 			.mockReturnValueOnce( UserRole.KitchenSiteEmployee );
 
 		expect( guard.canActivate( ) ).toEqual( false );
+		expect( routerStub.navigate ).toHaveBeenCalledTimes( 1 );
+		expect( routerStub.navigate ).toHaveBeenCalledWith([ '/404' ]);
 	});
 
 });

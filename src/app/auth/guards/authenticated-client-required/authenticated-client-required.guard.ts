@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
+import { CanActivate, Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
 import { UserRole } from '../../services/auth/enums/user-role.enum';
 
@@ -13,13 +13,22 @@ export class AuthenticatedClientRequiredGuard implements CanActivate {
 
 	public constructor(
 		private readonly authService: AuthService,
+		private readonly router: Router,
 	) { }
 
 	/**
 	 * Returns _true_ if there's a client currently authenticated and _false_ otherwise.
+	 *
+	 * If the user is not a client, they're redirected to the error page.
 	 */
 	public canActivate( ): boolean {
-		return this.authService.authenticatedUserRoleSnapshot === UserRole.Client;
+		const hasRequiredRole = this.authService.authenticatedUserRoleSnapshot === UserRole.Client;
+
+		if ( !hasRequiredRole ) {
+			this.router.navigate([ '/404' ]);
+		}
+
+		return hasRequiredRole;
 	}
 
 }

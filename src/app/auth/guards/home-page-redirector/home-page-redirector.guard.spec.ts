@@ -4,17 +4,17 @@ import { Router } from '@angular/router';
 import { DeepPartial } from 'tsdef';
 import { AuthService } from '../../services/auth/auth.service';
 import { UserRole } from '../../services/auth/enums/user-role.enum';
-import { AuthenticatedKitchenSiteEmployeeRequiredGuard } from './authenticated-kitchen-site-employee-required.guard';
+import { HomePageRedirectorGuard } from './home-page-redirector.guard';
 
-describe( 'AuthenticatedKitchenSiteEmployeeRequiredGuard', ( ) => {
-	let guard: AuthenticatedKitchenSiteEmployeeRequiredGuard;
+describe( 'HomePageRedirectorGuard', ( ) => {
+	let guard: HomePageRedirectorGuard;
 	let authServiceStub: AuthService;
 	let routerStub: Router;
 
 	beforeEach( ( ) => {
 		TestBed.configureTestingModule({
 			providers: <StaticProvider[ ]> [
-				AuthenticatedKitchenSiteEmployeeRequiredGuard,
+				HomePageRedirectorGuard,
 				{
 					provide: AuthService,
 					useFactory: ( ): DeepPartial<AuthService> => {
@@ -37,25 +37,36 @@ describe( 'AuthenticatedKitchenSiteEmployeeRequiredGuard', ( ) => {
 			],
 		});
 
-		guard = TestBed.inject( AuthenticatedKitchenSiteEmployeeRequiredGuard );
+		guard = TestBed.inject( HomePageRedirectorGuard );
 		authServiceStub = TestBed.inject( AuthService );
 		routerStub = TestBed.inject( Router );
 	});
 
-	test( 'should be created', async ( ) => {
+	it( 'should be created', async ( ) => {
 		expect( guard ).toBeTruthy( );
 	});
 
-	test( 'should allow the navigation if there is a kitchen site employee authenticated', async ( ) => {
+	test( 'should redirect to the home page of an authenticated client', async ( ) => {
+		jest.spyOn( authServiceStub, 'authenticatedUserRoleSnapshot', 'get' )
+			.mockReturnValueOnce( UserRole.Client );
+
+		expect( guard.canActivate( ) ).toEqual( false );
+		expect( routerStub.navigate ).toHaveBeenCalledTimes( 1 );
+		expect( routerStub.navigate ).toHaveBeenCalledWith([ '/mis-tickets' ]);
+	});
+
+	test( 'should redirect to the home page of an authenticated kitchen site employee', async ( ) => {
 		jest.spyOn( authServiceStub, 'authenticatedUserRoleSnapshot', 'get' )
 			.mockReturnValueOnce( UserRole.KitchenSiteEmployee );
 
-		expect( guard.canActivate( ) ).toEqual( true );
+		expect( guard.canActivate( ) ).toEqual( false );
+		expect( routerStub.navigate ).toHaveBeenCalledTimes( 1 );
+		expect( routerStub.navigate ).toHaveBeenCalledWith([ '/menus-disponibles' ]);
 	});
 
-	test( 'should redirect to the error page if there is no kitchen site employee authenticated', async ( ) => {
+	test( 'should redirect to the home page of an authenticated user with an unknown role', async ( ) => {
 		jest.spyOn( authServiceStub, 'authenticatedUserRoleSnapshot', 'get' )
-			.mockReturnValueOnce( UserRole.Client );
+			.mockReturnValueOnce( <UserRole> <unknown> 'unknown' );
 
 		expect( guard.canActivate( ) ).toEqual( false );
 		expect( routerStub.navigate ).toHaveBeenCalledTimes( 1 );

@@ -2,14 +2,14 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { PublicPageComponent } from './components/public-page/public-page.component';
+import { ClientOwnTicketsPageComponent } from './components/client-own-tickets-page/client-own-tickets-page.component';
 
 /**
- * Module for the public page displayed as the home.
+ * Module for the page where a client can view all the tickets they have purchased.
  */
 @NgModule({
 	declarations: [
-		PublicPageComponent,
+		ClientOwnTicketsPageComponent,
 	],
 	imports: [
 		CommonModule,
@@ -17,7 +17,7 @@ import { PublicPageComponent } from './components/public-page/public-page.compon
 		SharedModule,
 	],
 	exports: [
-		PublicPageComponent,
+		ClientOwnTicketsPageComponent,
 	],
 })
-export class PublicPageModule { }
+export class ClientOwnTicketsPageModule { }
