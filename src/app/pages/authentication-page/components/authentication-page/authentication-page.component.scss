@@ -1,10 +1,56 @@
 :host {
 	flex: 1 1 auto;
 	display: flex;
-	flex-flow: column nowrap;
-	align-items: center;
-	justify-content: center;
+	flex-flow: row nowrap;
+	align-items: stretch;
+	justify-content: flex-start;
 	position: relative;
+}
+
+.hero_screen {
+	flex: 1 1 auto;
+	display: flex;
+	flex-flow: column nowrap;
+	position: relative;
+	padding: 2.5rem;
+	background-image: url( '/assets/images/comedor-universitario-interior-azul.png' );
+	background-size: cover;
+	background-position: center;
+
+	&__title {
+		margin: 0;
+		font-size: 48px;
+		font-weight: 100;
+		line-height: 1;
+		color: white;
+		text-shadow: 0 0 0.25em hsla( 0, 0%, 0%, 0.5 );
+	}
+
+	&__subtitle {
+		margin: 1rem 0 0 0;
+		font-size: 28px;
+		font-weight: 600;
+		line-height: 1.15;
+		color: hsl( 0, 0%, 100% );
+		text-shadow: 0 0 0.25em hsla( 0, 0%, 0%, 0.5 );
+		font-variant: small-caps;
+		letter-spacing: 0.05em;
+	}
+}
+
+.authentication_card {
+	flex: 0 0 auto;
+	display: flex;
+	flex-flow: column nowrap;
+	position: relative;
+	padding: 2.5rem;
+
+	&__title {
+		font-weight: 500;
+		font-size: 36px;
+		margin-bottom: 2rem;
+		line-height: 1.25;
+	}
 }
 
 .authentication_form {
@@ -30,7 +76,7 @@
 		display: flex;
 		flex-flow: row nowrap;
 		justify-content: center;
-		margin: 1rem 0 0 0;
+		margin: 2rem 0 0 0;
 		text-align: center;
 		text-transform: uppercase;
 	}

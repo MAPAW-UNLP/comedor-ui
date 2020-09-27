@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthService } from 'src/app/auth/services/auth/auth.service';
 
 /**
  * Top-level component of the Root module.
@@ -9,33 +8,4 @@ import { AuthService } from 'src/app/auth/services/auth/auth.service';
 	templateUrl: './root.component.html',
 	styleUrls: [ './root.component.scss' ],
 })
-export class RootComponent {
-
-	/**
-	 * The full name of the authenticated user.
-	 *
-	 * If there is no user authenticated, it is _undefined_.
-	 */
-	public get fullNameOfAuthenticatedUser( ): string | undefined {
-		return this.authService.authenticatedUserSnapshot?.fullName;
-	}
-
-	/**
-	 * Value that is _true_ if there is a user authenticated and _false_ otherwise.
-	 */
-	public get aUserIsAuthenticated( ): boolean {
-		return this.authService.aUserIsAuthenticatedSnapshot;
-	}
-
-	public constructor(
-		private readonly authService: AuthService,
-	) { }
-
-	/**
-	 * Deauthenticates the currently authenticated user.
-	 */
-	public deauthenticate( ): void {
-		this.authService.deauthenticate( );
-	}
-
-}
+export class RootComponent { }

@@ -6,20 +6,14 @@ import { AuthenticationPageModule } from '../authentication-page/authentication-
 import { AuthenticationPageComponent } from '../authentication-page/components/authentication-page/authentication-page.component';
 import { NotFoundPageComponent } from '../not-found-page/components/not-found-page/not-found-page.component';
 import { NotFoundPageModule } from '../not-found-page/not-found-page.module';
+import { PlatformComponent } from '../platform/components/platform/platform.component';
+import { PlatformModule } from '../platform/platform.module';
 import { ProtectedPageComponent } from '../protected-page/components/protected-page/protected-page.component';
 import { ProtectedPageModule } from '../protected-page/protected-page.module';
 import { PublicPageComponent } from '../public-page/components/public-page/public-page.component';
 import { PublicPageModule } from '../public-page/public-page.module';
 
 const routes: Routes = [
-	{
-		path: '',
-		pathMatch: 'full',
-		component: PublicPageComponent,
-		canActivate: [
-			AuthenticatedUserRequiredGuard,
-		],
-	},
 	{
 		path: 'ingresar',
 		component: AuthenticationPageComponent,
@@ -28,23 +22,31 @@ const routes: Routes = [
 		],
 	},
 	{
-		path: 'protected-page',
-		component: ProtectedPageComponent,
+		path: '',
+		pathMatch: 'prefix',
+		component: PlatformComponent,
 		canActivate: [
 			AuthenticatedUserRequiredGuard,
 		],
-	},
-	{
-		path: '404',
-		component: NotFoundPageComponent,
-		canActivate: [
-			AuthenticatedUserRequiredGuard,
+		children: [
+			{
+				path: '',
+				pathMatch: 'full',
+				component: PublicPageComponent,
+			},
+			{
+				path: 'protected-page',
+				component: ProtectedPageComponent,
+			},
+			{
+				path: '404',
+				component: NotFoundPageComponent,
+			},
 		],
 	},
 	{
 		path: '**',
 		redirectTo: '/404',
-
 	},
 ];
 
@@ -53,14 +55,15 @@ const routes: Routes = [
  */
 @NgModule({
 	imports: [
-		RouterModule.forRoot( routes ),
 		PublicPageModule,
 		AuthenticationPageModule,
 		ProtectedPageModule,
 		NotFoundPageModule,
+		PlatformModule,
+		RouterModule.forRoot( routes ),
 	],
 	exports: [
 		RouterModule,
-	]
+	],
 })
 export class RootRoutingModule { }

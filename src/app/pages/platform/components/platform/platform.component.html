@@ -1,0 +1,18 @@
+<mat-toolbar class="app_bar">
+	<span class="app_bar__site_title">Comedor Universitario</span>
+	<span class="app_bar__user_name">
+		Hola, <strong>{{ fullNameOfAuthenticatedUser }}</strong>
+	</span>
+	<button
+		mat-flat-button
+		color="accent"
+		class="app_bar__action_button logout_button"
+		(click)="deauthenticate( )"
+	>
+		Salir
+	</button>
+</mat-toolbar>
+
+<main class="router_outlet_container">
+	<router-outlet></router-outlet>
+</main>
