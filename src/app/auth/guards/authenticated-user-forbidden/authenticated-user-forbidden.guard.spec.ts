@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { DeepPartial } from 'tsdef';
 import { AuthService } from '../../services/auth/auth.service';
-import { AuthenticatedUserForbiddenGuard } from './authenticated-user-forbidden';
+import { AuthenticatedUserForbiddenGuard } from './authenticated-user-forbidden.guard';
 
 describe( 'AuthenticatedUserForbiddenGuard', ( ) => {
 	let guard: AuthenticatedUserForbiddenGuard;

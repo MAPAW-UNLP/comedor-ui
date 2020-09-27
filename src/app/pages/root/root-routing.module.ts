@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthenticatedUserForbiddenGuard } from 'src/app/auth/guards/authenticated-user-forbidden/authenticated-user-forbidden';
-import { AuthenticatedUserRequiredGuard } from 'src/app/auth/guards/authenticated-user-required/authenticated-user-required';
+import { AuthenticatedUserForbiddenGuard } from 'src/app/auth/guards/authenticated-user-forbidden/authenticated-user-forbidden.guard';
+import { AuthenticatedUserRequiredGuard } from 'src/app/auth/guards/authenticated-user-required/authenticated-user-required.guard';
 import { AuthenticationPageModule } from '../authentication-page/authentication-page.module';
 import { AuthenticationPageComponent } from '../authentication-page/components/authentication-page/authentication-page.component';
 import { NotFoundPageComponent } from '../not-found-page/components/not-found-page/not-found-page.component';

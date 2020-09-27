@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { DeepPartial } from 'tsdef';
 import { AuthService } from '../../services/auth/auth.service';
-import { AuthenticatedUserRequiredGuard } from './authenticated-user-required';
+import { AuthenticatedUserRequiredGuard } from './authenticated-user-required.guard';
 
 describe( 'AuthenticatedUserRequiredGuard', ( ) => {
 	let guard: AuthenticatedUserRequiredGuard;
