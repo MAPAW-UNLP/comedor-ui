@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { AuthenticatedClientRequiredGuard } from 'src/app/auth/guards/authenticated-client-required/authenticated-client-required.guard';
 import { AuthenticatedKitchenSiteEmployeeRequiredGuard } from 'src/app/auth/guards/authenticated-kitchen-site-employee-required/authenticated-kitchen-site-employee-required.guard';
 import { AuthenticatedUserForbiddenGuard } from 'src/app/auth/guards/authenticated-user-forbidden/authenticated-user-forbidden.guard';
 import { AuthenticatedUserRequiredGuard } from 'src/app/auth/guards/authenticated-user-required/authenticated-user-required.guard';
 import { HomePageRedirectorGuard } from 'src/app/auth/guards/home-page-redirector/home-page-redirector.guard';
+import { ComedorUniversitarioRoutes } from 'src/app/interfaces/comedor-universitario-routes.interface';
 import { AuthenticationPageModule } from '../authentication-page/authentication-page.module';
 import { AuthenticationPageComponent } from '../authentication-page/components/authentication-page/authentication-page.component';
 import { AvailableMealsPageModule } from '../available-meals-page/available-meals-page.module';
@@ -16,13 +17,16 @@ import { NotFoundPageModule } from '../not-found-page/not-found-page.module';
 import { PlatformComponent } from '../platform/components/platform/platform.component';
 import { PlatformModule } from '../platform/platform.module';
 
-const routes: Routes = [
+const routes: ComedorUniversitarioRoutes = [
 	{
 		path: 'ingresar',
 		component: AuthenticationPageComponent,
 		canActivate: [
 			AuthenticatedUserForbiddenGuard,
 		],
+		data: {
+			pageTitle: 'Ingresar',
+		},
 	},
 	{
 		path: '',
@@ -39,6 +43,7 @@ const routes: Routes = [
 					HomePageRedirectorGuard,
 				],
 				component: NotFoundPageComponent,
+				// No "data" object as this route won't be loaded because of the home page redirector guard.
 			},
 			{
 				path: 'mis-tickets',
@@ -46,6 +51,9 @@ const routes: Routes = [
 				canActivate: [
 					AuthenticatedClientRequiredGuard,
 				],
+				data: {
+					pageTitle: 'Mis tickets',
+				},
 			},
 			{
 				path: 'menus-disponibles',
@@ -53,10 +61,16 @@ const routes: Routes = [
 				canActivate: [
 					AuthenticatedKitchenSiteEmployeeRequiredGuard,
 				],
+				data: {
+					pageTitle: 'Menús disponibles',
+				},
 			},
 			{
 				path: '404',
 				component: NotFoundPageComponent,
+				data: {
+					pageTitle: 'Página no encontrada',
+				},
 			},
 		],
 	},
