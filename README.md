@@ -1,69 +1,25 @@
 
 # ComedorUI
 
-This is a base template for Angular projects used by the Rapid team in Argentina.
+Este es el proyecto de front-end de la aplicación Comedor Universitario, creada para la cursada 2020 de la materia Métodos Ágiles para Desarrollo Web.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.4.
+## Repositorio de Git
 
-## Development server
+Cloná el repositorio en tu equipo con el comando `git clone https://github.com/MAPAW-UNLP/comedor-ui.git`.
 
-Run `npm run start` to launch the development server and navigate to `http://localhost:4200/`
+## Prerrequisitos
 
- The app will automatically reload if you change any of the source files.
+Para ejecutar el proyecto y colaborar en él, se requiere tener instaladas las siguientes dependencias:
 
-### Environment configuration
+ - Node.js (versión 12.18.3 o superior)
+ - Angular CLI (versión 10.1.2 o superior)
 
-There are 6 different environment configuration files:
+ Para instalar los paquetes de NPM que el proyecto necesita para funcionar, desde el directorio raíz del proyecto ejecutá el comando `npm install`.
 
- - **isolated-local:** locally served front-end with a mock back-end.
- - **integrated-local:** locally served front-end and back-end.
- - **development:** development environment for deploy.
- - **testing:** testing environment for deploy.
- - **staging:** staging environment for deploy.
- - **production:** production environment for deploy.
+## Servidor local
 
-The `npm run start` script uses the **isolated-local** environment by default.
+Una vez que los paquetes de NPM están instalados, el directorio raíz del proyecto ejecutá el comando `npm run start` en la consola para levantar el servidor de desarrollo local.
 
-To serve the app using a specific environment configuration, run `npm run start:<environment name>`, replacing `<environment name>` with the name of the environment you want to use.
+Luego navegá a `http://localhost:4200/` para ver la aplicación corriendo.
 
-#### Example:
-
-> `npm run start:integrated-local`
-
-## Build
-
-Run `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-### Environment configuration
-
-The same environment configurations that apply to the `npm run start` script also apply to the `npm run build` script.
-
-The exception is that the `npm run build` script uses the **development** environment by default.
-
-To build the app using a specific environment configuration, run `npm run build:<environment name>`, replacing `<environment name>` with the name of the environment you want to use.
-
-#### Example:
-
-> `npm run build:production`
-
-## Running linter
-
-Run `npm run lint` to execute the linting rules via [TSLint](https://palantir.github.io/tslint/).
-
-TSLint will also auto-fix all the rule violations with fixes available.
-
-## Running unit tests
-
-Run `npm run unit` to execute the unit tests via [Jest](https://jestjs.io/en/).
-
-To execute the unit tests every time you change any of the source files, run `npm run unit:watch` instead.
-
-## Running end-to-end tests
-
-Run `npm run e2e` to execute the end-to-end tests headlessly via [Cypress](https://www.cypress.io/).
-
-To execute the end-to-end tests in an interactive visual environment, run `npm run e2e:interactive` instead.
-
-## Running all together
-
-Run `npm run test` to execute the linting rules, unit tests and end-to-end tests in a single run.
+La aplicación se va a recargar automáticamente si cambiás alguno de los archivos del proyecto.
