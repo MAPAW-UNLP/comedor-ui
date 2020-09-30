@@ -8,7 +8,7 @@ export interface AccessToken {
 	/**
 	 * The unique identifier of the authenticated user.
 	 */
-	readonly id: string;
+	readonly id: number;
 
 	/**
 	 * The full name of the authenticated user.

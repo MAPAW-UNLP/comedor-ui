@@ -3,6 +3,6 @@
  * of the authenticated user: either a client or an employee for a kitchen site.
  */
 export enum UserRole {
-	Client = 'client',
-	KitchenSiteEmployee = 'employee',
+	Client = 'ROLE_CLIENT',
+	KitchenSiteEmployee = 'ROLE_EMPLOYEE',
 }

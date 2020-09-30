@@ -245,7 +245,7 @@ export class AuthService {
 	 */
 	private getUserFromAccessToken( deserializedAccessToken: AccessToken ): User {
 		return new User(
-			deserializedAccessToken.id,
+			deserializedAccessToken.id.toString( ),
 			deserializedAccessToken.fullName,
 			deserializedAccessToken.dni,
 		);
