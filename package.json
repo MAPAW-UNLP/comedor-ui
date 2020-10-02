@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "start": "ng serve",
+    "start:remote": "ng serve --configuration=remote --proxy-config=proxy.conf.json",
     "lint": "ng lint --fix",
     "unit": "ng test",
     "unit:watch": "ng test --watch",
