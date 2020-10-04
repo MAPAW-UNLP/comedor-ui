@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -15,7 +15,7 @@ import { dniLengthValidator } from 'src/app/shared/validators/dni-length.validat
 	templateUrl: './authentication-page.component.html',
 	styleUrls: [ './authentication-page.component.scss' ],
 })
-export class AuthenticationPageComponent {
+export class AuthenticationPageComponent implements AfterViewInit {
 	private readonly _dniFieldName: string = 'dniField';
 	private readonly _passwordFieldName: string = 'passwordField';
 	private readonly _authenticationForm: FormGroup = new FormGroup({
@@ -31,6 +31,12 @@ export class AuthenticationPageComponent {
 	});
 	private _hasInvalidCredentials: boolean = false;
 	private _isWaitingForServerResponse: boolean = false;
+
+	@ViewChild( 'dniInput' )
+	private readonly _dniInputRef!: ElementRef<HTMLInputElement>;
+
+	@ViewChild( 'passwordInput' )
+	private readonly _passwordInputRef!: ElementRef<HTMLInputElement>;
 
 	/**
 	 * The form group for authentication displayed on the page.
@@ -186,6 +192,10 @@ export class AuthenticationPageComponent {
 		private readonly snackBar: MatSnackBar,
 	) { }
 
+	public ngAfterViewInit( ): void {
+		this.focusDniInput( );
+	}
+
 	/**
 	 * Attempts to authenticate the user with the credentials entered in the authentication form.
 	 *
@@ -226,6 +236,7 @@ export class AuthenticationPageComponent {
 					else {
 						this._hasInvalidCredentials = true;
 						this.passwordField.setValue( '' );
+						this.focusPasswordInput( );
 					}
 				},
 				error: ( authenticationError: Error ) => {
@@ -234,6 +245,20 @@ export class AuthenticationPageComponent {
 					);
 				},
 			});
+	}
+
+	/**
+	 * Programatically swtiches the user focus to the DNI input.
+	 */
+	private focusDniInput( ): void {
+		this._dniInputRef.nativeElement.focus( );
+	}
+
+	/**
+	 * Programatically swtiches the user focus to the password input.
+	 */
+	private focusPasswordInput( ): void {
+		this._passwordInputRef.nativeElement.focus( );
 	}
 
 	/**
