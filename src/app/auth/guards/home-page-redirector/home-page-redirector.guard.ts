@@ -38,7 +38,7 @@ export class HomePageRedirectorGuard implements CanActivate {
 				break;
 			}
 			case UserRole.KitchenSiteEmployee: {
-				this.router.navigate([ '/menus-disponibles' ]);
+				this.router.navigate([ '/menus-habilitados' ]);
 				break;
 			}
 			default: {
