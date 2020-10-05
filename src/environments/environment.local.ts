@@ -10,6 +10,6 @@ export const environment: Environment = {
 		domain: 'localhost:3000'
 	},
 	resourcePaths: {
-		authenticate: 'authenticate',
+		authenticate: 'login',
 	},
 };

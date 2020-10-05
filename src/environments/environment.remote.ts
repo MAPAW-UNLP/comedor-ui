@@ -4,10 +4,10 @@ import { Environment } from 'src/app/interfaces/environment.interface';
  * Object that represents the remote execution environment.
  */
 export const environment: Environment = {
-	name: 'local',
+	name: 'remote',
 	serverUrl: {
-		protocol: 'http',
-		domain: 'localhost:4200/api'
+		protocol: 'https',
+		domain: 'comedor-universitario.herokuapp.com'
 	},
 	resourcePaths: {
 		authenticate: 'login',
