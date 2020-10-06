@@ -2,7 +2,7 @@
   "name": "comedor-ui",
   "version": "0.0.0",
   "scripts": {
-	"start": "ng serve --configuration=remote --proxy-config=src/proxy.conf.json",
+    "start": "ng serve --configuration=remote --proxy-config=src/proxy.conf.json",
     "start:dev": "ng serve --proxy-config=src/proxy.conf.json",
     "lint": "ng lint --fix",
     "unit": "ng test",
@@ -28,8 +28,6 @@
     "@angular/router": "~10.1.2",
     "@auth0/angular-jwt": "^5.0.1",
     "@uiowa/digit-only": "^2.2.0",
-    "cors": "^2.8.5",
-    "express": "4.17.1",
     "http-status-codes": "^2.1.4",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
