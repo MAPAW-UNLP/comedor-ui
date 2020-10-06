@@ -269,7 +269,7 @@ export class AuthService {
 		username: string,
 		password: string,
 	): Observable<AuthenticationResponseDTO> {
-		const url: string = this.environmentService.getEndpoint( 'authenticate' );
+		const url: string = this.environmentService.getEndpoint( 'login' );
 		const authenticationCredentialsDTO: AuthenticationCredentialsDTO = {
 			username: username,
 			password: password,

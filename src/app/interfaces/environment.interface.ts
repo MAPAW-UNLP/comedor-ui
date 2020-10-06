@@ -14,11 +14,6 @@ export interface Environment {
 	readonly serverUrl: {
 
 		/**
-		 * The protocol of the URL of the server.
-		 */
-		readonly protocol: 'http' | 'https';
-
-		/**
 		 * The domain of the URL of the server.
 		 */
 		readonly domain: string;
@@ -33,7 +28,7 @@ export interface Environment {
 		/**
 		 * Resource route of the authentication endpoint.
 		 */
-		readonly authenticate: string;
+		readonly login: string;
 
 	};
 
