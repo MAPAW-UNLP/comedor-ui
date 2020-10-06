@@ -6,10 +6,9 @@ import { Environment } from 'src/app/interfaces/environment.interface';
 export const environment: Environment = {
 	name: 'local',
 	serverUrl: {
-		protocol: 'https',
 		domain: 'comedor-universitario.herokuapp.com'
 	},
 	resourcePaths: {
-		authenticate: 'login',
+		login: '/api/login',
 	},
 };

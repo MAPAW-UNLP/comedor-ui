@@ -17,14 +17,7 @@ export class EnvironmentService {
 	public get environment( ): Environment {
 		return environment;
 	}
-
-	/**
-	 * The URL of the server.
-	 */
-	public get serverUrl( ): string {
-		return `${ environment.serverUrl.protocol }://${ environment.serverUrl.domain }`;
-	}
-
+	
 	/**
 	 * Returns the value of the provided key in the current execution environment.
 	 */
@@ -36,7 +29,7 @@ export class EnvironmentService {
 	 * Returns the URL of the endpoint associated to the provided resource name.
 	 */
 	public getEndpoint<T extends keyof Environment[ 'resourcePaths' ]>( resourceName: T ): string {
-		return `${ this.serverUrl }/${ environment.resourcePaths[ resourceName ] }`;
+		return `${ environment.resourcePaths[ resourceName ] }`;
 	}
 
 }
