@@ -2,7 +2,7 @@
   "name": "comedor-ui",
   "version": "0.0.0",
   "scripts": {
-    "start": "ng serve --configuration=remote --proxy-config=src/proxy.conf.json",
+    "start": "node server.js",
     "start:dev": "ng serve --proxy-config=src/proxy.conf.json",
     "lint": "ng lint --fix",
     "unit": "ng test",
@@ -10,7 +10,7 @@
     "e2e": "concurrently \"wait-on http-get://localhost:5200 && ng e2e --headless\" \"ng serve --configuration=local --port=5200\" -r -k -s first",
     "e2e:interactive": "concurrently \"wait-on http-get://localhost:5200 && ng e2e --watch\" \"ng serve --configuration=local --port=5200\" -r -k -s first",
     "test": "npm run lint && npm run unit && npm run e2e",
-    "build": "ng build",
+    "build": "ng build --configuration=remote",
     "build:remote": "ng build --configuration=remote",
     "postinstall": "ngcc"
   },
@@ -28,6 +28,8 @@
     "@angular/router": "~10.1.2",
     "@auth0/angular-jwt": "^5.0.1",
     "@uiowa/digit-only": "^2.2.0",
+    "express": "^4.17.1",
+    "http-proxy": "^1.18.1",
     "http-status-codes": "^2.1.4",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
