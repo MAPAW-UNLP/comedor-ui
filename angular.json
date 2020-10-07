@@ -60,14 +60,17 @@
 				"serve": {
 					"builder": "@angular-devkit/build-angular:dev-server",
 					"options": {
-						"browserTarget": "comedor-ui:build"
+						"browserTarget": "comedor-ui:build",
+						"proxyConfig": "src/proxy.conf.json"
 					},
 					"configurations": {
 						"local": {
-							"browserTarget": "comedor-ui:build:local"
+							"browserTarget": "comedor-ui:build:local",
+							"proxyConfig": "src/proxy.conf.json"
 						},
 						"remote": {
-							"browserTarget": "comedor-ui:build:remote"
+							"browserTarget": "comedor-ui:build:remote",
+							"proxyConfig": "src/proxy.conf.json"
 						}
 					}
 				},

@@ -8,10 +8,10 @@ import { Environment } from 'src/app/interfaces/environment.interface';
 export const environment: Environment = {
 	name: 'default',
 	serverUrl: {
-		protocol: 'http',
-		domain: 'localhost:3000'
+		proxyPrefix: '/backend',
+		domain: 'comedor-universitario.herokuapp.com'
 	},
 	resourcePaths: {
-		authenticate: 'authenticate',
+		login: '/login',
 	},
 };
