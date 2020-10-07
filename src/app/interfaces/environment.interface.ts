@@ -18,6 +18,11 @@ export interface Environment {
 		 */
 		readonly domain: string;
 
+		/**
+		 * The prefix of the proxy server.
+		 */
+		readonly proxyPrefix: string;
+
 	};
 
 	/**

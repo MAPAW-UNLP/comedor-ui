@@ -6,9 +6,10 @@ import { Environment } from 'src/app/interfaces/environment.interface';
 export const environment: Environment = {
 	name: 'remote',
 	serverUrl: {
+		proxyPrefix: '/backend',
 		domain: 'comedor-universitario.herokuapp.com'
 	},
 	resourcePaths: {
-		login: '/api/login',
+		login: '/login',
 	},
 };

@@ -6,7 +6,7 @@ const port = process.env.PORT || 8080
 
 const proxy = (request, response) => {
 
-	request.url = request.url.replace("/api", "");
+	request.url = request.url.replace("/backend", "");
 	const proxy = httpProxy.createProxyServer({
 		target: `https://comedor-universitario.herokuapp.com`,
 		changeOrigin: true,
@@ -35,13 +35,13 @@ const proxy = (request, response) => {
 app.use(express.static('./dist/comedor-ui'));
 
 
-app.get('/api/*', (req, res) => proxy(req, res));
+app.get('/backend/*', (req, res) => proxy(req, res));
 
-app.post('/api/*', (req, res) => proxy(req, res));
+app.post('/backend/*', (req, res) => proxy(req, res));
 
-app.put('/api/*', (req, res) => proxy(req, res));
+app.put('/backend/*', (req, res) => proxy(req, res));
 
-app.delete('/api/*', (req, res) => proxy(req, res));
+app.delete('/backend/*', (req, res) => proxy(req, res));
 
 app.get('/*', (req, res) =>
     res.sendFile('index.html', {root: 'dist/comedor-ui/'}),

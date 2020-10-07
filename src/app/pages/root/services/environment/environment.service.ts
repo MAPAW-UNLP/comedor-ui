@@ -17,7 +17,7 @@ export class EnvironmentService {
 	public get environment( ): Environment {
 		return environment;
 	}
-	
+
 	/**
 	 * Returns the value of the provided key in the current execution environment.
 	 */
@@ -29,7 +29,7 @@ export class EnvironmentService {
 	 * Returns the URL of the endpoint associated to the provided resource name.
 	 */
 	public getEndpoint<T extends keyof Environment[ 'resourcePaths' ]>( resourceName: T ): string {
-		return `${ environment.resourcePaths[ resourceName ] }`;
+		return `${ environment.serverUrl.proxyPrefix }${ environment.resourcePaths[ resourceName ] }`;
 	}
 
 }
