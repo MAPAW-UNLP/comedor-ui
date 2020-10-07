@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -28,6 +28,12 @@ import { RootRoutingModule } from './root-routing.module';
 		RootRoutingModule,
 		BrowserAnimationsModule,
 		SharedModule,
+	],
+	providers: [
+		{
+			provide: LOCALE_ID,
+			useValue: 'es-AR',
+		},
 	],
 	bootstrap: [
 		RootComponent,

@@ -1,0 +1,120 @@
+.menu_card {
+	display: grid;
+	grid-auto-flow: row;
+	grid-template-columns: auto 25rem;
+	grid-auto-rows: auto;
+	gap: 1rem;
+	position: relative;
+	padding: 1rem;
+
+	&__thumbnail_container {
+		grid-row: 1 / span 1;
+		grid-column: 1 / span 1;
+		height: 15rem;
+		width: 15rem;
+		background-color: orange;
+	}
+
+	&__thumbnail {
+		height: 100%;
+		width: 100%;
+		object-fit: cover;
+		object-position: center;
+	}
+
+	&__content {
+		display: grid;
+		grid-auto-flow: row;
+		grid-template-columns: 15rem 10rem;
+		grid-template-rows: auto auto 1fr auto;
+		align-items: stretch;
+		justify-items: stretch;
+		position: relative;
+	}
+
+	&__title {
+		$font-size: 16px;
+		$line-height: 1.25;
+		$max-lines: 3;
+
+		grid-row: 1 / span 1;
+		grid-column: 1 / span 1;
+		max-height: ( $max-lines * $font-size * $line-height );
+		font-size: $font-size;
+		font-family: Roboto, sans-serif;
+		font-weight: 500;
+		letter-spacing: 0.15px;
+		line-height: $line-height;
+		overflow: hidden;
+	}
+
+	&__price_tag {
+		grid-row: 1 / span 1;
+		grid-column: 2 / span 1;
+		font-size: 28px;
+		font-family: Roboto, sans-serif;
+		font-weight: 900;
+		line-height: 1.15;
+		overflow: hidden;
+		text-align: right;
+		text-overflow: ellipsis;
+	}
+
+	&__validity {
+		grid-row: 2 / span 1;
+		grid-column: 1 / span 2;
+		justify-self: start;
+		margin: 0.75rem 0;
+		display: grid;
+		grid-auto-flow: column;
+		grid-template-columns: auto auto;
+		grid-auto-rows: auto;
+		gap: 1.5rem;
+		color: hsl( 0, 0%, 40% );
+	}
+
+	&__validity_item {
+
+	}
+
+	&__validity_item_icon {
+		height: 1em;
+		width: 1em;
+		margin: 0 0.125em 0.0625em -0.25em;
+		font-size: 1.25em;
+		vertical-align: middle;
+	}
+
+	&__consumption_type {
+		grid-row: 3 / span 1;
+		grid-column: 1 / span 2;
+		align-self: start;
+		justify-self: start;
+		margin: 0.25rem 0;
+	}
+
+	&__actions {
+		grid-row: 4 / span 1;
+		grid-column: 1 / span 2;
+		justify-self: end;
+		display: grid;
+		grid-auto-flow: column;
+		grid-template-columns: repeat( auto-fill, auto );
+		grid-auto-rows: auto;
+		gap: 1rem;
+
+	}
+
+	&__action_button {
+		text-transform: uppercase;
+	}
+
+	&__action_button_icon {
+		height: 1em;
+		width: 1em;
+		margin: 0 0.125em 0.0625em -0.25em;
+		font-size: 1.25em;
+		vertical-align: middle;
+	}
+
+}

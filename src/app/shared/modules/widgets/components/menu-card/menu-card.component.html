@@ -1,0 +1,46 @@
+<mat-card class="menu_card mat-elevation-z4">
+	<div class="menu_card__thumbnail_container">
+		<img
+			class="menu_card__thumbnail"
+			[src]="thumbnailSource"
+			aria-hidden="true"
+			role="presentation"
+		>
+	</div>
+	<div class="menu_card__content">
+		<span class="menu_card__title" role="heading">{{ title }}</span>
+		<span class="menu_card__price_tag">{{ priceTag }}</span>
+		<div class="menu_card__validity">
+			<div class="menu_card__validity_item">
+				<mat-icon class="menu_card__validity_item_icon">event</mat-icon>
+				{{ date | date:'EEEE dd/MM/yyyy' }}
+			</div>
+			<div class="menu_card__validity_item">
+				<mat-icon class="menu_card__validity_item_icon">place</mat-icon>
+				{{ kitchenSiteName }}
+			</div>
+		</div>
+		<mat-button-toggle-group class="menu_card__consumption_type" value="vianda">
+			<mat-button-toggle value="vianda">Para retirar</mat-button-toggle>
+			<mat-button-toggle value="presencial">Para consumir en comedor</mat-button-toggle>
+		</mat-button-toggle-group>
+		<div class="menu_card__actions">
+			<button
+				mat-raised-button
+				class="menu_card__action_button"
+				color="accent"
+			>
+				<mat-icon class="menu_card__action_button_icon">info</mat-icon>
+				Ver más
+			</button>
+			<button
+				mat-raised-button
+				class="menu_card__action_button"
+				[color]="cartButtonColor"
+			>
+				<mat-icon class="menu_card__action_button_icon">{{ cartButtonIcon }}</mat-icon>
+				{{ cartButtonText }}
+			</button>
+		</div>
+	</div>
+</mat-card>
