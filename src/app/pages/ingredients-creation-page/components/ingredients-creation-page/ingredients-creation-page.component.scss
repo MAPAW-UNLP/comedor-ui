@@ -1,0 +1,44 @@
+:host {
+	flex: 1 0 auto;
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	position: relative;
+	padding: 2.5rem;
+}
+
+.page_title {
+	font-size: 48px;
+	color: hsla( 0, 0%, 0%, 0.75 );
+	margin-bottom: 2.5rem;
+}
+
+.ingredient_creation_form {
+	display: flex;
+	flex-flow: column nowrap;
+}
+
+.ingredient_creation_form_field {
+	width: 20rem;
+	font-size: 16px;
+
+	&__error_message_container {
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: space-between;
+	}
+
+	&__form_error {
+		margin: 2rem 0 0 0;
+	}
+
+	&__submit_button {
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: center;
+		margin: 2rem 0 0 0;
+		text-align: center;
+		text-transform: uppercase;
+	}
+
+}
