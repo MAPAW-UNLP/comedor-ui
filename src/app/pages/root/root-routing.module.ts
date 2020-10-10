@@ -14,6 +14,8 @@ import { ClientOwnTicketsPageModule } from '../client-own-tickets-page/client-ow
 import { ClientOwnTicketsPageComponent } from '../client-own-tickets-page/components/client-own-tickets-page/client-own-tickets-page.component';
 import { EnabledMenusPageComponent } from '../enabled-menus-page/components/enabled-menus-page/enabled-menus-page.component';
 import { EnabledMenusPageModule } from '../enabled-menus-page/enabled-menus-page.module';
+import { IngredientsCreationPageComponent } from '../ingredients-creation-page/components/ingredients-creation-page/ingredients-creation-page.component';
+import { IngredientsCreationPageModule } from '../ingredients-creation-page/ingredients-creation-page.module';
 import { NotFoundPageComponent } from '../not-found-page/components/not-found-page/not-found-page.component';
 import { NotFoundPageModule } from '../not-found-page/not-found-page.module';
 import { PlatformComponent } from '../platform/components/platform/platform.component';
@@ -78,6 +80,16 @@ const routes: ComedorUniversitarioRoutes = [
 				},
 			},
 			{
+				path: 'ingredientes',
+				component: IngredientsCreationPageComponent,
+				canActivate: [
+					AuthenticatedKitchenSiteEmployeeRequiredGuard,
+				],
+				data: {
+					pageTitle: 'Ingredientes',
+				},
+			},
+			{
 				path: '404',
 				component: NotFoundPageComponent,
 				data: {
@@ -103,6 +115,7 @@ const routes: ComedorUniversitarioRoutes = [
 		ClientOwnTicketsPageModule,
 		AvailableMealsPageModule,
 		EnabledMenusPageModule,
+		IngredientsCreationPageModule,
 		RouterModule.forRoot( routes ),
 	],
 	exports: [
