@@ -16,50 +16,31 @@ import { autocompleteValidator } from 'src/app/shared/validators/autocomplete.va
 	styleUrls: [ './ingredients-creation-page.component.scss' ],
 })
 export class IngredientsCreationPageComponent implements OnInit {
+	private readonly _ingredientNameFieldName: string = 'ingredientNameField';
+	private readonly _measurementUnitFieldName: string = 'measurementUnitField';
 
-	private readonly _ingredientNameFieldName: string = 'ingredientField';
-	private readonly _measurementFieldName: string = 'measurementField';
-	public readonly measurements = Object.keys(MeasurementUnit);
-	public filteredMeasurements: string[] = this.measurements;
+	public readonly measurements = Object.keys( MeasurementUnit );
+	public filteredMeasurements: string[ ] = this.measurements;
 
 	private readonly _ingredientCreationForm: FormGroup = new FormGroup({
 		[ this._ingredientNameFieldName ]: new FormControl( '', {
 			validators: [
-				Validators.required
+				Validators.required,
 			],
 		}),
-		[ this._measurementFieldName ]: new FormControl( '', [
+		[ this._measurementUnitFieldName ]: new FormControl( '', [
 			Validators.required,
-			autocompleteValidator(this.measurements)
+			autocompleteValidator( this.measurements ),
 		]),
 	});
 
-
 	private _isWaitingForServerResponse: boolean = false;
 
-	@ViewChild( 'nameInput' )
-	private readonly _nameInputRef!: ElementRef<HTMLInputElement>;
+	@ViewChild( 'ingredientNameInput' )
+	private readonly _ingredientNameInputRef!: ElementRef<HTMLInputElement>;
 
-	@ViewChild( 'measurementInput' )
-	private readonly _measurementInputRef!: ElementRef<HTMLInputElement>;
-
-	public constructor(
-		private readonly ingredientsService: IngredientsService,
-		private readonly snackBar: MatSnackBar,
-	) { }
-
-
-	public ngOnInit() {
-		this.measurementField.valueChanges
-		.subscribe((change) => {
-			this.filteredMeasurements = this._autocompleteFilter(change)
-		});
-	}
-
-	private _autocompleteFilter(value: string): string[] {
-		const filterValue = value?.toLowerCase() || '';
-		return this.measurements.filter((measurement) => measurement.toLowerCase().includes(filterValue));
-	}
+	@ViewChild( 'measurementUnitInput' )
+	private readonly _measurementUnitInputRef!: ElementRef<HTMLInputElement>;
 
 	public get ingredientCreationForm( ): FormGroup {
 		return this._ingredientCreationForm;
@@ -69,39 +50,39 @@ export class IngredientsCreationPageComponent implements OnInit {
 		return this._ingredientNameFieldName;
 	}
 
-	public get measurementFieldName( ): string {
-		return this._measurementFieldName;
+	public get measurementUnitFieldName( ): string {
+		return this._measurementUnitFieldName;
 	}
 
 	public get ingredientNameField( ): AbstractControl {
 		return this.ingredientCreationForm.controls[ this.ingredientNameFieldName ];
 	}
 
-	public get measurementField( ): AbstractControl {
-		return this.ingredientCreationForm.controls[ this.measurementFieldName ];
+	public get measurementUnitField( ): AbstractControl {
+		return this.ingredientCreationForm.controls[ this.measurementUnitFieldName ];
 	}
 
-	public get hasRequiredNameError( ): boolean {
+	public get hasRequiredIngredientNameError( ): boolean {
 		return this.ingredientNameField.hasError( 'required' );
 	}
 
-	public get hasRequiredMeasurementError( ): boolean {
-		return this.measurementField.hasError( 'required' );
+	public get hasRequiredMeasurementUnitError( ): boolean {
+		return this.measurementUnitField.hasError( 'required' );
 	}
 
 	public get hasInvalidMeasurementError( ): boolean {
-		return this.measurementField.hasError( 'autocomplete' );
+		return this.measurementUnitField.hasError( 'autocomplete' );
 	}
 
 	public get requiredIngredientNameErrorMessage( ): string {
-		return 'Tenés que un nombre para tu ingrediente';
+		return 'Tenés que ingresar el nombre del ingrediente';
 	}
 
-	public get requiredMeasurementErrorMessage( ): string {
-		return 'Tenés que ingresar una unidad de medida para tu ingrediente';
+	public get requiredMeasurementUnitErrorMessage( ): string {
+		return 'Tenés que ingresar la unidad de medida del ingrediente';
 	}
 
-	public get invalidMeasurementErrorMessage( ): string {
+	public get invalidMeasurementUnitErrorMessage( ): string {
 		return 'Tenés que ingresar una unidad de medida de la lista';
 	}
 
@@ -114,11 +95,11 @@ export class IngredientsCreationPageComponent implements OnInit {
 
 		if ( value ) {
 			this.ingredientNameField.disable( );
-			this.measurementField.disable( );
+			this.measurementUnitField.disable( );
 		}
 		else {
 			this.ingredientNameField.enable( );
-			this.measurementField.enable( );
+			this.measurementUnitField.enable( );
 		}
 	}
 
@@ -132,6 +113,23 @@ export class IngredientsCreationPageComponent implements OnInit {
 		return this.ingredientCreationForm.invalid || this.isWaitingForServerResponse;
 	}
 
+	public constructor(
+		private readonly ingredientsService: IngredientsService,
+		private readonly snackBar: MatSnackBar,
+	) { }
+
+	public ngOnInit() {
+		this.measurementUnitField.valueChanges
+		.subscribe((change) => {
+			this.filteredMeasurements = this._autocompleteFilter(change);
+		});
+	}
+
+	private _autocompleteFilter(value: string): string[] {
+		const filterValue = value?.toLowerCase() || '';
+		return this.measurements.filter((measurement) => measurement.toLowerCase().includes(filterValue));
+	}
+
 	public create( ): void {
 		if ( this.ingredientCreationForm.invalid ) {
 			return;
@@ -139,7 +137,7 @@ export class IngredientsCreationPageComponent implements OnInit {
 
 		this.isWaitingForServerResponse = true;
 		this.ingredientsService
-			.create( this.ingredientNameField.value, this.measurementField.value )
+			.create( this.ingredientNameField.value, this.measurementUnitField.value )
 			.pipe(
 				tap({
 					next: ( ) => {
