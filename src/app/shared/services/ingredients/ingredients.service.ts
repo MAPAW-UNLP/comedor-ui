@@ -2,9 +2,10 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, shareReplay, tap } from 'rxjs/operators';
+import { MeasurementUnit } from 'src/app/enums/measurement-unit.enum';
 import { EnvironmentService } from 'src/app/pages/root/services/environment/environment.service';
 import { IngredientCreationResponseDTO } from './dto/ingredient-creation-response.dto';
-import { IngredientCreationDTO } from './dto/ingredient-creation.dto';
+import { IngredientCreationRequestDTO } from './dto/ingredient-creation-request.dto';
 
 @Injectable({
 	providedIn: 'root',
@@ -16,19 +17,21 @@ export class IngredientsService {
 		private readonly httpClient: HttpClient,
 	) { }
 
-	public create(ingredientName: string, measurement: string): Observable<IngredientCreationResponseDTO | undefined> {
+	public create(
+		ingredientName: string,
+		measurementUnit: MeasurementUnit,
+	): Observable<IngredientCreationResponseDTO> {
 		const url: string = this.environmentService.getEndpoint( 'ingredients' );
-		const authenticationCredentialsDTO: IngredientCreationDTO = {
+		const ingredientCreationRequestDTO: IngredientCreationRequestDTO = {
 			name: ingredientName,
-			measurement,
+			measurement: measurementUnit,
 		};
-		return this.httpClient.post<IngredientCreationResponseDTO>( url, authenticationCredentialsDTO )
-		.pipe(
-			catchError( ( error: HttpErrorResponse ) => {
-				return of(undefined);
-			}),
-			// Avoid sending multiple concurrent requests.
-			shareReplay( ),
-		);
+
+		return this.httpClient
+			.post<IngredientCreationResponseDTO>( url, ingredientCreationRequestDTO )
+			.pipe(
+				// Avoid sending multiple concurrent requests.
+				shareReplay( ),
+			);
 	}
 }

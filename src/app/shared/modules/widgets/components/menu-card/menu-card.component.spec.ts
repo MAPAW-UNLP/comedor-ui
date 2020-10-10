@@ -1,5 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { MenuCardComponent } from './menu-card.component';
 
 describe( 'MenuCardComponent', ( ) => {
@@ -11,6 +12,9 @@ describe( 'MenuCardComponent', ( ) => {
 			.configureTestingModule({
 				declarations: [
 					MenuCardComponent,
+				],
+				imports: [
+					SharedModule,
 				],
 				schemas: [
 					CUSTOM_ELEMENTS_SCHEMA,

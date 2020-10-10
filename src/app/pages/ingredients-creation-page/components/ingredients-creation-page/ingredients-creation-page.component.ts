@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { tap } from 'rxjs/operators';
@@ -6,6 +6,7 @@ import { MeasurementUnit } from 'src/app/enums/measurement-unit.enum';
 import { IngredientCreationResponseDTO } from 'src/app/shared/services/ingredients/dto/ingredient-creation-response.dto';
 import { IngredientsService } from 'src/app/shared/services/ingredients/ingredients.service';
 import { autocompleteValidator } from 'src/app/shared/validators/autocomplete.validator';
+import { MeasurementUnitAutocompleteOption } from './interfaces/measurement-unit-autocomplete-option.interface';
 
 /**
  * Top-level component of the IngredientsCreationPage module.
@@ -15,13 +16,43 @@ import { autocompleteValidator } from 'src/app/shared/validators/autocomplete.va
 	templateUrl: './ingredients-creation-page.component.html',
 	styleUrls: [ './ingredients-creation-page.component.scss' ],
 })
-export class IngredientsCreationPageComponent implements OnInit {
+export class IngredientsCreationPageComponent implements AfterViewInit {
 	private readonly _ingredientNameFieldName: string = 'ingredientNameField';
 	private readonly _measurementUnitFieldName: string = 'measurementUnitField';
-
-	public readonly measurements = Object.keys( MeasurementUnit );
-	public filteredMeasurements: string[ ] = this.measurements;
-
+	private readonly _measurementUnitOptions: MeasurementUnitAutocompleteOption[ ] = [
+		{
+			value: MeasurementUnit.CubicCentimetre,
+			label: 'Centímetros cúbicos',
+		},
+		{
+			value: MeasurementUnit.CubicMillimetre,
+			label: 'Milímetros cúbicos',
+		},
+		{
+			value: MeasurementUnit.Gram,
+			label: 'Gramos',
+		},
+		{
+			value: MeasurementUnit.Kilogram,
+			label: 'Kilogramos',
+		},
+		{
+			value: MeasurementUnit.Litre,
+			label: 'Litros',
+		},
+		{
+			value: MeasurementUnit.Milligram,
+			label: 'Miligramos',
+		},
+		{
+			value: MeasurementUnit.Millilitre,
+			label: 'Mililitros',
+		},
+		{
+			value: MeasurementUnit.Unit,
+			label: 'Unidades',
+		},
+	];
 	private readonly _ingredientCreationForm: FormGroup = new FormGroup({
 		[ this._ingredientNameFieldName ]: new FormControl( '', {
 			validators: [
@@ -30,7 +61,7 @@ export class IngredientsCreationPageComponent implements OnInit {
 		}),
 		[ this._measurementUnitFieldName ]: new FormControl( '', [
 			Validators.required,
-			autocompleteValidator( this.measurements ),
+			autocompleteValidator( this.measurementUnitOptionLabels ),
 		]),
 	});
 
@@ -38,9 +69,6 @@ export class IngredientsCreationPageComponent implements OnInit {
 
 	@ViewChild( 'ingredientNameInput' )
 	private readonly _ingredientNameInputRef!: ElementRef<HTMLInputElement>;
-
-	@ViewChild( 'measurementUnitInput' )
-	private readonly _measurementUnitInputRef!: ElementRef<HTMLInputElement>;
 
 	public get ingredientCreationForm( ): FormGroup {
 		return this._ingredientCreationForm;
@@ -60,6 +88,28 @@ export class IngredientsCreationPageComponent implements OnInit {
 
 	public get measurementUnitField( ): AbstractControl {
 		return this.ingredientCreationForm.controls[ this.measurementUnitFieldName ];
+	}
+
+	private get measurementUnitOptions( ): MeasurementUnitAutocompleteOption[ ] {
+		return this._measurementUnitOptions;
+	}
+
+	private get measurementUnitOptionLabels( ): string[ ] {
+		return this.measurementUnitOptions.map( ( option ) => option.label );
+	}
+
+	public get filteredMeasurementUnitOptionLabels( ): string[ ] {
+		const fieldText: string = this.measurementUnitField.value;
+
+		if ( fieldText === '' ) {
+			return this.measurementUnitOptionLabels;
+		}
+
+		const normalizedFieldText: string = fieldText.toLowerCase( );
+		return this.measurementUnitOptionLabels.filter( ( label ) => {
+			const normalizedLabel: string = label.toLowerCase( );
+			return normalizedLabel.includes( normalizedFieldText );
+		});
 	}
 
 	public get hasRequiredIngredientNameError( ): boolean {
@@ -116,18 +166,11 @@ export class IngredientsCreationPageComponent implements OnInit {
 	public constructor(
 		private readonly ingredientsService: IngredientsService,
 		private readonly snackBar: MatSnackBar,
+		private readonly changeDetectorRef: ChangeDetectorRef,
 	) { }
 
-	public ngOnInit() {
-		this.measurementUnitField.valueChanges
-		.subscribe((change) => {
-			this.filteredMeasurements = this._autocompleteFilter(change);
-		});
-	}
-
-	private _autocompleteFilter(value: string): string[] {
-		const filterValue = value?.toLowerCase() || '';
-		return this.measurements.filter((measurement) => measurement.toLowerCase().includes(filterValue));
+	public ngAfterViewInit( ): void {
+		this.focusIngredientNameInput( );
 	}
 
 	public create( ): void {
@@ -136,8 +179,14 @@ export class IngredientsCreationPageComponent implements OnInit {
 		}
 
 		this.isWaitingForServerResponse = true;
+
+		const ingredientName: string = this.ingredientNameField.value;
+		const measurementUnit: MeasurementUnit = this.getMeasurementUnitByLabel(
+			this.measurementUnitField.value
+		);
+
 		this.ingredientsService
-			.create( this.ingredientNameField.value, this.measurementUnitField.value )
+			.create( ingredientName, measurementUnit )
 			.pipe(
 				tap({
 					next: ( ) => {
@@ -149,20 +198,44 @@ export class IngredientsCreationPageComponent implements OnInit {
 				}),
 			)
 			.subscribe({
-				next: ( response: IngredientCreationResponseDTO | undefined ) => {
-					if ( response ) {
-						this.showSnackBar(
-							`El ingrediente se creó exitosamente`
-						);
-						this.ingredientCreationForm.reset();
-					}
-					else {
-						this.showSnackBar(
-							`Ocurió un error al crear el ingrediente, intente nuevamente`
-						);
-					}
+				next: ( response: IngredientCreationResponseDTO ) => {
+					this.showSnackBar(
+						`El ingrediente se creó exitosamente`
+					);
+					this.ingredientCreationForm.reset( );
+				},
+				error: ( error: Error ) => {
+					this.showSnackBar(
+						`Ocurió un error al crear el ingrediente, intente nuevamente`
+					);
 				},
 			});
+	}
+
+	/**
+	 * Programatically swtiches the user focus to the ingredient name input.
+	 */
+	private focusIngredientNameInput( ): void {
+		this._ingredientNameInputRef.nativeElement.focus( );
+		this.changeDetectorRef.detectChanges( );
+	}
+
+	/**
+	 * Retrieves the unique identifying value of the measurement unit by it's label in the autocomplete control.
+	 *
+	 * Throws an error if there's no measurement unit with the provided label.
+	 */
+	private getMeasurementUnitByLabel( measurementUnitLabel: string ): MeasurementUnit {
+		const measurementUnit: MeasurementUnit | undefined = this._measurementUnitOptions
+			.find( ( option ) => option.label === measurementUnitLabel )
+			?.value;
+
+		if ( measurementUnit === undefined ) {
+			throw new Error( `There's no measurement unit with label "${ measurementUnitLabel }".` );
+		}
+		else {
+			return measurementUnit;
+		}
 	}
 
 	private showSnackBar( message: string ): void {
