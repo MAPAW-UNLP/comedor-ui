@@ -18,7 +18,7 @@ Para ejecutar el proyecto y colaborar en él, se requiere tener instaladas las s
 
 ## Servidor local
 
-Una vez que los paquetes de NPM están instalados, el directorio raíz del proyecto ejecutá el comando `npm run start` en la consola para levantar el servidor de desarrollo local.
+Una vez que los paquetes de NPM están instalados, el directorio raíz del proyecto ejecutá el comando `npm run start:dev` en la consola para levantar el servidor de desarrollo local.
 
 Luego navegá a `http://localhost:4200/` para ver la aplicación corriendo.
 
