@@ -3,6 +3,7 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { tap } from 'rxjs/operators';
 import { MeasurementUnit } from 'src/app/enums/measurement-unit.enum';
+import { FuzzySearchService } from 'src/app/shared/services/fuzzy-search/fuzzy-search.service';
 import { IngredientCreationResponseDTO } from 'src/app/shared/services/ingredients/dto/ingredient-creation-response.dto';
 import { IngredientsService } from 'src/app/shared/services/ingredients/ingredients.service';
 import { autocompleteValidator } from 'src/app/shared/validators/autocomplete.validator';
@@ -105,10 +106,8 @@ export class IngredientsCreationPageComponent implements AfterViewInit {
 			return this.measurementUnitOptionLabels;
 		}
 
-		const normalizedFieldText: string = fieldText.toLowerCase( );
 		return this.measurementUnitOptionLabels.filter( ( label ) => {
-			const normalizedLabel: string = label.toLowerCase( );
-			return normalizedLabel.includes( normalizedFieldText );
+			return this.fuzzySearchService.isFuzzilyIncludedInText( fieldText, label );
 		});
 	}
 
@@ -165,6 +164,7 @@ export class IngredientsCreationPageComponent implements AfterViewInit {
 
 	public constructor(
 		private readonly ingredientsService: IngredientsService,
+		private readonly fuzzySearchService: FuzzySearchService,
 		private readonly snackBar: MatSnackBar,
 		private readonly changeDetectorRef: ChangeDetectorRef,
 	) { }

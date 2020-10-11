@@ -3,8 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FuzzySearchService } from 'src/app/shared/services/fuzzy-search/fuzzy-search.service';
 import { IngredientsService } from 'src/app/shared/services/ingredients/ingredients.service';
-import { SharedModule } from 'src/app/shared/shared.module';
 import { DeepPartial } from 'tsdef';
 import { IngredientsCreationPageComponent } from './ingredients-creation-page.component';
 
@@ -26,6 +26,15 @@ describe( 'IngredientsCreationPageComponent', ( ) => {
 								create: jest.fn( ),
 							};
 							return _ingredientsService;
+						},
+					},
+					{
+						provide: FuzzySearchService,
+						useFactory: ( ): DeepPartial<FuzzySearchService> => {
+							const _fuzzySearchService: DeepPartial<FuzzySearchService> = {
+								isFuzzilyIncludedInText: jest.fn( ),
+							};
+							return _fuzzySearchService;
 						},
 					},
 					{
