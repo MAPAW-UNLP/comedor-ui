@@ -40,7 +40,9 @@ describe( 'PageTitleService', ( ) => {
 	});
 
 	test( 'should use a programatically defined route title', async ( ) => {
+		jest.useFakeTimers( );
 		service.routeTitle = 'page title from program';
+		jest.runAllTimers( );
 
 		expect( service.routeTitle ).toEqual( 'page title from program' );
 		expect( titleStub.setTitle ).toHaveBeenCalledTimes( 1 );
@@ -66,7 +68,10 @@ describe( 'PageTitleService', ( ) => {
 	});
 
 	test( 'should reset programatically defined route titles when loading a title from route', async ( ) => {
+		jest.useFakeTimers( );
 		service.routeTitle = 'page title from program';
+		jest.runAllTimers( );
+
 		service.setFromRouteData({
 			pageTitle: 'page title from route'
 		});
@@ -78,7 +83,10 @@ describe( 'PageTitleService', ( ) => {
 		service.setFromRouteData({
 			pageTitle: 'page title from route'
 		});
+
+		jest.useFakeTimers( );
 		service.routeTitle = 'page title from program';
+		jest.runAllTimers( );
 
 		expect( service.routeTitle ).toEqual( 'page title from program' );
 		expect( titleStub.setTitle ).toHaveBeenCalledTimes( 2 );

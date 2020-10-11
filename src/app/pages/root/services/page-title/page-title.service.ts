@@ -39,8 +39,17 @@ export class PageTitleService {
 		return this._customRouteTitle;
 	}
 	private set customRouteTitle( value: string | undefined ) {
-		this._customRouteTitle = value;
-		this.updatePageTitle( );
+
+		/*
+		 * HACK: Using setTimeout to schedule the route title change as a macrotask and thus prevent the
+		 * "ExpressionChangedAfterItHasBeenChecked" error caused by a child component indirectly updating
+		 * a field in the parent component's view through this service.
+		 */
+		setTimeout( ( ) => {
+			this._customRouteTitle = value;
+			this.updatePageTitle( );
+		});
+
 	}
 
 	/**
@@ -69,9 +78,8 @@ export class PageTitleService {
 	 */
 	public setFromRouteData( routeData: RouteData | undefined ): void {
 		const pageTitleInRoute = routeData?.pageTitle;
-
-		this.defaultRouteTitle = pageTitleInRoute;
 		this._customRouteTitle = undefined;
+		this.defaultRouteTitle = pageTitleInRoute;
 	}
 
 	/**
