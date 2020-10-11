@@ -5,6 +5,8 @@ import { siteTitle } from 'src/app/constants/site-title.constant';
 import { DeepPartial } from 'tsdef';
 import { PageTitleService } from './page-title.service';
 
+// tslint:disable: no-magic-numbers
+
 describe( 'PageTitleService', ( ) => {
 	let service: PageTitleService;
 	let titleStub: Title;
@@ -33,9 +35,24 @@ describe( 'PageTitleService', ( ) => {
 		expect( service ).toBeTruthy( );
 	});
 
+	test( 'should expose an undefined route title by default', async ( ) => {
+		expect( service.routeTitle ).toBeUndefined( );
+	});
+
+	test( 'should use a programatically defined route title', async ( ) => {
+		jest.useFakeTimers( );
+		service.routeTitle = 'page title from program';
+		jest.runAllTimers( );
+
+		expect( service.routeTitle ).toEqual( 'page title from program' );
+		expect( titleStub.setTitle ).toHaveBeenCalledTimes( 1 );
+		expect( titleStub.setTitle ).toHaveBeenCalledWith( `page title from program - ${ siteTitle }` );
+	});
+
 	test( 'should display the site title when no route data is provided', async ( ) => {
 		service.setFromRouteData( undefined );
 
+		expect( service.routeTitle ).toEqual( undefined );
 		expect( titleStub.setTitle ).toHaveBeenCalledTimes( 1 );
 		expect( titleStub.setTitle ).toHaveBeenCalledWith( siteTitle );
 	});
@@ -45,8 +62,36 @@ describe( 'PageTitleService', ( ) => {
 			pageTitle: 'page title from route'
 		});
 
+		expect( service.routeTitle ).toEqual( `page title from route` );
 		expect( titleStub.setTitle ).toHaveBeenCalledTimes( 1 );
 		expect( titleStub.setTitle ).toHaveBeenCalledWith( `page title from route - ${ siteTitle }` );
+	});
+
+	test( 'should reset programatically defined route titles when loading a title from route', async ( ) => {
+		jest.useFakeTimers( );
+		service.routeTitle = 'page title from program';
+		jest.runAllTimers( );
+
+		service.setFromRouteData({
+			pageTitle: 'page title from route'
+		});
+
+		expect( service.routeTitle ).toEqual( 'page title from route' );
+	});
+
+	test( 'should use a programatically defined route title over the one from the route', async ( ) => {
+		service.setFromRouteData({
+			pageTitle: 'page title from route'
+		});
+
+		jest.useFakeTimers( );
+		service.routeTitle = 'page title from program';
+		jest.runAllTimers( );
+
+		expect( service.routeTitle ).toEqual( 'page title from program' );
+		expect( titleStub.setTitle ).toHaveBeenCalledTimes( 2 );
+		expect( titleStub.setTitle ).toHaveBeenNthCalledWith( 1, `page title from route - ${ siteTitle }` );
+		expect( titleStub.setTitle ).toHaveBeenNthCalledWith( 2, `page title from program - ${ siteTitle }` );
 	});
 
 });

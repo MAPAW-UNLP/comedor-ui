@@ -9,10 +9,11 @@
 			#ingredientNameInput
 			matInput
 			[formControlName]="ingredientNameFieldName"
+			placeholder="Ingresá el nombre del ingrediente"
 		>
 
 		<mat-error
-			*ngIf="hasRequiredNameError"
+			*ngIf="hasRequiredIngredientNameError"
 			class="ingredient_creation_form_field__error_message_container"
 			align="end"
 		>
@@ -26,34 +27,34 @@
 		<mat-label>Unidad de medida</mat-label>
 
 		<input
-			#measurementInput
-			placeholder="Seleciona una unidad"
+			#measurementUnitInput
+			placeholder="Seleccioná la unidad de medida"
 			matInput
 			type="text"
-			[formControl]="measurementField"
+			[formControl]="measurementUnitField"
 			[matAutocomplete]="auto"
 			appearance="fill"
 		>
 		<mat-autocomplete #auto="matAutocomplete">
-			<mat-option *ngFor="let measurement of filteredMeasurements" [value]="measurement">
-			  {{measurement}}
+			<mat-option *ngFor="let label of filteredMeasurementUnitOptionLabels" [value]="label">
+			  {{ label }}
 			</mat-option>
 		</mat-autocomplete>
 
 		<mat-error
-			*ngIf="hasRequiredMeasurementError"
-			class="ingredient_creation_field__error_message_container"
+			*ngIf="hasRequiredMeasurementUnitError"
+			class="ingredient_creation_form_field__error_message_container"
 			align="end"
 		>
-			<span>{{ requiredMeasurementErrorMessage }}</span>
+			<span>{{ requiredMeasurementUnitErrorMessage }}</span>
 		</mat-error>
 
 		<mat-error
 			*ngIf="hasInvalidMeasurementError"
-			class="ingredient_creation_field__error_message_container"
+			class="ingredient_creation_form_field__error_message_container"
 			align="end"
 		>
-			<span>{{ invalidMeasurementErrorMessage }}</span>
+			<span>{{ invalidMeasurementUnitErrorMessage }}</span>
 		</mat-error>
 
 	</mat-form-field>
