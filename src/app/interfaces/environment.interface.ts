@@ -34,7 +34,7 @@ export interface Environment {
 		 * Resource route of the authentication endpoint.
 		 */
 		readonly login: string;
-		readonly ingredients: string;
+		readonly ingredientRecipe: string;
 
 	};
 
