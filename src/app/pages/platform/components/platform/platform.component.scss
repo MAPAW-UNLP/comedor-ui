@@ -4,8 +4,11 @@
 	flex-flow: column nowrap;
 	align-items: stretch;
 	position: relative;
-}
 
+}
+.container {
+	height: 100%;
+}
 .app_bar {
 	flex: 0 0 auto;
 	display: flex;
@@ -17,6 +20,11 @@
 	box-shadow: 0 0.25rem 0.5rem 0 hsla( 0, 0%, 0%, 0.25 );
 	color: hsla( 0, 0%, 100%, 1 );
 	text-shadow: 0 0 1px hsla( 0, 0%, 0%, 0.5 );
+
+	&__menu {
+		margin-right: 25px;
+		cursor: pointer;
+	}
 
 	&__site_title {
 		margin-right: auto;

@@ -11,6 +11,9 @@ import { AuthService } from 'src/app/auth/services/auth/auth.service';
 })
 export class PlatformComponent {
 
+	public menuOpened = false;
+	public menuIcon = 'menu';
+
 	/**
 	 * The full name of the authenticated user.
 	 *
@@ -18,6 +21,14 @@ export class PlatformComponent {
 	 */
 	public get fullNameOfAuthenticatedUser( ): string | undefined {
 		return this.authService.authenticatedUserSnapshot?.fullName;
+	}
+
+	public get isClient(): boolean {
+		return this.authService.aClientIsAuthenticatedSnapshot;
+	}
+
+	public get isEmployee(): boolean {
+		return this.authService.aKitchenSiteEmployeeIsAuthenticatedSnapshot;
 	}
 
 	public constructor(
@@ -29,6 +40,15 @@ export class PlatformComponent {
 	 */
 	public deauthenticate( ): void {
 		this.authService.deauthenticate( );
+	}
+
+	public toggleMenu(): void {
+		this.menuOpened = !this.menuOpened;
+		if (this.menuOpened) {
+			this.menuIcon = 'close';
+		} else {
+			this.menuIcon = 'menu';
+		}
 	}
 
 }

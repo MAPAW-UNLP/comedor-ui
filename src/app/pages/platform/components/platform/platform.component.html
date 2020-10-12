@@ -1,4 +1,5 @@
 <mat-toolbar class="app_bar">
+	<mat-icon class="app_bar__menu" (click)="toggleMenu()" aria-hidden="false" aria-label="menu icon">{{menuIcon}}</mat-icon>
 	<span class="app_bar__site_title">Comedor Universitario</span>
 	<span class="app_bar__user_name">
 		Hola, <strong>{{ fullNameOfAuthenticatedUser }}</strong>
@@ -12,7 +13,42 @@
 		Salir
 	</button>
 </mat-toolbar>
-
-<main class="router_outlet_container">
-	<router-outlet></router-outlet>
-</main>
+<mat-sidenav-container class="container">
+	<mat-sidenav mode="side" [opened]="menuOpened" (click)="toggleMenu()">
+		<mat-nav-list>
+			<mat-list-item *ngIf="isClient" [routerLink]="['/mis-tickets']" >
+				<mat-icon matListIcon>receipt</mat-icon>
+				<h3 matLine > Mis tickets</h3>
+			</mat-list-item>
+			<mat-list-item [routerLink]="['/menus-habilitados']">
+				<mat-icon matListIcon>storage</mat-icon>
+				<h3 matLine > Lista de menús</h3>
+			</mat-list-item>
+			<mat-list-item [routerLink]="['/combos']">
+				<mat-icon matListIcon>format_list_bulleted</mat-icon>
+				<h3 matLine > Lista de combos </h3>
+			</mat-list-item>
+			<mat-list-item *ngIf="isEmployee" [routerLink]="['/crear-combo']">
+				<mat-icon matListIcon>fastfood</mat-icon>
+				<h3 matLine  > Alta de combos </h3>
+			</mat-list-item>
+			<mat-list-item *ngIf="isEmployee"  [routerLink]="['/platos']">
+				<mat-icon matListIcon>local_dining</mat-icon>
+				<h3 matLine> Alta de platos </h3>
+			</mat-list-item>
+			<mat-list-item *ngIf="isEmployee" [routerLink]="['/ingredientes']">
+				<mat-icon matListIcon>local_pizza</mat-icon>
+				<h3 matLine> Alta ingredientes </h3>
+			</mat-list-item>
+			<mat-list-item (click)="deauthenticate( )">
+				<mat-icon matListIcon>exit_to_app</mat-icon>
+				<h3 matLine> Salir </h3>
+			</mat-list-item>
+		</mat-nav-list>
+	</mat-sidenav>
+	<mat-sidenav-content>
+		<main class="router_outlet_container">
+			<router-outlet></router-outlet>
+		</main>
+	</mat-sidenav-content>
+</mat-sidenav-container>
