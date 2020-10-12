@@ -58,7 +58,7 @@ export class MenuCardComponent {
 	/**
 	 * The title of the card.
 	 *
-	 * If it's not present, it's _undefined_.
+	 * If it's not present, it uses a default title.
 	 *
 	 * It should represent the name of the meal associated to the card, or to the menu associated to the card.
 	 */
