@@ -12,6 +12,8 @@ import { AvailableMealsPageModule } from '../available-meals-page/available-meal
 import { AvailableMealsPageComponent } from '../available-meals-page/components/available-meals-page/available-meals-page.component';
 import { ClientOwnTicketsPageModule } from '../client-own-tickets-page/client-own-tickets-page.module';
 import { ClientOwnTicketsPageComponent } from '../client-own-tickets-page/components/client-own-tickets-page/client-own-tickets-page.component';
+import { DishCreationPageComponent } from '../dish-creation-page/components/dish-creation-page/dish-creation-page.component';
+import { DishCreationPageModule } from '../dish-creation-page/dish-creation-page.module';
 import { EnabledMenusPageComponent } from '../enabled-menus-page/components/enabled-menus-page/enabled-menus-page.component';
 import { EnabledMenusPageModule } from '../enabled-menus-page/enabled-menus-page.module';
 import { IngredientsCreationPageComponent } from '../ingredients-creation-page/components/ingredients-creation-page/ingredients-creation-page.component';
@@ -90,6 +92,16 @@ const routes: ComedorUniversitarioRoutes = [
 				},
 			},
 			{
+				path: 'platos',
+				component: DishCreationPageComponent,
+				canActivate: [
+					AuthenticatedKitchenSiteEmployeeRequiredGuard,
+				],
+				data: {
+					pageTitle: 'Platos',
+				},
+			},
+			{
 				path: '404',
 				component: NotFoundPageComponent,
 				data: {
@@ -116,6 +128,7 @@ const routes: ComedorUniversitarioRoutes = [
 		AvailableMealsPageModule,
 		EnabledMenusPageModule,
 		IngredientsCreationPageModule,
+		DishCreationPageModule,
 		RouterModule.forRoot( routes ),
 	],
 	exports: [

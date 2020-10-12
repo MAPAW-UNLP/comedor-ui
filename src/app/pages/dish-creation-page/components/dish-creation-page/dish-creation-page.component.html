@@ -1,0 +1,34 @@
+<h2 class="page_title">Platos</h2>
+
+<form class="creation_form" [formGroup]="dishCreationForm">
+	<mat-form-field class="dish_creation_form_field" appearance="standard">
+
+		<mat-label>Nombre</mat-label>
+
+		<input
+			#dishNameInput
+			matInput
+			[formControlName]="dishNameFieldName"
+			placeholder="Ingresá el nombre del plato"
+		>
+
+		<mat-error
+			*ngIf="hasRequiredDishNameError"
+			class="dish_creation_form_field__error_message_container"
+			align="end"
+		>
+			<span>{{ requiredDishNameErrorMessage }}</span>
+		</mat-error>
+
+	</mat-form-field>
+
+	<button
+		mat-raised-button
+		class="dish_creation_form_field__submit_button"
+		[disabled]="submitButtonIsDisabled"
+		color="accent"
+		(click)="create( )"
+	>
+		{{ submitbuttonText }}
+	</button>
+</form>

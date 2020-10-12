@@ -14,5 +14,6 @@ export const environment: Environment = {
 	resourcePaths: {
 		login: '/login',
 		ingredientRecipe: '/api/ingredientRecipe',
+		dishRecipe: '/api/dishRecipe',
 	},
 };
