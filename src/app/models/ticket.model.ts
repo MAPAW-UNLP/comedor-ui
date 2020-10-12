@@ -59,7 +59,7 @@ export class Ticket extends Entity {
 	/**
 	 * The consumption type of ticket: it can be either for on-site consuption or for takeaway.
 	 */
-	public get type( ): ConsumptionType {
+	public get consumptionType( ): ConsumptionType {
 		return this._consumptionType;
 	}
 
