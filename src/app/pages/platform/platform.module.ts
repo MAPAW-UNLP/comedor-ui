@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PlatformComponent } from './components/platform/platform.component';
@@ -14,6 +15,7 @@ import { PlatformComponent } from './components/platform/platform.component';
 	imports: [
 		CommonModule,
 		RouterModule,
+		FormsModule,
 		SharedModule,
 	],
 })

@@ -6,28 +6,68 @@
 	position: relative;
 
 }
-.container {
+
+.sidenav_container {
 	height: 100%;
 }
+
+.sidenav {
+	width: 20rem;
+
+	&_app_bar {
+		flex: 0 0 auto;
+		display: flex;
+		flex-flow: row nowrap;
+		align-items: center;
+		position: relative;
+		background-color: hsl( 0, 0%, 90% );
+		text-shadow: 0 0 1px hsla( 0, 0%, 0%, 0.5 );
+
+		&__menu_button {
+			margin-right: 1rem;
+		}
+
+		&__site_title {
+			margin-right: auto;
+		}
+	}
+}
+
 .app_bar {
 	flex: 0 0 auto;
 	display: flex;
 	flex-flow: row nowrap;
 	align-items: center;
 	position: relative;
-	padding: 1rem 1.5rem;
 	background-color: hsl( 210, 100%, 50% );
 	box-shadow: 0 0.25rem 0.5rem 0 hsla( 0, 0%, 0%, 0.25 );
 	color: hsla( 0, 0%, 100%, 1 );
 	text-shadow: 0 0 1px hsla( 0, 0%, 0%, 0.5 );
 
-	&__menu {
-		margin-right: 25px;
-		cursor: pointer;
+	&__menu_button {
+		margin-right: 1rem;
+	}
+
+	&__title {
+		flex: 0 0 auto;
+		display: flex;
+		align-items: center;
+		margin-right: auto;
+
+		&_divider {
+			height: 1.5rem;
+			width: 0;
+			margin: 0 0.75rem;
+			border: 1px solid hsla( 0, 0%, 100%, 0.25 );
+		}
 	}
 
 	&__site_title {
-		margin-right: auto;
+		font-weight: 500;
+	}
+
+	&__route_title {
+		font-weight: 300;
 	}
 
 	&__user_name{
