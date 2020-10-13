@@ -2,7 +2,7 @@ import { Client } from './client.model';
 import { Meal } from './meal.model';
 import { Menu } from './menu.model';
 import { Entity } from './entity.model';
-import { TicketType } from '../enums/ticket-type.enum';
+import { ConsumptionType } from '../enums/consumption-type.enum';
 import { KitchenSite } from '../enums/kitchen-site.enum';
 
 /**
@@ -12,7 +12,7 @@ import { KitchenSite } from '../enums/kitchen-site.enum';
 export class Ticket extends Entity {
 	private readonly _menu: Menu;
 	private readonly _client: Client;
-	private readonly _type: TicketType;
+	private readonly _consumptionType: ConsumptionType;
 
 	/**
 	 * The unique identifier of the ticket.
@@ -57,10 +57,10 @@ export class Ticket extends Entity {
 	}
 
 	/**
-	 * The type of ticket: it can be either for on-site consuption or for takeaway.
+	 * The consumption type of ticket: it can be either for on-site consuption or for takeaway.
 	 */
-	public get type( ): TicketType {
-		return this._type;
+	public get consumptionType( ): ConsumptionType {
+		return this._consumptionType;
 	}
 
 	/**
@@ -74,12 +74,12 @@ export class Ticket extends Entity {
 		id: string,
 		menu: Menu,
 		client: Client,
-		type: TicketType,
+		consumptionType: ConsumptionType,
 	) {
 		super( id );
 		this._menu = menu;
 		this._client = client;
-		this._type = type;
+		this._consumptionType = consumptionType;
 	}
 
 }

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, SecurityContext } from '@angular/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
@@ -13,7 +13,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { MatIconModule } from '@angular/material/icon';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
@@ -33,6 +33,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
+import { DomSanitizer } from '@angular/platform-browser';
 
 /**
  * Module that groups and exports all the modules exposed by the Angular Material library.
@@ -74,6 +75,9 @@ import { MatTreeModule } from '@angular/material/tree';
 		MatTooltipModule,
 		MatTreeModule,
 	],
+	providers: [
+		MatIconRegistry,
+	],
 	exports: [
 		MatAutocompleteModule,
 		MatBadgeModule,
@@ -111,4 +115,13 @@ import { MatTreeModule } from '@angular/material/tree';
 		MatTreeModule,
 	],
 })
-export class MaterialModule { }
+export class MaterialModule {
+
+	public constructor(
+		private readonly matIconRegistry: MatIconRegistry,
+		private readonly domSanitizer: DomSanitizer,
+	) {
+		matIconRegistry.registerFontClassAlias( 'fontawesome', 'fa' );
+	}
+
+}

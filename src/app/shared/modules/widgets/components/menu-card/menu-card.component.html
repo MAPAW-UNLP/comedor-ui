@@ -1,35 +1,78 @@
 <mat-card class="menu_card mat-elevation-z4">
+
 	<div class="menu_card__thumbnail_container">
 		<img
 			class="menu_card__thumbnail"
+			*ngIf="shouldDisplayThumbnail"
 			[src]="thumbnailSource"
-			alt="Menu card thumbnail"
+			alt=""
 			aria-hidden="true"
 			role="presentation"
 		>
+		<div
+			class="menu_card__thumbnail_placeholder"
+			*ngIf="!shouldDisplayThumbnail"
+			aria-hidden="true"
+			role="presentation"
+		>
+			<mat-icon class="menu_card__thumbnail_placeholder_icon">restaurant</mat-icon>
+		</div>
 	</div>
+
 	<div class="menu_card__content">
-		<span class="menu_card__title" role="heading">{{ title }}</span>
-		<span class="menu_card__price_tag">{{ priceTag }}</span>
-		<div class="menu_card__validity">
-			<div class="menu_card__validity_item">
-				<mat-icon class="menu_card__validity_item_icon">event</mat-icon>
+
+		<span class="menu_card__card_title">
+			{{ cardTitle }}
+		</span>
+
+		<span
+			class="menu_card__price_tag"
+			*ngIf="shouldDisplayPriceTag"
+		>
+			{{ priceTag }}
+		</span>
+
+		<div
+			class="menu_card__metadata menu_card__date_and_kitchen_site_name"
+			*ngIf="shouldDisplayDateAndKitchenSiteName"
+		>
+			<div class="menu_card__metadata_item" *ngIf="shouldDisplayDate">
+				<mat-icon class="menu_card__metadata_item_icon">event</mat-icon>
 				{{ date | date:'EEEE dd/MM/yyyy' }}
 			</div>
-			<div class="menu_card__validity_item">
-				<mat-icon class="menu_card__validity_item_icon">place</mat-icon>
+			<div class="menu_card__metadata_item" *ngIf="shouldDisplayKitchenSiteName">
+				<mat-icon class="menu_card__metadata_item_icon">place</mat-icon>
 				{{ kitchenSiteName }}
 			</div>
 		</div>
-		<mat-button-toggle-group class="menu_card__consumption_type" value="vianda">
-			<mat-button-toggle value="vianda">Para retirar</mat-button-toggle>
-			<mat-button-toggle value="presencial">Para consumir en comedor</mat-button-toggle>
+
+		<div
+			class="menu_card__metadata menu_card__minimum_purchase_anticipation_label"
+			*ngIf="shouldDisplayMinimumPurchaseAnticipationLabel"
+		>
+			<div class="menu_card__metadata_item">
+				<mat-icon class="menu_card__metadata_item_icon">av_timer</mat-icon>
+				{{ minimumPurchaseAnticipationLabel }}
+			</div>
+		</div>
+
+		<mat-button-toggle-group
+			class="menu_card__consumption_type_selector"
+			*ngIf="shouldDisplayConsumptionTypeSelector"
+			[value]="consumptionType"
+			(change)="handleConsumptionTypeChange( $event )"
+		>
+			<mat-button-toggle *ngFor="let option of consumptionTypeOptions" [value]="option.value">
+				{{ option.label }}
+			</mat-button-toggle>
 		</mat-button-toggle-group>
+
 		<div class="menu_card__actions">
 			<button
 				mat-raised-button
 				class="menu_card__action_button"
 				color="accent"
+				(click)="handleViewMoreButtonClick( )"
 			>
 				<mat-icon class="menu_card__action_button_icon">info</mat-icon>
 				Ver más
@@ -37,11 +80,15 @@
 			<button
 				mat-raised-button
 				class="menu_card__action_button"
-				[color]="cartButtonColor"
+				*ngIf="shouldDisplayCartActionButton"
+				[color]="cartActionButtonColor"
+				(click)="handleCartActionButtonClick( )"
 			>
-				<mat-icon class="menu_card__action_button_icon">{{ cartButtonIcon }}</mat-icon>
-				{{ cartButtonText }}
+				<mat-icon class="menu_card__action_button_icon">{{ cartActionButtonIcon }}</mat-icon>
+				{{ cartActionButtonText }}
 			</button>
 		</div>
+
 	</div>
+
 </mat-card>

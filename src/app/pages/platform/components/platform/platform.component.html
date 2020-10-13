@@ -1,18 +1,96 @@
-<mat-toolbar class="app_bar">
-	<span class="app_bar__site_title">Comedor Universitario</span>
-	<span class="app_bar__user_name">
-		Hola, <strong>{{ fullNameOfAuthenticatedUser }}</strong>
-	</span>
-	<button
-		mat-flat-button
-		color="accent"
-		class="app_bar__action_button logout_button"
-		(click)="deauthenticate( )"
-	>
-		Salir
-	</button>
-</mat-toolbar>
+<mat-sidenav-container class="sidenav_container" (backdropClick)="closeSidenav( )">
 
-<main class="router_outlet_container">
-	<router-outlet></router-outlet>
-</main>
+	<mat-sidenav class="sidenav" mode="over" [(opened)]="isSidenavOpened" [disableClose]="false">
+
+		<mat-toolbar class="sidenav_app_bar">
+			<button
+				mat-icon-button
+				class="sidenav_app_bar__menu_button"
+				aria-label="Menu button"
+				(click)="closeSidenav( )"
+			>
+				<mat-icon>close</mat-icon>
+			</button>
+			<span class="sidenav_app_bar__site_title">Menú de navegación</span>
+		</mat-toolbar>
+
+		<mat-nav-list>
+			<mat-list-item *ngIf="aClientIsAuthenticated" routerLink="/mis-tickets">
+				<mat-icon matListIcon>receipt</mat-icon>
+				<h3 matLine>Mis tickets</h3>
+			</mat-list-item>
+			<mat-divider *ngIf="aClientIsAuthenticated"></mat-divider>
+			<mat-list-item routerLink="/menus">
+				<mat-icon matListIcon>library_books</mat-icon>
+				<h3 matLine>Lista de menús</h3>
+			</mat-list-item>
+			<mat-list-item *ngIf="aKitchenSiteEmployeeIsAuthenticated" routerLink="/crear-menu">
+				<mat-icon matListIcon>library_add</mat-icon>
+				<h3 matLine>Crear menú</h3>
+			</mat-list-item>
+			<mat-divider *ngIf="aKitchenSiteEmployeeIsAuthenticated"></mat-divider>
+			<mat-list-item *ngIf="aKitchenSiteEmployeeIsAuthenticated" routerLink="/combos">
+				<mat-icon matListIcon>article</mat-icon>
+				<h3 matLine>Lista de combos</h3>
+			</mat-list-item>
+			<mat-list-item *ngIf="aKitchenSiteEmployeeIsAuthenticated" routerLink="/crear-combo">
+				<mat-icon matListIcon>add_box</mat-icon>
+				<h3 matLine>Crear combo</h3>
+			</mat-list-item>
+			<mat-divider *ngIf="aKitchenSiteEmployeeIsAuthenticated"></mat-divider>
+			<mat-list-item *ngIf="aKitchenSiteEmployeeIsAuthenticated" routerLink="/crear-plato">
+				<mat-icon matListIcon >local_dining</mat-icon>
+				<h3 matLine>Crear plato</h3>
+			</mat-list-item>
+			<mat-divider *ngIf="aKitchenSiteEmployeeIsAuthenticated"></mat-divider>
+			<mat-list-item *ngIf="aKitchenSiteEmployeeIsAuthenticated" routerLink="/crear-ingrediente">
+				<mat-icon matListIcon>local_pizza</mat-icon>
+				<h3 matLine>Crear ingrediente</h3>
+			</mat-list-item>
+			<mat-divider></mat-divider>
+			<mat-list-item tabindex="0" (click)="deauthenticate( )">
+				<mat-icon matListIcon>exit_to_app</mat-icon>
+				<h3 matLine>Salir</h3>
+			</mat-list-item>
+		</mat-nav-list>
+
+	</mat-sidenav>
+
+	<mat-sidenav-content>
+
+		<mat-toolbar class="app_bar">
+			<button
+				mat-icon-button
+				class="app_bar__menu_button"
+				aria-label="Menu button"
+				(click)="openSidenav( )"
+			>
+				<mat-icon>menu</mat-icon>
+			</button>
+			<div class="app_bar__title">
+				<span class="app_bar__site_title">{{ siteTitle }}</span>
+				<ng-container *ngIf="shouldShowRouteTitle">
+					<div class="app_bar__title_divider"></div>
+					<span class="app_bar__route_title">{{ routeTitle }}</span>
+				</ng-container>
+			</div>
+			<span class="app_bar__user_name">
+				Hola, <strong>{{ fullNameOfAuthenticatedUser }}</strong>
+			</span>
+			<button
+				mat-flat-button
+				color="accent"
+				class="app_bar__action_button logout_button"
+				(click)="deauthenticate( )"
+			>
+				Salir
+			</button>
+		</mat-toolbar>
+
+		<main class="router_outlet_container">
+			<router-outlet></router-outlet>
+		</main>
+
+	</mat-sidenav-content>
+
+</mat-sidenav-container>

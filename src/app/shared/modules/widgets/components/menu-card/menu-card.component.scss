@@ -12,27 +12,45 @@
 		grid-column: 1 / span 1;
 		height: 15rem;
 		width: 15rem;
-		background-color: orange;
 	}
 
 	&__thumbnail {
 		height: 100%;
 		width: 100%;
+		background-color: hsl( 0, 0%, 100% );
 		object-fit: cover;
 		object-position: center;
+	}
+
+	&__thumbnail_placeholder {
+		display: flex;
+		flex-flow: column nowrap;
+		align-items: center;
+		justify-content: center;
+		height: 100%;
+		width: 100%;
+		background-color: hsl( 0, 0%, 60% );
+		user-select: none;
+
+		&_icon {
+			height: auto;
+			width: auto;
+			color: hsla( 0, 0%, 100%, 50% );
+			font-size: 7.5rem;
+		}
 	}
 
 	&__content {
 		display: grid;
 		grid-auto-flow: row;
 		grid-template-columns: 15rem 10rem;
-		grid-template-rows: auto auto 1fr auto;
+		grid-template-rows: auto auto auto 1fr auto;
 		align-items: stretch;
 		justify-items: stretch;
 		position: relative;
 	}
 
-	&__title {
+	&__card_title {
 		$font-size: 16px;
 		$line-height: 1.25;
 		$max-lines: 3;
@@ -60,11 +78,9 @@
 		text-overflow: ellipsis;
 	}
 
-	&__validity {
-		grid-row: 2 / span 1;
-		grid-column: 1 / span 2;
+	&__metadata {
 		justify-self: start;
-		margin: 0.75rem 0;
+		margin: 0.75rem 0 0;
 		display: grid;
 		grid-auto-flow: column;
 		grid-template-columns: auto auto;
@@ -73,11 +89,11 @@
 		color: hsl( 0, 0%, 40% );
 	}
 
-	&__validity_item {
+	&__metadata_item {
 
 	}
 
-	&__validity_item_icon {
+	&__metadata_item_icon {
 		height: 1em;
 		width: 1em;
 		margin: 0 0.125em 0.0625em -0.25em;
@@ -85,16 +101,26 @@
 		vertical-align: middle;
 	}
 
-	&__consumption_type {
+	&__date_and_kitchen_site_name {
+		grid-row: 2 / span 1;
+		grid-column: 1 / span 2;
+	}
+
+	&__minimum_purchase_anticipation_label {
 		grid-row: 3 / span 1;
+		grid-column: 1 / span 2;
+	}
+
+	&__consumption_type_selector {
+		grid-row: 4 / span 1;
 		grid-column: 1 / span 2;
 		align-self: start;
 		justify-self: start;
-		margin: 0.25rem 0;
+		margin: 0.75rem 0;
 	}
 
 	&__actions {
-		grid-row: 4 / span 1;
+		grid-row: 5 / span 1;
 		grid-column: 1 / span 2;
 		justify-self: end;
 		display: grid;

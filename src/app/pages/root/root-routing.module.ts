@@ -62,33 +62,33 @@ const routes: ComedorUniversitarioRoutes = [
 				},
 			},
 			{
-				path: 'menus-disponibles',
+				path: 'combos',
 				component: AvailableMealsPageComponent,
 				canActivate: [
 					AuthenticatedKitchenSiteEmployeeRequiredGuard,
 				],
 				data: {
-					pageTitle: 'Menús disponibles',
+					pageTitle: 'Combos',
 				},
 			},
 			{
-				path: 'menus-habilitados',
+				path: 'menus',
 				component: EnabledMenusPageComponent,
 				canActivate: [
 					AuthenticatedKitchenSiteEmployeeRequiredGuard,
 				],
 				data: {
-					pageTitle: 'Menús habilitados',
+					pageTitle: 'Menús',
 				},
 			},
 			{
-				path: 'ingredientes',
+				path: 'crear-ingrediente',
 				component: IngredientsCreationPageComponent,
 				canActivate: [
 					AuthenticatedKitchenSiteEmployeeRequiredGuard,
 				],
 				data: {
-					pageTitle: 'Ingredientes',
+					pageTitle: 'Crear ingrediente',
 				},
 			},
 			{

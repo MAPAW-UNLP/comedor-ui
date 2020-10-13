@@ -5,8 +5,8 @@
  */
 export enum DishType {
 	Appetizer = 'appetizer',
-	MainDish = 'main dish',
-	SideDish = 'side dish',
+	MainDish = 'main_dish',
+	SideDish = 'side_dish',
 	Dessert = 'dessert',
 	Drink = 'drink',
 }
