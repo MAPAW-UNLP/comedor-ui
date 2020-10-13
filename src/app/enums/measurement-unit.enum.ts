@@ -8,6 +8,6 @@ export enum MeasurementUnit {
 	Milligram = 'milligram',
 	Litre = 'litre',
 	Millilitre = 'millilitre',
-	CubicCentimetre = 'cubic centimetre',
-	CubicMillimetre = 'cubic millimetre',
+	CubicCentimetre = 'cubic_centimetre',
+	CubicMillimetre = 'cubic_millimetre',
 }
