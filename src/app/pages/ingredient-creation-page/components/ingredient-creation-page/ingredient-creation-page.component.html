@@ -1,0 +1,71 @@
+<h2 class="page_title">Crear ingrediente</h2>
+
+<form class="creation_form" [formGroup]="ingredientCreationForm">
+	<mat-form-field class="ingredient_creation_form_field" appearance="standard">
+
+		<mat-label>Nombre</mat-label>
+
+		<input
+			#ingredientNameInput
+			matInput
+			[formControlName]="ingredientNameFieldName"
+			placeholder="Ingresá el nombre del ingrediente"
+		>
+
+		<mat-error
+			*ngIf="hasRequiredIngredientNameError"
+			class="ingredient_creation_form_field__error_message_container"
+			align="end"
+		>
+			<span>{{ requiredIngredientNameErrorMessage }}</span>
+		</mat-error>
+
+	</mat-form-field>
+
+	<mat-form-field class="ingredient_creation_form_field" appearance="standard">
+
+		<mat-label>Unidad de medida</mat-label>
+
+		<input
+			#measurementUnitInput
+			placeholder="Seleccioná la unidad de medida"
+			matInput
+			type="text"
+			[formControl]="measurementUnitField"
+			[matAutocomplete]="auto"
+			appearance="fill"
+		>
+		<mat-autocomplete #auto="matAutocomplete">
+			<mat-option *ngFor="let label of filteredMeasurementUnitOptionLabels" [value]="label">
+			  {{ label }}
+			</mat-option>
+		</mat-autocomplete>
+
+		<mat-error
+			*ngIf="hasRequiredMeasurementUnitError"
+			class="ingredient_creation_form_field__error_message_container"
+			align="end"
+		>
+			<span>{{ requiredMeasurementUnitErrorMessage }}</span>
+		</mat-error>
+
+		<mat-error
+			*ngIf="hasInvalidMeasurementError"
+			class="ingredient_creation_form_field__error_message_container"
+			align="end"
+		>
+			<span>{{ invalidMeasurementUnitErrorMessage }}</span>
+		</mat-error>
+
+	</mat-form-field>
+
+	<button
+		mat-raised-button
+		class="ingredient_creation_form_field__submit_button"
+		[disabled]="submitButtonIsDisabled"
+		color="accent"
+		(click)="create( )"
+	>
+		{{ submitbuttonText }}
+	</button>
+</form>

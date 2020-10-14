@@ -23,9 +23,9 @@ export class HomePageRedirectorGuard implements CanActivate {
 	 * Always returns _false_, as this guard's responsiblity is to always deny access to the associated route
 	 * and instead redirect the user to another route.
 	 *
-	 * If the user is a client, they're redirected to the ClientOwnTickets page.
+	 * If the user is a client, they're redirected to the PurchasedTickets page.
 	 *
-	 * If the user is a kitchen site employee, they're redirected to the AvailableMeals page.
+	 * If the user is a kitchen site employee, they're redirected to the MenusPage page.
 	 *
 	 * Otherwise, if the role of the user is not known, they're redirected to the error page.
 	 */
@@ -38,11 +38,11 @@ export class HomePageRedirectorGuard implements CanActivate {
 				break;
 			}
 			case UserRole.KitchenSiteEmployee: {
-				this.router.navigate([ '/menus-habilitados' ]);
+				this.router.navigate([ '/menus' ]);
 				break;
 			}
 			default: {
-				this.router.navigate([ '/404' ]);
+				this.router.navigate([ '/pagina-no-encontrada' ]);
 				break;
 			}
 		}

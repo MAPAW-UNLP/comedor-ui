@@ -8,18 +8,28 @@ import { HomePageRedirectorGuard } from 'src/app/auth/guards/home-page-redirecto
 import { ComedorUniversitarioRoutes } from 'src/app/interfaces/comedor-universitario-routes.interface';
 import { AuthenticationPageModule } from '../authentication-page/authentication-page.module';
 import { AuthenticationPageComponent } from '../authentication-page/components/authentication-page/authentication-page.component';
-import { AvailableMealsPageModule } from '../available-meals-page/available-meals-page.module';
-import { AvailableMealsPageComponent } from '../available-meals-page/components/available-meals-page/available-meals-page.component';
-import { ClientOwnTicketsPageModule } from '../client-own-tickets-page/client-own-tickets-page.module';
-import { ClientOwnTicketsPageComponent } from '../client-own-tickets-page/components/client-own-tickets-page/client-own-tickets-page.component';
-import { EnabledMenusPageComponent } from '../enabled-menus-page/components/enabled-menus-page/enabled-menus-page.component';
-import { EnabledMenusPageModule } from '../enabled-menus-page/enabled-menus-page.module';
-import { IngredientsCreationPageComponent } from '../ingredients-creation-page/components/ingredients-creation-page/ingredients-creation-page.component';
-import { IngredientsCreationPageModule } from '../ingredients-creation-page/ingredients-creation-page.module';
+import { DishCreationPageComponent } from '../dish-creation-page/components/dish-creation-page/dish-creation-page.component';
+import { DishCreationPageModule } from '../dish-creation-page/dish-creation-page.module';
+import { IngredientCreationPageComponent } from '../ingredient-creation-page/components/ingredient-creation-page/ingredient-creation-page.component';
+import { IngredientCreationPageModule } from '../ingredient-creation-page/ingredient-creation-page.module';
+import { MealCreationPageComponent } from '../meal-creation-page/components/meal-creation-page/meal-creation-page.component';
+import { MealCreationPageModule } from '../meal-creation-page/meal-creation-page.module';
+import { MealsPageComponent } from '../meals-page/components/meals-page/meals-page.component';
+import { MealsPageModule } from '../meals-page/meals-page.module';
+import { MenuCreationPageComponent } from '../menu-creation-page/components/menu-creation-page/menu-creation-page.component';
+import { MenuCreationPageModule } from '../menu-creation-page/menu-creation-page.module';
+import { MenuShopPageComponent } from '../menu-shop-page/components/menu-shop-page/menu-shop-page.component';
+import { MenuShopPageModule } from '../menu-shop-page/menu-shop-page.module';
+import { MenusPageComponent } from '../menus-page/components/menus-page/menus-page.component';
+import { MenusPageModule } from '../menus-page/menus-page.module';
 import { NotFoundPageComponent } from '../not-found-page/components/not-found-page/not-found-page.component';
 import { NotFoundPageModule } from '../not-found-page/not-found-page.module';
 import { PlatformComponent } from '../platform/components/platform/platform.component';
 import { PlatformModule } from '../platform/platform.module';
+import { PurchasedTicketsPageComponent } from '../purchased-tickets-page/components/purchased-tickets-page/purchased-tickets-page.component';
+import { PurchasedTicketsPageModule } from '../purchased-tickets-page/purchased-tickets-page.module';
+import { ShoppingCartPageComponent } from '../shopping-cart-page/components/shopping-cart-page/shopping-cart-page.component';
+import { ShoppingCartPageModule } from '../shopping-cart-page/shopping-cart-page.module';
 
 const routes: ComedorUniversitarioRoutes = [
 	{
@@ -51,7 +61,7 @@ const routes: ComedorUniversitarioRoutes = [
 			},
 			{
 				path: 'mis-tickets',
-				component: ClientOwnTicketsPageComponent,
+				component: PurchasedTicketsPageComponent,
 				canActivate: [
 					AuthenticatedClientRequiredGuard,
 				],
@@ -60,28 +70,78 @@ const routes: ComedorUniversitarioRoutes = [
 				},
 			},
 			{
-				path: 'combos',
-				component: AvailableMealsPageComponent,
+				path: 'carro-de-compras',
+				component: ShoppingCartPageComponent,
 				canActivate: [
-					AuthenticatedKitchenSiteEmployeeRequiredGuard,
+					AuthenticatedClientRequiredGuard,
 				],
 				data: {
-					pageTitle: 'Combos',
+					pageTitle: 'Carro de compras',
+				},
+			},
+			{
+				path: 'menus-disponibles',
+				component: MenuShopPageComponent,
+				canActivate: [
+					AuthenticatedClientRequiredGuard,
+				],
+				data: {
+					pageTitle: 'Menús disponibles',
 				},
 			},
 			{
 				path: 'menus',
-				component: EnabledMenusPageComponent,
+				component: MenusPageComponent,
 				canActivate: [
 					AuthenticatedKitchenSiteEmployeeRequiredGuard,
 				],
 				data: {
-					pageTitle: 'Menús',
+					pageTitle: 'Lista de menús',
 				},
 			},
 			{
-				path: 'crear-ingrediente',
-				component: IngredientsCreationPageComponent,
+				path: 'menus/crear',
+				component: MenuCreationPageComponent,
+				canActivate: [
+					AuthenticatedKitchenSiteEmployeeRequiredGuard,
+				],
+				data: {
+					pageTitle: 'Crear menú',
+				},
+			},
+			{
+				path: 'combos',
+				component: MealsPageComponent,
+				canActivate: [
+					AuthenticatedKitchenSiteEmployeeRequiredGuard,
+				],
+				data: {
+					pageTitle: 'Lista de combos',
+				},
+			},
+			{
+				path: 'combos/crear',
+				component: MealCreationPageComponent,
+				canActivate: [
+					AuthenticatedKitchenSiteEmployeeRequiredGuard,
+				],
+				data: {
+					pageTitle: 'Crear combo',
+				},
+			},
+			{
+				path: 'platos/crear',
+				component: DishCreationPageComponent,
+				canActivate: [
+					AuthenticatedKitchenSiteEmployeeRequiredGuard,
+				],
+				data: {
+					pageTitle: 'Crear plato',
+				},
+			},
+			{
+				path: 'ingredientes/crear',
+				component: IngredientCreationPageComponent,
 				canActivate: [
 					AuthenticatedKitchenSiteEmployeeRequiredGuard,
 				],
@@ -90,7 +150,7 @@ const routes: ComedorUniversitarioRoutes = [
 				},
 			},
 			{
-				path: '404',
+				path: 'pagina-no-encontrada',
 				component: NotFoundPageComponent,
 				data: {
 					pageTitle: 'Página no encontrada',
@@ -100,7 +160,7 @@ const routes: ComedorUniversitarioRoutes = [
 	},
 	{
 		path: '**',
-		redirectTo: '/404',
+		redirectTo: '/pagina-no-encontrada',
 	},
 ];
 
@@ -112,10 +172,15 @@ const routes: ComedorUniversitarioRoutes = [
 		AuthenticationPageModule,
 		PlatformModule,
 		NotFoundPageModule,
-		ClientOwnTicketsPageModule,
-		AvailableMealsPageModule,
-		EnabledMenusPageModule,
-		IngredientsCreationPageModule,
+		PurchasedTicketsPageModule,
+		ShoppingCartPageModule,
+		MenuShopPageModule,
+		MenusPageModule,
+		MenuCreationPageModule,
+		MealsPageModule,
+		MealCreationPageModule,
+		DishCreationPageModule,
+		IngredientCreationPageModule,
 		RouterModule.forRoot( routes ),
 	],
 	exports: [

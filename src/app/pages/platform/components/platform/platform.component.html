@@ -14,36 +14,52 @@
 			<span class="sidenav_app_bar__site_title">Menú de navegación</span>
 		</mat-toolbar>
 
-		<mat-nav-list>
-			<mat-list-item *ngIf="aClientIsAuthenticated" routerLink="/mis-tickets">
+		<mat-nav-list *ngIf="aClientIsAuthenticated">
+			<mat-list-item tabindex="0" (click)="handleNavigationFromSidenav( '/mis-tickets' )">
 				<mat-icon matListIcon>receipt</mat-icon>
 				<h3 matLine>Mis tickets</h3>
 			</mat-list-item>
-			<mat-divider *ngIf="aClientIsAuthenticated"></mat-divider>
-			<mat-list-item routerLink="/menus">
+			<mat-divider></mat-divider>
+			<mat-list-item tabindex="0" (click)="handleNavigationFromSidenav( '/menus-disponibles' )">
+				<mat-icon matListIcon>restaurant</mat-icon>
+				<h3 matLine>Menús disponibles</h3>
+			</mat-list-item>
+			<mat-list-item tabindex="0" (click)="handleNavigationFromSidenav( '/carro-de-compras' )">
+				<mat-icon matListIcon>shopping_cart</mat-icon>
+				<h3 matLine>Carro de compras</h3>
+			</mat-list-item>
+			<mat-divider></mat-divider>
+			<mat-list-item tabindex="0" (click)="deauthenticate( )">
+				<mat-icon matListIcon>exit_to_app</mat-icon>
+				<h3 matLine>Salir</h3>
+			</mat-list-item>
+		</mat-nav-list>
+
+		<mat-nav-list *ngIf="aKitchenSiteEmployeeIsAuthenticated">
+			<mat-list-item tabindex="0" (click)="handleNavigationFromSidenav( '/menus' )">
 				<mat-icon matListIcon>library_books</mat-icon>
 				<h3 matLine>Lista de menús</h3>
 			</mat-list-item>
-			<mat-list-item *ngIf="aKitchenSiteEmployeeIsAuthenticated" routerLink="/crear-menu">
+			<mat-list-item tabindex="0" (click)="handleNavigationFromSidenav( '/menus/crear' )">
 				<mat-icon matListIcon>library_add</mat-icon>
 				<h3 matLine>Crear menú</h3>
 			</mat-list-item>
-			<mat-divider *ngIf="aKitchenSiteEmployeeIsAuthenticated"></mat-divider>
-			<mat-list-item *ngIf="aKitchenSiteEmployeeIsAuthenticated" routerLink="/combos">
+			<mat-divider></mat-divider>
+			<mat-list-item tabindex="0" (click)="handleNavigationFromSidenav( '/combos' )">
 				<mat-icon matListIcon>article</mat-icon>
 				<h3 matLine>Lista de combos</h3>
 			</mat-list-item>
-			<mat-list-item *ngIf="aKitchenSiteEmployeeIsAuthenticated" routerLink="/crear-combo">
+			<mat-list-item tabindex="0" (click)="handleNavigationFromSidenav( '/combos/crear' )">
 				<mat-icon matListIcon>add_box</mat-icon>
 				<h3 matLine>Crear combo</h3>
 			</mat-list-item>
-			<mat-divider *ngIf="aKitchenSiteEmployeeIsAuthenticated"></mat-divider>
-			<mat-list-item *ngIf="aKitchenSiteEmployeeIsAuthenticated" routerLink="/crear-plato">
+			<mat-divider></mat-divider>
+			<mat-list-item tabindex="0" (click)="handleNavigationFromSidenav( '/platos/crear' )">
 				<mat-icon matListIcon >local_dining</mat-icon>
 				<h3 matLine>Crear plato</h3>
 			</mat-list-item>
-			<mat-divider *ngIf="aKitchenSiteEmployeeIsAuthenticated"></mat-divider>
-			<mat-list-item *ngIf="aKitchenSiteEmployeeIsAuthenticated" routerLink="/crear-ingrediente">
+			<mat-divider></mat-divider>
+			<mat-list-item tabindex="0" (click)="handleNavigationFromSidenav( '/ingredientes/crear' )">
 				<mat-icon matListIcon>local_pizza</mat-icon>
 				<h3 matLine>Crear ingrediente</h3>
 			</mat-list-item>
