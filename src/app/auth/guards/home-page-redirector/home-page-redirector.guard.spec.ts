@@ -61,7 +61,7 @@ describe( 'HomePageRedirectorGuard', ( ) => {
 
 		expect( guard.canActivate( ) ).toEqual( false );
 		expect( routerStub.navigate ).toHaveBeenCalledTimes( 1 );
-		expect( routerStub.navigate ).toHaveBeenCalledWith([ '/menus-habilitados' ]);
+		expect( routerStub.navigate ).toHaveBeenCalledWith([ '/menus' ]);
 	});
 
 	test( 'should redirect to the home page of an authenticated user with an unknown role', async ( ) => {
@@ -70,7 +70,7 @@ describe( 'HomePageRedirectorGuard', ( ) => {
 
 		expect( guard.canActivate( ) ).toEqual( false );
 		expect( routerStub.navigate ).toHaveBeenCalledTimes( 1 );
-		expect( routerStub.navigate ).toHaveBeenCalledWith([ '/404' ]);
+		expect( routerStub.navigate ).toHaveBeenCalledWith([ '/pagina-no-encontrada' ]);
 	});
 
 });

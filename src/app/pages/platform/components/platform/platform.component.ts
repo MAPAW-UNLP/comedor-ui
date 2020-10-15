@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth/auth.service';
 import { siteTitle } from 'src/app/constants/site-title.constant';
 import { PageTitleService } from 'src/app/pages/root/services/page-title/page-title.service';
@@ -73,6 +74,7 @@ export class PlatformComponent {
 	public constructor(
 		private readonly authService: AuthService,
 		private readonly pageTitleService: PageTitleService,
+		private readonly router: Router,
 	) { }
 
 	/**
@@ -94,6 +96,14 @@ export class PlatformComponent {
 	 */
 	public closeSidenav( ): void {
 		this.isSidenavOpened = false;
+	}
+
+	/**
+	 * Handles a navigation attempt by clicking an option in the sidenav.
+	 */
+	public handleNavigationFromSidenav( targetUrl: string ): void {
+		this.router.navigate([ targetUrl ]);
+		this.closeSidenav( );
 	}
 
 }

@@ -2,14 +2,14 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { DishCreationPageComponent } from './components/dish-creation-page/dish-creation-page.component';
+import { IngredientCreationPageComponent } from './components/ingredient-creation-page/ingredient-creation-page.component';
 
 /**
- * Module for the page where a kitchen site employee can create a new dish.
+ * Module for the page where a kitchen site employee can create a new ingredient.
  */
 @NgModule({
 	declarations: [
-		DishCreationPageComponent,
+		IngredientCreationPageComponent,
 	],
 	imports: [
 		CommonModule,
@@ -17,7 +17,7 @@ import { DishCreationPageComponent } from './components/dish-creation-page/dish-
 		SharedModule,
 	],
 	exports: [
-		DishCreationPageComponent,
+		IngredientCreationPageComponent,
 	],
 })
-export class DishCreationPageModule { }
+export class IngredientCreationPageModule { }

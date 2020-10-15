@@ -91,7 +91,6 @@ export class DishCreationPageComponent implements AfterViewInit, OnDestroy {
 	) {
 		this.ingredientsSubscription = this.ingredientsService.getAll().subscribe( (ingredients) => {
 			this.ingredients = ingredients;
-			console.log(this.ingredients);
 		});
 	}
 

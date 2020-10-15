@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Data, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { filter, map, mergeMap, switchMap } from 'rxjs/operators';
+import { filter, mergeMap, switchMap } from 'rxjs/operators';
 import { RouteData } from 'src/app/interfaces/route-data.interface';
 import { PageTitleService } from '../../services/page-title/page-title.service';
 

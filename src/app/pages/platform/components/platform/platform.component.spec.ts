@@ -1,7 +1,9 @@
 import { CUSTOM_ELEMENTS_SCHEMA, StaticProvider } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth/auth.service';
 import { User } from 'src/app/models/user.model';
+import { PageTitleService } from 'src/app/pages/root/services/page-title/page-title.service';
 import { PlatformComponent } from './platform.component';
 
 // tslint:disable: no-magic-numbers no-any
@@ -29,6 +31,25 @@ describe( 'PlatformComponent', ( ) => {
 								get: jest.fn( ),
 							});
 							return _authService;
+						},
+					},
+					{
+						provide: PageTitleService,
+						useFactory: ( ): Partial<PageTitleService> => {
+							const _pageTitleService: Partial<PageTitleService> = { };
+							Object.defineProperty( _pageTitleService, 'routeTitle', {
+								get: jest.fn( ),
+							});
+							return _pageTitleService;
+						},
+					},
+					{
+						provide: Router,
+						useFactory: ( ): Partial<Router> => {
+							const _router: Partial<Router> = {
+								navigate: jest.fn( ),
+							};
+							return _router;
 						},
 					},
 				],
