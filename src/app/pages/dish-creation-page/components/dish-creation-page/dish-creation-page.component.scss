@@ -12,3 +12,33 @@
 	color: hsla( 0, 0%, 0%, 0.75 );
 	margin-bottom: 2.5rem;
 }
+
+.dish_creation_form {
+	display: flex;
+	flex-flow: column nowrap;
+}
+
+.dish_creation_form_field {
+	width: 20rem;
+	font-size: 16px;
+
+	&__error_message_container {
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: space-between;
+	}
+
+	&__form_error {
+		margin: 2rem 0 0 0;
+	}
+
+	&__submit_button {
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: center;
+		margin: 2rem 0 0 0;
+		text-align: center;
+		text-transform: uppercase;
+	}
+
+}

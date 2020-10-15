@@ -18,7 +18,7 @@ export class FuzzySearchService {
 	 * @param targetText The text on which to check if the search text is fuzzily contained.
 	 */
 	public isFuzzilyIncludedInText( searchText: string, targetText: string ): boolean {
-		const normalizedSearchText: string = this.normalizeText( searchText );
+		const normalizedSearchText: string = this.normalizeText( searchText || '' );
 		const normalizedTargetText: string = this.normalizeText( targetText );
 
 		const regexText: string = normalizedSearchText.split( '' ).join( '(?:.*)' );

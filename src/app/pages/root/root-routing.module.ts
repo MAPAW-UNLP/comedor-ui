@@ -31,6 +31,7 @@ import { PurchasedTicketsPageModule } from '../purchased-tickets-page/purchased-
 import { ShoppingCartPageComponent } from '../shopping-cart-page/components/shopping-cart-page/shopping-cart-page.component';
 import { ShoppingCartPageModule } from '../shopping-cart-page/shopping-cart-page.module';
 
+
 const routes: ComedorUniversitarioRoutes = [
 	{
 		path: 'ingresar',

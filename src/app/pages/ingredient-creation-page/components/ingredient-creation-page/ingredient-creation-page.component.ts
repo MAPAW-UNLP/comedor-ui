@@ -4,7 +4,7 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { tap } from 'rxjs/operators';
 import { MeasurementUnit } from 'src/app/enums/measurement-unit.enum';
 import { FuzzySearchService } from 'src/app/shared/services/fuzzy-search/fuzzy-search.service';
-import { IngredientCreationResponseDTO } from 'src/app/shared/services/ingredients/dto/ingredient-creation-response.dto';
+import { IngredientRecipeDTO } from 'src/app/shared/services/ingredients/dto/ingredient-recipe.dto';
 import { IngredientsService } from 'src/app/shared/services/ingredients/ingredients.service';
 import { autocompleteValidator } from 'src/app/shared/validators/autocomplete.validator';
 import { MeasurementUnitAutocompleteOption } from './interfaces/measurement-unit-autocomplete-option.interface';
@@ -26,10 +26,6 @@ export class IngredientCreationPageComponent implements AfterViewInit {
 			label: 'Centímetros cúbicos',
 		},
 		{
-			value: MeasurementUnit.CubicMillimetre,
-			label: 'Milímetros cúbicos',
-		},
-		{
 			value: MeasurementUnit.Gram,
 			label: 'Gramos',
 		},
@@ -40,10 +36,6 @@ export class IngredientCreationPageComponent implements AfterViewInit {
 		{
 			value: MeasurementUnit.Litre,
 			label: 'Litros',
-		},
-		{
-			value: MeasurementUnit.Milligram,
-			label: 'Miligramos',
 		},
 		{
 			value: MeasurementUnit.Millilitre,
@@ -198,7 +190,7 @@ export class IngredientCreationPageComponent implements AfterViewInit {
 				}),
 			)
 			.subscribe({
-				next: ( response: IngredientCreationResponseDTO ) => {
+				next: ( response: IngredientRecipeDTO ) => {
 					this.showSnackBar(
 						`El ingrediente se creó exitosamente`
 					);

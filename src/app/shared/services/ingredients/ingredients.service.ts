@@ -1,11 +1,11 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { catchError, shareReplay, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { shareReplay } from 'rxjs/operators';
 import { MeasurementUnit } from 'src/app/enums/measurement-unit.enum';
 import { EnvironmentService } from 'src/app/pages/root/services/environment/environment.service';
-import { IngredientCreationResponseDTO } from './dto/ingredient-creation-response.dto';
 import { IngredientCreationRequestDTO } from './dto/ingredient-creation-request.dto';
+import { IngredientRecipeDTO } from './dto/ingredient-recipe.dto';
 
 @Injectable({
 	providedIn: 'root',
@@ -20,15 +20,36 @@ export class IngredientsService {
 	public create(
 		ingredientName: string,
 		measurementUnit: MeasurementUnit,
-	): Observable<IngredientCreationResponseDTO> {
-		const url: string = this.environmentService.getEndpoint( 'ingredients' );
+	): Observable<IngredientRecipeDTO> {
+		const url: string = `${this.environmentService.getEndpoint( 'ingredientRecipe' )}/save`;
 		const ingredientCreationRequestDTO: IngredientCreationRequestDTO = {
 			name: ingredientName,
 			measurement: measurementUnit,
 		};
 
 		return this.httpClient
-			.post<IngredientCreationResponseDTO>( url, ingredientCreationRequestDTO )
+			.put<IngredientRecipeDTO>( url, ingredientCreationRequestDTO )
+			.pipe(
+				// Avoid sending multiple concurrent requests.
+				shareReplay( ),
+			);
+	}
+
+	public getAll(): Observable<IngredientRecipeDTO[]> {
+		const url: string = `${this.environmentService.getEndpoint( 'ingredientRecipe' )}/`;
+		return this.httpClient
+			.get<IngredientRecipeDTO[]>( url )
+			.pipe(
+				// Avoid sending multiple concurrent requests.
+				shareReplay( ),
+			);
+	}
+
+	public get(ingredientId: string): Observable<IngredientRecipeDTO> {
+		const url: string = `${this.environmentService.getEndpoint( 'ingredientRecipe' )}/`;
+		const params = { id: ingredientId };
+		return this.httpClient
+			.get<IngredientRecipeDTO>( url, { params })
 			.pipe(
 				// Avoid sending multiple concurrent requests.
 				shareReplay( ),

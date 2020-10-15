@@ -13,6 +13,7 @@ export const environment: Environment = {
 	},
 	resourcePaths: {
 		login: '/login',
-		ingredients: '/api/ingredients',
+		ingredientRecipe: '/api/ingredientRecipe',
+		dishRecipe: '/api/dishRecipe',
 	},
 };
