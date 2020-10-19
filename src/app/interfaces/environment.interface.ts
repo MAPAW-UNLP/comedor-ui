@@ -36,6 +36,7 @@ export interface Environment {
 		readonly login: string;
 		readonly ingredientRecipe: string;
 		readonly dishRecipe: string;
+		readonly kitchenSite: string;
 
 	};
 

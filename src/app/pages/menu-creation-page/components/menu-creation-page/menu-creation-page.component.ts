@@ -5,6 +5,8 @@ import { FuzzySearchService } from 'src/app/shared/services/fuzzy-search/fuzzy-s
 import { autocompleteValidator } from 'src/app/shared/validators/autocomplete.validator';
 import moment, { Moment } from 'moment';
 import { MatDatepicker } from '@angular/material/datepicker';
+import { KitchenSitesService } from 'src/app/shared/services/kitchenSites/kitchen-sites.service';
+import { KitchenSiteDTO } from 'src/app/shared/services/kitchenSites/dto/kitchen-site.dto';
 
 
 interface AutocompleteData {
@@ -20,7 +22,7 @@ interface AutocompleteData {
 	templateUrl: './menu-creation-page.component.html',
 	styleUrls: [ './menu-creation-page.component.scss' ],
 })
-export class MenuCreationPageComponent {
+export class MenuCreationPageComponent{
 
 	private readonly avalibleCombos: AutocompleteData[ ] = [
 		{
@@ -37,20 +39,7 @@ export class MenuCreationPageComponent {
 		}
 	];
 
-	public readonly kitchenSites: AutocompleteData[ ] = [
-		{
-			value: '1',
-			label: 'Everton',
-		},
-		{
-			value: '2',
-			label: 'Este',
-		},
-		{
-			value: '3',
-			label: 'Oeste',
-		}
-	];
+	public kitchenSites: KitchenSiteDTO[ ] = [];
 
 	@ViewChild( 'datepicker' )
 	public readonly datepickerInputRef!: ElementRef<HTMLInputElement>;
@@ -58,8 +47,6 @@ export class MenuCreationPageComponent {
 	public readonly pickerInputRef!: MatDatepicker<Moment | undefined>;
 
 	private readonly avalibleCombosLabels: string[] =  this.avalibleCombos.map((c) => c.label);
-
-	private readonly kitchenSitesLabels: string[] = this.kitchenSites.map((ks) => ks.label);
 
 	private readonly _comboFieldName: string = 'comboField';
 	private readonly _anticipationFieldName: string = 'anticipationField';
@@ -94,7 +81,7 @@ export class MenuCreationPageComponent {
 				Validators.min(1)
 			],
 		}),
-		[ this._kitchenSitesFieldName ]: new FormControl( this.kitchenSitesLabels, {
+		[ this._kitchenSitesFieldName ]: new FormControl( [], {
 			validators: [
 				Validators.required,
 			],
@@ -110,8 +97,14 @@ export class MenuCreationPageComponent {
 
 	public constructor(
 		private readonly fuzzySearchService: FuzzySearchService,
+		private readonly kitchenSitesService: KitchenSitesService,
 		private readonly snackBar: MatSnackBar,
-	) { }
+	) {
+		this.kitchenSitesService.getAll().subscribe( (r) => {
+			this.kitchenSites = r;
+			this.kitchenSiteField.setValue(this.kitchenSitesLabels(r));
+		});
+	}
 
 	private showSnackBar( message: string ): void {
 		const closeButtonText: string = 'CERRAR';
@@ -121,6 +114,10 @@ export class MenuCreationPageComponent {
 			verticalPosition: 'bottom',
 		};
 		this.snackBar.open( message, closeButtonText, snackBarConfiguration );
+	}
+
+	private  kitchenSitesLabels(kitchenSites: KitchenSiteDTO[]): string[] {
+		return kitchenSites.map((ks) => ks.name);
 	}
 
 	/**

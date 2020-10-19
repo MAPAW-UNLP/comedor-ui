@@ -118,8 +118,8 @@
 							Todas
 						</span>
 					</mat-select-trigger>
-					<mat-option *ngFor="let kitchenSite of kitchenSites" [value]="kitchenSite.label">
-						{{ kitchenSite.label }}
+					<mat-option *ngFor="let kitchenSite of kitchenSites" [value]="kitchenSite.name">
+						{{ kitchenSite.name }}
 					</mat-option>
 				</mat-select>
 				<mat-error

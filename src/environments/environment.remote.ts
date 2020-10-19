@@ -13,5 +13,6 @@ export const environment: Environment = {
 		login: '/login',
 		ingredientRecipe: '/api/ingredientRecipe',
 		dishRecipe: '/api/dishRecipe',
+		kitchenSite: '/api/kitchenSite'
 	},
 };
