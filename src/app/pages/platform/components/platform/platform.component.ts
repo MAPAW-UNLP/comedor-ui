@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth/auth.service';
 import { siteTitle } from 'src/app/constants/site-title.constant';
 import { PageTitleService } from 'src/app/pages/root/services/page-title/page-title.service';
+import { CartService } from 'src/app/shared/services/cart/cart.service';
 
 /**
  * Top-level component for the Platform module.
@@ -73,6 +74,7 @@ export class PlatformComponent {
 
 	public constructor(
 		private readonly authService: AuthService,
+		public readonly cartService: CartService,
 		private readonly pageTitleService: PageTitleService,
 		private readonly router: Router,
 	) { }
@@ -104,6 +106,11 @@ export class PlatformComponent {
 	public handleNavigationFromSidenav( targetUrl: string ): void {
 		this.router.navigate([ targetUrl ]);
 		this.closeSidenav( );
+	}
+
+	public getCartCount(): number | undefined {
+		const cartCount = this.cartService.getAmountOfItems();
+		return cartCount > 0 ? cartCount : undefined;
 	}
 
 }

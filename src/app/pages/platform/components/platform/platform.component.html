@@ -93,7 +93,7 @@
 			<button *ngIf="aClientIsAuthenticated"
 				mat-icon-button
 				color="white"
-				[matBadge]="1592"
+				[matBadge]="getCartCount()"
 				matBadgeColor="warn"
 				(click)="handleNavigationFromSidenav( '/carro-de-compras' )"
 			>

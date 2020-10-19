@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CartService } from 'src/app/shared/services/cart/cart.service';
 
 /**
  * Top-level component of the ShoppingCartPage module.
@@ -14,7 +15,10 @@ export class ShoppingCartPageComponent implements OnInit {
 	public firstFormGroup!: FormGroup;
 	public cardInfoFormGroup!: FormGroup;
 
-	public constructor(private readonly _formBuilder: FormBuilder) { }
+	public constructor(
+		private readonly _formBuilder: FormBuilder,
+		public readonly cartService: CartService,
+		) { }
 
 	public ngOnInit() {
 		this.firstFormGroup = this._formBuilder.group({
