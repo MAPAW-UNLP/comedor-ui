@@ -16,6 +16,7 @@ export const environment: Environment = {
 		ingredientRecipe: '/api/ingredientRecipe',
 		dishRecipe: '/api/dishRecipe',
 		kitchenSite: '/api/kitchenSite',
-		meals: '/api/meal'
+		meals: '/api/meal',
+		menus: '/api/menu',
 	},
 };

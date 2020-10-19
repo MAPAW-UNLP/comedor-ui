@@ -164,7 +164,7 @@
 			</button>
 		</mat-grid-tile>
 	</mat-grid-list>
-	<mat-grid-list cols="4" rowHeight="20px" *ngIf="this.sellingDatesField.value.length">
+	<mat-grid-list cols="4" rowHeight="20px" *ngIf="this.sellingDatesField.value?.length">
 		<mat-grid-tile [colspan]="1" [rowspan]="1">
 			<label>Fechas elegidas</label>
 		</mat-grid-tile>
@@ -174,7 +174,7 @@
 			<label>Elige al menos una fecha</label>
 		</mat-grid-tile>
 	</mat-grid-list>
-	<mat-grid-list cols="4" rowHeight="100px" *ngFor="let selectedDate of this.sellingDatesField.value">
+	<mat-grid-list cols="4" rowHeight="100px" *ngFor="let selectedDate of this.sellingDatesField?.value">
 		<mat-grid-tile [colspan]="1" [rowspan]="1">
 			<label>{{ formatDate(selectedDate) }}</label>
 		</mat-grid-tile>
@@ -189,9 +189,9 @@
 		<mat-grid-tile [colspan]="1" [rowspan]="1">
 			<button
 				mat-raised-button
-				[disabled]="menuCreationForm.invalid"
 				color="accent"
 				type="submit"
+				[disabled]="isWaitingForServerResponse"
 				(click)="create()"
 			>
 				Crear

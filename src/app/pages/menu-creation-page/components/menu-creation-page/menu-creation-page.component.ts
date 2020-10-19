@@ -9,12 +9,9 @@ import { KitchenSitesService } from 'src/app/shared/services/kitchenSites/kitche
 import { KitchenSiteDTO } from 'src/app/shared/services/kitchenSites/dto/kitchen-site.dto';
 import { MealsService } from 'src/app/shared/services/meals/meals.service';
 import { MealDTO } from 'src/app/shared/services/meals/dto/meal.dto';
-
-
-interface AutocompleteData {
-	value: string;
-	label: string;
-}
+import { MenusService } from 'src/app/shared/services/menus/menus.service';
+import { MenuCreationRequestDTO } from 'src/app/shared/services/menus/dto/menu-creation-request.dto';
+import { tap } from 'rxjs/operators';
 
 /**
  * Top-level component of the MenuCreationPage module.
@@ -79,12 +76,13 @@ export class MenuCreationPageComponent{
 		}),
 	});
 
-	// private _isWaitingForServerResponse: boolean = false;
+	public isWaitingForServerResponse: boolean = false;
 
 	public constructor(
 		private readonly fuzzySearchService: FuzzySearchService,
 		private readonly kitchenSitesService: KitchenSitesService,
 		private readonly mealsService: MealsService,
+		private readonly menusService: MenusService,
 		private readonly snackBar: MatSnackBar,
 	) {
 		this.kitchenSitesService.getAll().subscribe( (r) => {
@@ -118,16 +116,35 @@ export class MenuCreationPageComponent{
 		return this.avalibleCombos.map((ks) => ks.name);
 	}
 
+	private getComboByName( name: string ): MealDTO {
+		const combo: MealDTO | undefined = this.avalibleCombos
+			.find( ( option ) => option.name === name );
+
+		if ( combo === undefined ) {
+			throw new Error( `There's no combo with label "${ name }".` );
+		}
+		else {
+			return combo;
+		}
+	}
+
+	private getKitchenSitesByNames( names: string[]): KitchenSiteDTO[] {
+		const kitchenSites: KitchenSiteDTO[] = this.kitchenSites
+			.filter( ( option ) => names.includes(option.name) );
+
+		if (kitchenSites.length === 0) {
+			throw new Error( `There's no kitchen sites with names "${ names }".` );
+		}
+		else {
+			return kitchenSites;
+		}
+	}
 
 	/**
 	 * The form group for authentication displayed on the page.
 	 */
 	public get menuCreationForm( ): FormGroup {
 		return this._menuCreationForm;
-	}
-
-	public displayCombosLabels(combo: AutocompleteData): string {
-		return combo.label;
 	}
 
 	public get comboField( ): AbstractControl {
@@ -193,6 +210,53 @@ export class MenuCreationPageComponent{
 	}
 
 	public create(): void {
-		console.log('date');
+		if (this.menuCreationForm.invalid) {
+			return ;
+		}
+
+		this.isWaitingForServerResponse = true;
+
+		const name: string = this.comboField.value; // TODO PEDIR QUE LO SAQUEN - NO APLICA
+		const meal: MealDTO = this.getComboByName(this.comboField.value);
+		const anticipationDays = Number.parseInt(this.anticipationField.value);
+		const stock = Number.parseInt(this.stockField.value);
+		const unitPrice = Number.parseInt(this.priceField.value);
+		const kitchenSites = this.getKitchenSitesByNames(this.kitchenSiteField.value).map((ks) => { return { id: ks.id}; });
+		const habilitedDates = this.sellingDatesField.value.map((s: string) => moment(s, 'DD/MM/YYYY').format('YYYY-MM-DD'));
+		const body: MenuCreationRequestDTO = {
+			name,
+			meal: {
+				id: meal.id
+			},
+			anticipationDays,
+			stock,
+			unitPrice,
+			kitchenSites,
+			habilitedDates
+		};
+		this.menusService.create(body)
+		.pipe(
+			tap({
+				next: ( ) => {
+					this.isWaitingForServerResponse = false;
+				},
+				error: ( ) => {
+					this.isWaitingForServerResponse = false;
+				},
+			}),
+		)
+		.subscribe({
+			next: ( response: any ) => {
+				this.showSnackBar(
+					`El menú se creó exitosamente`
+				);
+				this.menuCreationForm.reset( );
+			},
+			error: ( error: Error ) => {
+				this.showSnackBar(
+					`Ocurió un error al crear el menú, intente nuevamente`
+				);
+			},
+		});
 	}
 }
