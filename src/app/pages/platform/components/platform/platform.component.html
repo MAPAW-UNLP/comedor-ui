@@ -90,6 +90,15 @@
 					<span class="app_bar__route_title">{{ routeTitle }}</span>
 				</ng-container>
 			</div>
+			<button *ngIf="aClientIsAuthenticated"
+				mat-icon-button
+				color="white"
+				[matBadge]="1592"
+				matBadgeColor="warn"
+				(click)="handleNavigationFromSidenav( '/carro-de-compras' )"
+			>
+				<mat-icon>shopping_cart</mat-icon>
+			</button>
 			<span class="app_bar__user_name">
 				Hola, <strong>{{ fullNameOfAuthenticatedUser }}</strong>
 			</span>

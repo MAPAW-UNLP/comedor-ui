@@ -1,1 +1,72 @@
-<h2 class="page_title">Carro de compras</h2>
+<mat-horizontal-stepper [linear]="true" #stepper>
+	<mat-step>
+		<ng-template matStepLabel>Resumen de compra</ng-template>
+			<mat-form-field>
+				<mat-label>Name</mat-label>
+				<input matInput placeholder="Last name, First name" required>
+			</mat-form-field>
+			<button mat-button matStepperNext>Siguiente</button>
+	</mat-step>
+	<mat-step [stepControl]="cardInfoFormGroup" label="Completa los datos de la tarjeta">
+	  <form [formGroup]="cardInfoFormGroup">
+		<mat-grid-list cols="6" rowHeight="100px">
+			<mat-grid-tile colspan="1">
+				<mat-form-field>
+					<mat-label>Nombre del titular</mat-label>
+					<input matInput
+						formControlName="name"
+						placeholder="Nombre del titular"
+						required
+					>
+				</mat-form-field>
+			</mat-grid-tile>
+			<mat-grid-tile colspan="1">
+				<mat-form-field>
+					<mat-label>Número de tarjeta</mat-label>
+					<input matInput
+						formControlName="cardNumber"
+						placeholder="XXXXXXXXXXXXX"
+						required
+					>
+				  </mat-form-field>
+			</mat-grid-tile>
+		</mat-grid-list>
+		<mat-grid-list cols="6" rowHeight="100px">
+			<mat-grid-tile colspan="1">
+				<mat-form-field>
+					<mat-label>Vencimiento</mat-label>
+					<input 	matInput
+							formControlName="expirancy"
+							placeholder="MMAA"
+							required
+					>
+			  	</mat-form-field>
+			</mat-grid-tile>
+			<mat-grid-tile colspan="1">
+			  <mat-form-field>
+				<mat-label>CCV</mat-label>
+				<input 	matInput
+						formControlName="ccv"
+						placeholder="CCV"
+						required
+				>
+			  </mat-form-field>
+			</mat-grid-tile>
+		</mat-grid-list>
+		<mat-grid-list cols="6" rowHeight="100px">
+			<mat-grid-tile colspan="1">
+				<button mat-button matStepperPrevious>Volver</button>
+		  		<button mat-button matStepperNext>Siguiente</button>
+			</mat-grid-tile>
+		</mat-grid-list>
+	  </form>
+	</mat-step>
+	<mat-step>
+	  <ng-template matStepLabel>Confirmar compra</ng-template>
+	  <p>You are now done.</p>
+	  <div>
+		<button mat-button matStepperPrevious>Volver</button>
+		<button mat-button mat-raised-button color="accent" (click)="stepper.reset()">Comprar</button>
+	  </div>
+	</mat-step>
+  </mat-horizontal-stepper>
