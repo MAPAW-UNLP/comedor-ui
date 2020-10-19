@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MenuCreationPageComponent } from './components/menu-creation-page/menu-creation-page.component';
 
@@ -12,6 +13,7 @@ import { MenuCreationPageComponent } from './components/menu-creation-page/menu-
 	],
 	imports: [
 		CommonModule,
+		ReactiveFormsModule,
 		SharedModule,
 	],
 	exports: [

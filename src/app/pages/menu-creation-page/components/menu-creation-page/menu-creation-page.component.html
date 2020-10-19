@@ -1,1 +1,202 @@
-<h2 class="page_title">Crear menú</h2>
+<form class="creation_form" [formGroup]="menuCreationForm">
+	<mat-grid-list cols="4" rowHeight="100px">
+		<mat-grid-tile [colspan]="4" [rowspan]="1">
+			<h2 class="page_title">Crear menú</h2>
+		</mat-grid-tile>
+		<mat-grid-tile [colspan]="1" [rowspan]="1">
+			<mat-form-field appearance="standard">
+				<mat-label>Combo</mat-label>
+				<input
+					#comboAutocomplete
+					placeholder="Seleccioná un combo"
+					matInput
+					type="text"
+					appearance="fill"
+					[formControl]="comboField"
+					[matAutocomplete]="auto"
+				>
+				<mat-hint align="start">
+					Ingresa el nombre del combo
+				</mat-hint>
+				<mat-autocomplete #auto="matAutocomplete">
+					<mat-option *ngFor="let combo of filteredCombosOptions" [value]="combo.label">
+					{{ combo.label }}
+					</mat-option>
+				</mat-autocomplete>
+				<mat-error
+					*ngIf="this.comboField.hasError( 'required' ) || this.comboField.hasError( 'autocomplete' )"
+					align="start"
+				>
+					<span>Debes seleccionar un combo de la lista</span>
+				</mat-error>
+			</mat-form-field>
+		</mat-grid-tile>
+		<mat-grid-tile [colspan]="1" [rowspan]="1">
+			<mat-form-field appearance="standard">
+				<mat-label>Anticipación mínima</mat-label>
+				<input
+					#anticipation
+					placeholder="0"
+					matInput
+					appearance="fill"
+					[formControl]="anticipationField"
+					inputmode="numeric"
+					pattern="[0-9]*"
+					digitOnly
+				>
+				<mat-hint align="start">
+					Cantidad de dias de anticipación
+				</mat-hint>
+				<mat-error
+					*ngIf="this.anticipationField.hasError( 'required' ) || this.anticipationField.hasError( 'min' )"
+					align="start"
+				>
+					<span>Debes ingresar un numero superior a 0</span>
+				</mat-error>
+			</mat-form-field>
+		</mat-grid-tile>
+		<mat-grid-tile [colspan]="1" [rowspan]="1">
+			<mat-form-field appearance="standard">
+				<mat-label>Stock</mat-label>
+				<input
+					#stock
+					placeholder="100"
+					matInput
+					appearance="fill"
+					[formControl]="stockField"
+					inputmode="numeric"
+					pattern="[0-9]*"
+					digitOnly
+				>
+				<mat-hint align="start">
+					Stock disponible
+				</mat-hint>
+				<mat-error
+					*ngIf="this.stockField.hasError( 'required' ) || this.stockField.hasError( 'min' )"
+					align="start"
+				>
+					<span>Debes ingresar un numero superior a 0</span>
+				</mat-error>
+			</mat-form-field>
+		</mat-grid-tile>
+		<mat-grid-tile [colspan]="1" [rowspan]="1">
+			<mat-form-field appearance="standard">
+				<mat-label>Precio</mat-label>
+				<input
+					#price
+					placeholder="100"
+					matInput
+					appearance="fill"
+					[formControl]="priceField"
+					inputmode="numeric"
+					pattern="[0-9]*"
+					digitOnly
+				>
+				<mat-hint align="start">
+					Precio del menú
+				</mat-hint>
+				<mat-error
+					*ngIf="this.priceField.hasError( 'required' ) || this.priceField.hasError( 'min' )"
+					align="start"
+				>
+					<span>Debes ingresar un numero superior a 0</span>
+				</mat-error>
+			</mat-form-field>
+		</mat-grid-tile>
+		<mat-grid-tile [colspan]="3" [rowspan]="1">
+			<mat-form-field appearance="standard">
+				<mat-label>Sedes</mat-label>
+				<mat-select
+					[formControl]="kitchenSiteField"
+					multiple
+				>
+					<mat-select-trigger>
+						<span *ngIf="kitchenSiteField.value?.length < kitchenSites.length">
+							{{ kitchenSiteField.value }}
+						</span>
+						<span *ngIf="kitchenSiteField.value?.length === kitchenSites.length">
+							Todas
+						</span>
+					</mat-select-trigger>
+					<mat-option *ngFor="let kitchenSite of kitchenSites" [value]="kitchenSite.label">
+						{{ kitchenSite.label }}
+					</mat-option>
+				</mat-select>
+				<mat-error
+					*ngIf="this.kitchenSiteField.hasError( 'required' )"
+					align="start"
+				>
+					<span>Debes seleccionar al menos una sede</span>
+				</mat-error>
+			</mat-form-field>
+		</mat-grid-tile>
+	</mat-grid-list>
+	<mat-grid-list cols="5" rowHeight="100px">
+	<mat-grid-tile [colspan]="1" [rowspan]="1">
+		<h2>Fechas de venta</h2>
+	</mat-grid-tile>
+	</mat-grid-list>
+	<mat-grid-list cols="4" rowHeight="100px">
+		<mat-grid-tile [colspan]="1" [rowspan]="1">
+			<mat-form-field appearance="standard">
+				<input
+					#datepicker
+					matInput
+					readonly
+					[min]="minDate"
+					[matDatepicker]="picker"
+					[matDatepickerFilter]="datePickerFilter"
+					placeholder="Selecciona una fecha"
+				>
+				<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+				<mat-datepicker #picker></mat-datepicker>
+
+			</mat-form-field>
+		</mat-grid-tile>
+		<mat-grid-tile [colspan]="1" [rowspan]="1">
+			<button
+				mat-raised-button
+				color="primary"
+				(click)="addDate()"
+				type="button"
+			>
+				Agregar fecha
+			</button>
+		</mat-grid-tile>
+	</mat-grid-list>
+	<mat-grid-list cols="4" rowHeight="20px" *ngIf="this.sellingDatesField.value.length">
+		<mat-grid-tile [colspan]="1" [rowspan]="1">
+			<label>Fechas elegidas</label>
+		</mat-grid-tile>
+	</mat-grid-list>
+	<mat-grid-list cols="4" rowHeight="20px" *ngIf="this.sellingDatesField.invalid">
+		<mat-grid-tile [colspan]="1" [rowspan]="1">
+			<label>Elige al menos una fecha</label>
+		</mat-grid-tile>
+	</mat-grid-list>
+	<mat-grid-list cols="4" rowHeight="100px" *ngFor="let selectedDate of this.sellingDatesField.value">
+		<mat-grid-tile [colspan]="1" [rowspan]="1">
+			<label>{{ formatDate(selectedDate) }}</label>
+		</mat-grid-tile>
+		<mat-grid-tile [colspan]="1" [rowspan]="1">
+			<button mat-raised-button color="warn" type="button" (click)="removeDate(selectedDate)">
+				Eliminar
+			</button>
+		</mat-grid-tile>
+
+	</mat-grid-list>
+	<mat-grid-list cols="4" rowHeight="100px">
+		<mat-grid-tile [colspan]="1" [rowspan]="1">
+			<button
+				mat-raised-button
+				[disabled]="menuCreationForm.invalid"
+				color="accent"
+				type="submit"
+				(click)="create()"
+			>
+				Crear
+			</button>
+		</mat-grid-tile>
+
+	</mat-grid-list>
+</form>
