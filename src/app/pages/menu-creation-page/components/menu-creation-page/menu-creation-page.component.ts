@@ -7,6 +7,8 @@ import moment, { Moment } from 'moment';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { KitchenSitesService } from 'src/app/shared/services/kitchenSites/kitchen-sites.service';
 import { KitchenSiteDTO } from 'src/app/shared/services/kitchenSites/dto/kitchen-site.dto';
+import { MealsService } from 'src/app/shared/services/meals/meals.service';
+import { MealDTO } from 'src/app/shared/services/meals/dto/meal.dto';
 
 
 interface AutocompleteData {
@@ -24,20 +26,7 @@ interface AutocompleteData {
 })
 export class MenuCreationPageComponent{
 
-	private readonly avalibleCombos: AutocompleteData[ ] = [
-		{
-			value: '1',
-			label: 'Mila',
-		},
-		{
-			value: '2',
-			label: 'Pizza',
-		},
-		{
-			value: '3',
-			label: 'Pollo',
-		}
-	];
+	public avalibleCombos: MealDTO[ ] = [];
 
 	public kitchenSites: KitchenSiteDTO[ ] = [];
 
@@ -45,8 +34,6 @@ export class MenuCreationPageComponent{
 	public readonly datepickerInputRef!: ElementRef<HTMLInputElement>;
 	@ViewChild( 'picker' )
 	public readonly pickerInputRef!: MatDatepicker<Moment | undefined>;
-
-	private readonly avalibleCombosLabels: string[] =  this.avalibleCombos.map((c) => c.label);
 
 	private readonly _comboFieldName: string = 'comboField';
 	private readonly _anticipationFieldName: string = 'anticipationField';
@@ -60,7 +47,6 @@ export class MenuCreationPageComponent{
 		[ this._comboFieldName ]: new FormControl( '', {
 			validators: [
 				Validators.required,
-				autocompleteValidator( this.avalibleCombosLabels ),
 			],
 		}),
 		[ this._anticipationFieldName ]: new FormControl( '', {
@@ -98,11 +84,19 @@ export class MenuCreationPageComponent{
 	public constructor(
 		private readonly fuzzySearchService: FuzzySearchService,
 		private readonly kitchenSitesService: KitchenSitesService,
+		private readonly mealsService: MealsService,
 		private readonly snackBar: MatSnackBar,
 	) {
 		this.kitchenSitesService.getAll().subscribe( (r) => {
 			this.kitchenSites = r;
 			this.kitchenSiteField.setValue(this.kitchenSitesLabels(r));
+		});
+		this.mealsService.getAll().subscribe( (r) => {
+			this.avalibleCombos = r;
+			this.comboField.setValidators([
+				Validators.required,
+				autocompleteValidator( this.avalibleCombosLabels(r) )
+			]);
 		});
 	}
 
@@ -119,6 +113,11 @@ export class MenuCreationPageComponent{
 	private  kitchenSitesLabels(kitchenSites: KitchenSiteDTO[]): string[] {
 		return kitchenSites.map((ks) => ks.name);
 	}
+
+	private  avalibleCombosLabels(combos: MealDTO[]): string[] {
+		return this.avalibleCombos.map((ks) => ks.name);
+	}
+
 
 	/**
 	 * The form group for authentication displayed on the page.
@@ -155,7 +154,7 @@ export class MenuCreationPageComponent{
 		return this.menuCreationForm.controls[ this._sellingDatesFieldName ];
 	}
 
-	public get filteredCombosOptions( ): AutocompleteData[ ] {
+	public get filteredCombosOptions( ): MealDTO[ ] {
 		const fieldText: string = this.comboField.value;
 
 		if ( fieldText === '' ) {
@@ -163,7 +162,7 @@ export class MenuCreationPageComponent{
 		}
 
 		return this.avalibleCombos.filter( ( combo ) => {
-			return this.fuzzySearchService.isFuzzilyIncludedInText( fieldText, combo.label );
+			return this.fuzzySearchService.isFuzzilyIncludedInText( fieldText, combo.name );
 		});
 	}
 

@@ -19,8 +19,8 @@
 					Ingresa el nombre del combo
 				</mat-hint>
 				<mat-autocomplete #auto="matAutocomplete">
-					<mat-option *ngFor="let combo of filteredCombosOptions" [value]="combo.label">
-					{{ combo.label }}
+					<mat-option *ngFor="let combo of filteredCombosOptions" [value]="combo.name">
+					{{ combo.name }}
 					</mat-option>
 				</mat-autocomplete>
 				<mat-error
