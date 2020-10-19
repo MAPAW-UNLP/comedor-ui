@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ShoppingCartPageComponent } from './components/shopping-cart-page/shopping-cart-page.component';
 
@@ -12,6 +13,7 @@ import { ShoppingCartPageComponent } from './components/shopping-cart-page/shopp
 	],
 	imports: [
 		CommonModule,
+		ReactiveFormsModule,
 		SharedModule,
 	],
 	exports: [
