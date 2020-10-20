@@ -95,11 +95,11 @@ export class ShoppingCartPageComponent implements OnInit {
 
 
 	public get expirancyDigitCountToExpected( ): string {
-		return `${ this.cardInfoFormGroup.get('expirancy')?.value?.length } / 4`;
+		return `${ this.cardInfoFormGroup.get('expirancy')?.value?.length || 0 } / 4`;
 	}
 
 	public get ccvDigitCountToExpected( ): string {
-		return `${ this.cardInfoFormGroup.get('ccv')?.value?.length } / 3`;
+		return `${ this.cardInfoFormGroup.get('ccv')?.value?.length || 0 } / 3`;
 	}
 
 	public getCardLastNumbers(): string {
