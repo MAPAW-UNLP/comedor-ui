@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
@@ -23,6 +23,8 @@ interface PaymentMethod {
 	selector: 'cu-shopping-cart-page',
 	templateUrl: './shopping-cart-page.component.html',
 	styleUrls: [ './shopping-cart-page.component.scss' ],
+	// tslint:disable-next-line: use-component-view-encapsulation
+	encapsulation: ViewEncapsulation.None
 })
 export class ShoppingCartPageComponent implements OnInit {
 
@@ -101,8 +103,8 @@ export class ShoppingCartPageComponent implements OnInit {
 	}
 
 	public getCardLastNumbers(): string {
-		const cardNumber = this.cardInfoFormGroup.get('cardNumber')?.value.split('');
-		return cardNumber.slice(cardNumber.length - 4, cardNumber.length ).join('');
+		const cardNumber = this.cardInfoFormGroup.get('cardNumber')?.value?.split('');
+		return cardNumber ? cardNumber.slice(cardNumber.length - 4, cardNumber.length ).join('') : '';
 	}
 
 	public buy(): void {

@@ -13,6 +13,10 @@
 	margin-bottom: 15px;
 }
 
+.mat-step-header {
+	pointer-events: none !important;
+}
+
 .summary {
 	width: 30%;
 	margin-left: 40px;

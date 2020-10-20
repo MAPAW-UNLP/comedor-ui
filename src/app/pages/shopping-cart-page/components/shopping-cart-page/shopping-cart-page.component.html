@@ -66,7 +66,7 @@
 	</div>
 </div>
 
-<mat-vertical-stepper *ngIf="showStepper" [linear]="false" [disableRipple]="true" #stepper>
+<mat-vertical-stepper *ngIf="showStepper" [linear]="true" [disableRipple]="true" #stepper>
 	<mat-step [stepControl]="cardInfoFormGroup" label="Completa los datos de la tarjeta">
 	  <form [formGroup]="cardInfoFormGroup" autocomplete="off">
 		<mat-grid-list cols="6" rowHeight="100px">
