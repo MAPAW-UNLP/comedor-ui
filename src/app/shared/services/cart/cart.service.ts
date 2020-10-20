@@ -43,9 +43,10 @@ export class CartService {
 		return this.cartState;
 	}
 
-	public empty(): void {
+	public empty(): Menu[] {
 		this.cartState = [];
 		this.persistCartOnSession(this.cartState);
+		return this.cartState;
 	}
 
 	public getCartItems(): Menu[] {

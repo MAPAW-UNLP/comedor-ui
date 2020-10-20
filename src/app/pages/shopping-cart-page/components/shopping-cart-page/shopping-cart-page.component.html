@@ -1,62 +1,70 @@
-<div class="container" *ngIf="!showStepper">
-	<div class="cards-holder">
-		<div class="card-container" *ngFor="let menu of cartItems">
-			<cu-menu-card
-				[cardTitle]="menu.name"
-				[price]="menu.unitPrice"
-				[date]="menu.date"
-				[kitchenSiteName]="menu.kitchenSite.name"
-				[menuIsInShoppingCart]="true"
-				[shouldDisplayCartActionButton]="true"
-				(removeFromCartButtonClick)="removeFromCart(menu)"
-			></cu-menu-card>
+<div class="empty-cart" *ngIf="cartItems.length === 0 && !buySucceded">
+	<div>
+		<mat-card-title class="summary-title">
+			<span>Su carrito esta vacio !</span>
+		</mat-card-title>
+	  </div>
+</div>
+<div *ngIf="cartItems.length">
+	<div class="container" *ngIf="!showStepper">
+		<div class="cards-holder">
+			<div class="card-container" *ngFor="let menu of cartItems">
+				<cu-menu-card
+					[cardTitle]="menu.name"
+					[price]="menu.unitPrice"
+					[date]="menu.date"
+					[kitchenSiteName]="menu.kitchenSite.name"
+					[menuIsInShoppingCart]="true"
+					[shouldDisplayCartActionButton]="true"
+					(removeFromCartButtonClick)="removeFromCart(menu)"
+				></cu-menu-card>
+			</div>
+		</div>
+		<div class="summary">
+			<form [formGroup]="paymentMethodFormGroup">
+				<mat-card>
+					<mat-card-title class="summary-title">
+						<span>Resumen de compra</span>
+					</mat-card-title>
+					<mat-card-content class= "summary-content">
+						<ul>
+							<li *ngFor="let menu of cartItems">
+								{{getSummaryOptionText(menu)}}
+							</li>
+						</ul>
+
+						<mat-form-field appearance="standard">
+							<mat-label>Método de pago</mat-label>
+							<mat-select formControlName="paymentMethod">
+								<mat-option *ngFor="let paymentMethod of paymentMethods" [value]="paymentMethod.id">
+								{{paymentMethod.name}}
+								</mat-option>
+							</mat-select>
+							<mat-error
+								*ngIf="this.paymentMethodFormGroup.get('paymentMethod')?.hasError( 'required' )"
+								align="start"
+							>
+								<span>Debes seleccionar un método de pago</span>
+							</mat-error>
+						</mat-form-field>
+					</mat-card-content>
+					<mat-card-title class="summary-title">
+						<span>Total a pagar</span>
+						<span class="summary-price">$ {{getTotalAmount()}}</span>
+					</mat-card-title>
+					<mat-card-actions align="center">
+						<button
+							type="submit"
+							mat-button
+							mat-raised-button
+							color="accent"
+							(click)="proceedToPayment()">Comprar</button>
+					</mat-card-actions>
+				</mat-card>
+			</form>
 		</div>
 	</div>
-	<div class="summary">
-		<form [formGroup]="paymentMethodFormGroup">
-			<mat-card>
-				<mat-card-title class="summary-title">
-					<span>Resumen de compra</span>
-				</mat-card-title>
-				<mat-card-content class= "summary-content">
-					<ul>
-						<li *ngFor="let menu of cartItems">
-							{{getSummaryOptionText(menu)}}
-						</li>
-					</ul>
-
-					<mat-form-field appearance="standard">
-						<mat-label>Método de pago</mat-label>
-						<mat-select formControlName="paymentMethod">
-							<mat-option *ngFor="let paymentMethod of paymentMethods" [value]="paymentMethod.id">
-							{{paymentMethod.name}}
-							</mat-option>
-						</mat-select>
-						<mat-error
-							*ngIf="this.paymentMethodFormGroup.get('paymentMethod')?.hasError( 'required' )"
-							align="start"
-						>
-							<span>Debes seleccionar un método de pago</span>
-						</mat-error>
-					</mat-form-field>
-				</mat-card-content>
-				<mat-card-title class="summary-title">
-					<span>Total a pagar</span>
-					<span class="summary-price">$ {{getTotalAmount()}}</span>
-				</mat-card-title>
-				<mat-card-actions align="center">
-					<button
-						type="submit"
-						mat-button
-						mat-raised-button
-						color="accent"
-						(click)="proceedToPayment()">Comprar</button>
-				</mat-card-actions>
-			</mat-card>
-		</form>
-	</div>
 </div>
-
 
 <mat-vertical-stepper *ngIf="showStepper" [linear]="false" [disableRipple]="true" #stepper>
 	<mat-step [stepControl]="cardInfoFormGroup" label="Completa los datos de la tarjeta">
@@ -148,23 +156,38 @@
 	  </form>
 	</mat-step>
 	<mat-step>
-	  <ng-template matStepLabel>Confirmar compra</ng-template>
-	  <div>
-		<mat-card-title class="summary-title">
-			<span>Resumen de compra</span>
-		</mat-card-title>
-		<mat-card-content class= "summary-content">
-			<ul>
-				<li *ngFor="let menu of cartItems">
-					{{getSummaryOptionText(menu)}}
-				</li>
-				<li><strong>Método de pago: Tarjeta terminada en {{ getCardLastNumbers()}} </strong></li>
-			</ul>
-		</mat-card-content>
-	</div>
-	  <div>
-		<button mat-button matStepperPrevious>Volver</button>
-		<button mat-button mat-raised-button color="accent" (click)="buy()">Confirmar</button>
-	  </div>
+	  	<ng-template matStepLabel>Confirmar compra</ng-template>
+		<div>
+			<mat-card-title class="summary-title">
+				<span>Resumen de compra</span>
+			</mat-card-title>
+			<mat-card-content class= "summary-content">
+				<ul>
+					<li *ngFor="let menu of cartItems">
+						{{getSummaryOptionText(menu)}}
+					</li>
+					<li><strong>Método de pago: Tarjeta terminada en {{ getCardLastNumbers()}} </strong></li>
+				</ul>
+			</mat-card-content>
+	  	</div>
+	  	<div *ngIf="!isWaitingForServerResponse">
+			<button mat-button matStepperPrevious>Volver</button>
+			<button mat-button mat-raised-button color="accent" (click)="buy()">Confirmar</button>
+		</div>
+		<mat-spinner *ngIf="isWaitingForServerResponse"></mat-spinner>
 	</mat-step>
+	<mat-step>
+		<ng-template matStepLabel>Confirmación</ng-template>
+		<div>
+		  <mat-card-title class="summary-title">
+			  <span>{{lastStepMessage}}</span>
+		  </mat-card-title>
+	  </div>
+		<div *ngIf="buySucceded">
+		  <button mat-button mat-raised-button color="accent" (click)="router.navigate([ '/mis-tickets' ]);">Ir a mis tickets</button>
+		</div>
+		<div *ngIf="!buySucceded">
+			<button mat-button mat-raised-button color="accent" (click)="returnToSummary()">Volver a intentar</button>
+		  </div>
+	  </mat-step>
   </mat-vertical-stepper>

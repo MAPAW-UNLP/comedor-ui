@@ -13,7 +13,7 @@ const creditCardRegex = {
 };
 
 export const creditCardNumberValidator: ValidatorFn = ( control ) => {
-	const cardNumber: string = control.value.trim( );
+	const cardNumber: string = control.value.trim( ) || '';
 	if (cardNumber === '') {
 		return null;
 	} else {

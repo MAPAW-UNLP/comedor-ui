@@ -1,8 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatStepper } from '@angular/material/stepper';
+import { Router } from '@angular/router';
 import moment from 'moment';
+import { tap } from 'rxjs/operators';
+import { ConsumptionType } from 'src/app/enums/consumption-type.enum';
 import { Menu } from 'src/app/models/menu.model';
 import { CartService } from 'src/app/shared/services/cart/cart.service';
+import { TicketDTO } from 'src/app/shared/services/tickets/dto/ticket.dto';
+import { TicketsService } from 'src/app/shared/services/tickets/tickets.service';
 import { creditCardExpirancyValidator, creditCardNumberValidator } from 'src/app/shared/validators/credit-card.validator';
 
 
@@ -24,6 +30,9 @@ export class ShoppingCartPageComponent implements OnInit {
 	public paymentMethodFormGroup!: FormGroup;
 	public cardInfoFormGroup!: FormGroup;
 	public cartItems: Menu[] = [];
+	public isWaitingForServerResponse = false;
+	public lastStepMessage: string = '';
+	public buySucceded: boolean = false;
 
 	public paymentMethods: PaymentMethod[] = [
 		{
@@ -32,9 +41,14 @@ export class ShoppingCartPageComponent implements OnInit {
 		}
 	];
 
+	@ViewChild( 'stepper' )
+	public readonly stepperInputRef!: MatStepper;
+
 	public constructor(
 		private readonly _formBuilder: FormBuilder,
 		public readonly cartService: CartService,
+		public readonly ticketService: TicketsService,
+		public readonly router: Router,
 		) { }
 
 	public ngOnInit() {
@@ -64,6 +78,8 @@ export class ShoppingCartPageComponent implements OnInit {
 	}
 
 	public returnToSummary(): void {
+		this.paymentMethodFormGroup.reset();
+		this.cardInfoFormGroup.reset();
 		this.showStepper = false;
 	}
 
@@ -90,6 +106,42 @@ export class ShoppingCartPageComponent implements OnInit {
 	}
 
 	public buy(): void {
+		if (this.cardInfoFormGroup.invalid || this.paymentMethodFormGroup.invalid) {
+			return ;
+		}
+		this.isWaitingForServerResponse = true;
+		const items: TicketDTO[] = this.cartItems.map((ci) => {
+			return {
+				menu: {
+					id: Number.parseInt(ci.id)
+				},
+				ticketType: ConsumptionType.OnSite
+			};
+		});
+		this.ticketService.create({ items })
+		.pipe(
+			tap({
+				next: ( ) => {
+					this.isWaitingForServerResponse = false;
+				},
+				error: ( ) => {
+					this.isWaitingForServerResponse = false;
+				},
+			}),
+		)
+		.subscribe({
+			next: ( response: any ) => {
+				this.buySucceded = true;
+				this.cartItems = this.cartService.empty();
+				this.lastStepMessage = 'Gracias por su compra !';
+				this.stepperInputRef.next();
+			},
+			error: ( error: Error ) => {
+				this.buySucceded = false;
+				this.lastStepMessage = 'Algo salió mal con su compra, intente nuevamente';
+				this.stepperInputRef.next();
+			},
+		});
 
 	}
 }

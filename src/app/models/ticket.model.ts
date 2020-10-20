@@ -3,7 +3,7 @@ import { Meal } from './meal.model';
 import { Menu } from './menu.model';
 import { Entity } from './entity.model';
 import { ConsumptionType } from '../enums/consumption-type.enum';
-import { KitchenSite } from '../enums/kitchen-site.enum';
+import { KitchenSiteDTO } from '../shared/services/kitchenSites/dto/kitchen-site.dto';
 
 /**
  * Model that represents a ticket puchased by a specific client, who can exchange it for its associated meal at
@@ -45,7 +45,7 @@ export class Ticket extends Entity {
 	/**
 	 * The kitchen site where the ticket is valid.
 	 */
-	public get kitchenSite( ): KitchenSite {
+	public get kitchenSite( ): KitchenSiteDTO {
 		return this.menu.kitchenSite;
 	}
 
