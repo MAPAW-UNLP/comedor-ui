@@ -3,3 +3,31 @@
 	color: hsla( 0, 0%, 0%, 0.75 );
 	margin-bottom: 2.5rem;
 }
+
+.cards-holder {
+	width: 60%;
+	height: auto;
+}
+
+.card-container {
+	margin-bottom: 15px;
+}
+
+.summary {
+	width: 30%;
+	margin-left: 40px;
+	&-title {
+		margin-bottom: 20px;
+	}
+	&-price {
+		float: right;
+	}
+	&-content {
+		margin-left: 20px;
+	}
+}
+
+.container {
+	display: flex;
+	margin: 30px;
+}
