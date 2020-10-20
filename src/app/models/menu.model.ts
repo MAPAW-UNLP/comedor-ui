@@ -1,3 +1,4 @@
+import { ConsumptionType } from '../enums/consumption-type.enum';
 import { KitchenSiteDTO } from '../shared/services/kitchenSites/dto/kitchen-site.dto';
 import { Entity } from './entity.model';
 import { Meal } from './meal.model';
@@ -14,6 +15,7 @@ export class Menu extends Entity {
 	private readonly _unitPrice: number;
 	private readonly _currentStock: number;
 	private readonly _name: string;
+	private _consumptionType: ConsumptionType;
 
 	/**
 	 * The unique identifier of the menu.
@@ -64,6 +66,14 @@ export class Menu extends Entity {
 		return this._currentStock;
 	}
 
+	public get consumptionType( ): ConsumptionType {
+		return this._consumptionType;
+	}
+
+	public set consumptionType( type: ConsumptionType) {
+		this._consumptionType = type;
+	}
+
 	public constructor(
 		id: string,
 		name: string,
@@ -72,6 +82,7 @@ export class Menu extends Entity {
 		meal: Meal,
 		unitPrice: number,
 		currentStock: number,
+		consumptionType?: ConsumptionType,
 	) {
 		super( id );
 		this._name = name;
@@ -80,6 +91,7 @@ export class Menu extends Entity {
 		this._meal = meal;
 		this._unitPrice = unitPrice;
 		this._currentStock = currentStock;
+		this._consumptionType = consumptionType ? consumptionType : ConsumptionType.OnSite;
 	}
 
 }

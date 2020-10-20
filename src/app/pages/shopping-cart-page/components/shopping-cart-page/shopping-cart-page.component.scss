@@ -1,47 +1,59 @@
-.page_title {
-	font-size: 48px;
-	color: hsla( 0, 0%, 0%, 0.75 );
-	margin-bottom: 2.5rem;
-}
-
-.cards-holder {
-	width: 60%;
-	height: auto;
-}
-
-.card-container {
-	margin-bottom: 15px;
-}
-
-.mat-step-header {
-	pointer-events: none !important;
-}
-
-.summary {
-	width: 30%;
-	margin-left: 40px;
-	&-title {
-		margin-bottom: 20px;
+cu-shopping-cart-page {
+	.page_title {
+		font-size: 48px;
+		color: hsla( 0, 0%, 0%, 0.75 );
+		margin-bottom: 2.5rem;
 	}
-	&-price {
-		float: right;
+
+	.cards-holder {
+		width: 70%;
+		height: auto;
 	}
-	&-content {
+
+	.card-container {
+		margin-bottom: 15px;
+		display: flex;
+	}
+
+	.mat-step-header {
+		pointer-events: none !important;
+	}
+
+	.summary {
+		width: 30%;
+		margin-left: 40px;
+		&-title {
+			margin-bottom: 20px;
+		}
+		&-price {
+			float: right;
+		}
+		&-content {
+			ul {
+				list-style: none;
+			}
+			mat-icon {
+				margin-right: 10px;
+			}
+		}
+	}
+
+	.checkout-list {
 		margin-left: 20px;
+		margin-top: 20px !important;
+		list-style: none;
+		mat-icon {
+			margin-right: 10px;
+		}
 	}
-}
 
-.checkout-list {
-	margin-left: 20px;
-	margin-top: 20px !important;
-}
+	.container {
+		display: flex;
+		margin: 30px;
+	}
 
-.container {
-	display: flex;
-	margin: 30px;
-}
-
-.empty-cart {
-	margin-left: 100px;
-	margin-top: 50px;
+	.empty-cart {
+		margin-left: 100px;
+		margin-top: 50px;
+	}
 }

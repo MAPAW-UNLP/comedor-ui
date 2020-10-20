@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import { tap } from 'rxjs/operators';
 import { ConsumptionType } from 'src/app/enums/consumption-type.enum';
 import { Menu } from 'src/app/models/menu.model';
@@ -10,7 +10,7 @@ import { CartService } from 'src/app/shared/services/cart/cart.service';
 import { TicketDTO } from 'src/app/shared/services/tickets/dto/ticket.dto';
 import { TicketsService } from 'src/app/shared/services/tickets/tickets.service';
 import { creditCardExpirancyValidator, creditCardNumberValidator } from 'src/app/shared/validators/credit-card.validator';
-
+import { consumptionTypeLabels } from 'src/app/constants/consumption-type-labels.constant';
 
 interface PaymentMethod {
 	id: string;
@@ -51,7 +51,7 @@ export class ShoppingCartPageComponent implements OnInit {
 		public readonly cartService: CartService,
 		public readonly ticketService: TicketsService,
 		public readonly router: Router,
-		) { }
+	) { }
 
 	public ngOnInit() {
 
@@ -76,7 +76,7 @@ export class ShoppingCartPageComponent implements OnInit {
 
 	public getSummaryOptionText(menu: Menu): string {
 		const date = moment(menu.date, ['DD/MM/YYYY', 'YYYY-MM-DD']).locale('es').format('dddd DD/MM/YYYY');
-		return `${menu.name} - ${date} - ${menu.kitchenSite.name}`;
+		return `${menu.name} - ${date} - ${menu.kitchenSite.name} - ${consumptionTypeLabels[menu.consumptionType]}`;
 	}
 
 	public returnToSummary(): void {
@@ -95,11 +95,11 @@ export class ShoppingCartPageComponent implements OnInit {
 
 
 	public get expirancyDigitCountToExpected( ): string {
-		return `${ this.cardInfoFormGroup.get('expirancy')?.value.length } / 4`;
+		return `${ this.cardInfoFormGroup.get('expirancy')?.value?.length } / 4`;
 	}
 
 	public get ccvDigitCountToExpected( ): string {
-		return `${ this.cardInfoFormGroup.get('ccv')?.value.length } / 3`;
+		return `${ this.cardInfoFormGroup.get('ccv')?.value?.length } / 3`;
 	}
 
 	public getCardLastNumbers(): string {
@@ -117,7 +117,7 @@ export class ShoppingCartPageComponent implements OnInit {
 				menu: {
 					id: Number.parseInt(ci.id)
 				},
-				ticketType: ConsumptionType.OnSite
+				ticketType: ci.consumptionType
 			};
 		});
 		this.ticketService.create({ items })
@@ -144,6 +144,10 @@ export class ShoppingCartPageComponent implements OnInit {
 				this.stepperInputRef.next();
 			},
 		});
+	}
 
+	public changeConsumptionType(menu: Menu, type: ConsumptionType): void {
+		menu.consumptionType = type;
+		this.cartService.updateMenu(menu);
 	}
 }

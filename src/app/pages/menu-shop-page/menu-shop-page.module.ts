@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MenuShopPageComponent } from './components/menu-shop-page/menu-shop-page.component';
 
@@ -12,6 +13,7 @@ import { MenuShopPageComponent } from './components/menu-shop-page/menu-shop-pag
 	],
 	imports: [
 		CommonModule,
+		ReactiveFormsModule,
 		SharedModule,
 	],
 	exports: [

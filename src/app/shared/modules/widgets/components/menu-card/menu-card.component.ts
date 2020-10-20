@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { ConsumptionType } from 'src/app/enums/consumption-type.enum';
 import { ConsumptionTypeOption } from './interfaces/consumption-type-option.interface';
+import { consumptionTypeLabels } from 'src/app/constants/consumption-type-labels.constant';
+import moment from 'moment';
 
 /**
  * Dumb component used to display a menu (or meal) in a card list.
@@ -34,11 +36,11 @@ export class MenuCardComponent {
 	private readonly _consumptionTypeOptions: ConsumptionTypeOption[ ] = [
 		{
 			value: ConsumptionType.Takeaway,
-			label: 'Para retirar',
+			label: consumptionTypeLabels.TAKEAWAY,
 		},
 		{
 			value: ConsumptionType.OnSite,
-			label: 'Para consumir en comedor',
+			label: consumptionTypeLabels.ON_SITE,
 		},
 	];
 
@@ -402,6 +404,11 @@ export class MenuCardComponent {
 	 */
 	public handleReplaceInCartButtonClick( ): void {
 		this.replaceInCartButtonClick.emit( undefined );
+	}
+
+	public formatDate(date: string): string {
+		const asMoment = moment(date, 'YYYY-MM-DD').locale('es');
+		return asMoment.format('dddd DD/MM/YYYY');
 	}
 
 }
