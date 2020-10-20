@@ -1,14 +1,74 @@
-<mat-horizontal-stepper [linear]="true" #stepper>
-	<mat-step>
-		<ng-template matStepLabel>Resumen de compra</ng-template>
-			<mat-form-field>
-				<mat-label>Name</mat-label>
-				<input matInput placeholder="Last name, First name" required>
-			</mat-form-field>
-			<button mat-button matStepperNext>Siguiente</button>
-	</mat-step>
+<div class="empty-cart" *ngIf="cartItems.length === 0 && !buySucceded">
+	<div>
+		<mat-card-title class="summary-title">
+			<span>Su carrito esta vacio !</span>
+		</mat-card-title>
+	  </div>
+</div>
+<div *ngIf="cartItems.length">
+	<div class="container" *ngIf="!showStepper">
+		<div class="cards-holder">
+			<div class="card-container" *ngFor="let menu of cartItems">
+				<cu-menu-card
+					[cardTitle]="menu.name"
+					[price]="menu.unitPrice"
+					[date]="menu.date"
+					[kitchenSiteName]="menu.kitchenSite.name"
+					[menuIsInShoppingCart]="true"
+					[shouldDisplayCartActionButton]="true"
+					(removeFromCartButtonClick)="removeFromCart(menu)"
+				></cu-menu-card>
+			</div>
+		</div>
+		<div class="summary">
+			<form [formGroup]="paymentMethodFormGroup">
+				<mat-card>
+					<mat-card-title class="summary-title">
+						<span>Resumen de compra</span>
+					</mat-card-title>
+					<mat-card-content class= "summary-content">
+						<ul>
+							<li *ngFor="let menu of cartItems">
+								{{getSummaryOptionText(menu)}}
+							</li>
+						</ul>
+
+						<mat-form-field appearance="standard">
+							<mat-label>Método de pago</mat-label>
+							<mat-select formControlName="paymentMethod">
+								<mat-option *ngFor="let paymentMethod of paymentMethods" [value]="paymentMethod.id">
+								{{paymentMethod.name}}
+								</mat-option>
+							</mat-select>
+							<mat-error
+								*ngIf="this.paymentMethodFormGroup.get('paymentMethod')?.hasError( 'required' )"
+								align="start"
+							>
+								<span>Debes seleccionar un método de pago</span>
+							</mat-error>
+						</mat-form-field>
+					</mat-card-content>
+					<mat-card-title class="summary-title">
+						<span>Total a pagar</span>
+						<span class="summary-price">$ {{getTotalAmount()}}</span>
+					</mat-card-title>
+					<mat-card-actions align="center">
+						<button
+							type="submit"
+							mat-button
+							mat-raised-button
+							color="accent"
+							(click)="proceedToPayment()">Comprar</button>
+					</mat-card-actions>
+				</mat-card>
+			</form>
+		</div>
+	</div>
+</div>
+
+<mat-vertical-stepper *ngIf="showStepper" [linear]="true" [disableRipple]="true" #stepper>
 	<mat-step [stepControl]="cardInfoFormGroup" label="Completa los datos de la tarjeta">
-	  <form [formGroup]="cardInfoFormGroup">
+	  <form [formGroup]="cardInfoFormGroup" autocomplete="off">
 		<mat-grid-list cols="6" rowHeight="100px">
 			<mat-grid-tile colspan="1">
 				<mat-form-field>
@@ -24,10 +84,17 @@
 				<mat-form-field>
 					<mat-label>Número de tarjeta</mat-label>
 					<input matInput
+						#cardNumber
 						formControlName="cardNumber"
 						placeholder="XXXXXXXXXXXXX"
 						required
 					>
+					<mat-error
+						*ngIf="this.cardInfoFormGroup.get('cardNumber')?.hasError('required') || this.cardInfoFormGroup.get('cardNumber')?.hasError('invalidCardNumberFormat')"
+						align="start"
+					>
+						<span>Ingresa un número de tarjeta válido</span>
+					</mat-error>
 				  </mat-form-field>
 			</mat-grid-tile>
 		</mat-grid-list>
@@ -39,7 +106,26 @@
 							formControlName="expirancy"
 							placeholder="MMAA"
 							required
+							minlength="4"
+							maxlength="4"
+							inputmode="numeric"
+							digitOnly
 					>
+					<mat-hint align="end">
+						{{ expirancyDigitCountToExpected }}
+					</mat-hint>
+					<mat-error
+						*ngIf="this.cardInfoFormGroup.get('expirancy')?.hasError('required') || this.cardInfoFormGroup.get('expirancy')?.hasError('invalidCardExpirancyFormat')"
+						align="start"
+					>
+						<span>Ingresa la fecha de vencimiento en formato MMAA</span>
+					</mat-error>
+					<mat-error
+						*ngIf="this.cardInfoFormGroup.get('expirancy')?.hasError('invalidCardExpirancy')"
+						align="start"
+					>
+						<span>La tarjeta está vencida</span>
+					</mat-error>
 			  	</mat-form-field>
 			</mat-grid-tile>
 			<mat-grid-tile colspan="1">
@@ -49,24 +135,60 @@
 						formControlName="ccv"
 						placeholder="CCV"
 						required
+						minlength="3"
+						maxlength="3"
+						inputmode="numeric"
+						pattern="[0-9]*"
+						digitOnly
 				>
+				<mat-hint align="end">
+					{{ ccvDigitCountToExpected }}
+				</mat-hint>
 			  </mat-form-field>
 			</mat-grid-tile>
 		</mat-grid-list>
 		<mat-grid-list cols="6" rowHeight="100px">
 			<mat-grid-tile colspan="1">
-				<button mat-button matStepperPrevious>Volver</button>
+				<button mat-button (click)="returnToSummary()" >Volver</button>
 		  		<button mat-button matStepperNext>Siguiente</button>
 			</mat-grid-tile>
 		</mat-grid-list>
 	  </form>
 	</mat-step>
 	<mat-step>
-	  <ng-template matStepLabel>Confirmar compra</ng-template>
-	  <p>You are now done.</p>
-	  <div>
-		<button mat-button matStepperPrevious>Volver</button>
-		<button mat-button mat-raised-button color="accent" (click)="stepper.reset()">Comprar</button>
-	  </div>
+	  	<ng-template matStepLabel>Confirmar compra</ng-template>
+		<div>
+			<mat-card-title>
+				<span>Resumen de compra</span>
+			</mat-card-title>
+			<mat-card-content>
+				<ul class="checkout-list">
+					<li *ngFor="let menu of cartItems">
+						{{getSummaryOptionText(menu)}}
+					</li>
+					<li><strong>Método de pago: Tarjeta terminada en {{ getCardLastNumbers()}} </strong></li>
+					<li><strong>Total: $ {{getTotalAmount()}} </strong></li>
+				</ul>
+			</mat-card-content>
+	  	</div>
+	  	<div *ngIf="!isWaitingForServerResponse">
+			<button mat-button matStepperPrevious>Volver</button>
+			<button mat-button mat-raised-button color="accent" (click)="buy()">Confirmar</button>
+		</div>
+		<mat-spinner *ngIf="isWaitingForServerResponse"></mat-spinner>
 	</mat-step>
-  </mat-horizontal-stepper>
+	<mat-step>
+		<ng-template matStepLabel>Confirmación</ng-template>
+		<div>
+		  <mat-card-title class="summary-title">
+			  <span>{{lastStepMessage}}</span>
+		  </mat-card-title>
+	  </div>
+		<div *ngIf="buySucceded">
+		  <button mat-button mat-raised-button color="accent" (click)="router.navigate([ '/mis-tickets' ]);">Ir a mis tickets</button>
+		</div>
+		<div *ngIf="!buySucceded">
+			<button mat-button mat-raised-button color="accent" (click)="returnToSummary()">Volver a intentar</button>
+		  </div>
+	  </mat-step>
+  </mat-vertical-stepper>

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Menu } from 'src/app/models/menu.model';
 
 @Injectable({
 	providedIn: 'root',
@@ -6,10 +7,10 @@ import { Injectable } from '@angular/core';
 export class CartService {
 
 	private readonly CART_KEY = 'CART';
-	private cartState: string[] = [];
+	private cartState: Menu[] = [];
 
 	public constructor() {
-		let cart: string[];
+		let cart: Menu[];
 		const rawCart: string | null = window.sessionStorage.getItem(this.CART_KEY);
 		if (rawCart === null) {
 			cart = [];
@@ -26,21 +27,29 @@ export class CartService {
 		this.cartState = cart;
 	}
 
-	public add(entry: string): void {
-		const existOnCart = this.cartState.find((cartItem) => cartItem === entry);
+	public add(menu: Menu): Menu[] {
+		const existOnCart = this.cartState.find((cartItem) => cartItem.id === menu.id);
 		if (existOnCart) {
-			return;
+			return this.cartState;
 		}
-		this.cartState = this.cartState.concat([entry]);
+		this.cartState = this.cartState.concat([menu]);
 		this.persistCartOnSession(this.cartState);
+		return this.cartState;
 	}
 
-	public remove(entry: string): void {
-		this.cartState = this.cartState.filter((cartItem) => cartItem !== entry);
+	public remove(menuId: string): Menu[] {
+		this.cartState = this.cartState.filter((cartItem) => cartItem.id !== menuId);
 		this.persistCartOnSession(this.cartState);
+		return this.cartState;
 	}
 
-	public getCartItems(): string[] {
+	public empty(): Menu[] {
+		this.cartState = [];
+		this.persistCartOnSession(this.cartState);
+		return this.cartState;
+	}
+
+	public getCartItems(): Menu[] {
 		return this.cartState;
 	}
 
@@ -48,7 +57,7 @@ export class CartService {
 		return this.cartState.length;
 	}
 
-	private persistCartOnSession(cart: string[]): void {
+	private persistCartOnSession(cart: Menu[]): void {
 		window.sessionStorage.setItem(this.CART_KEY, JSON.stringify(cart));
 	}
 

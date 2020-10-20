@@ -3,3 +3,45 @@
 	color: hsla( 0, 0%, 0%, 0.75 );
 	margin-bottom: 2.5rem;
 }
+
+.cards-holder {
+	width: 60%;
+	height: auto;
+}
+
+.card-container {
+	margin-bottom: 15px;
+}
+
+.mat-step-header {
+	pointer-events: none !important;
+}
+
+.summary {
+	width: 30%;
+	margin-left: 40px;
+	&-title {
+		margin-bottom: 20px;
+	}
+	&-price {
+		float: right;
+	}
+	&-content {
+		margin-left: 20px;
+	}
+}
+
+.checkout-list {
+	margin-left: 20px;
+	margin-top: 20px !important;
+}
+
+.container {
+	display: flex;
+	margin: 30px;
+}
+
+.empty-cart {
+	margin-left: 100px;
+	margin-top: 50px;
+}

@@ -16,5 +16,6 @@ export const environment: Environment = {
 		kitchenSite: '/api/kitchenSite',
 		meals: '/api/meal',
 		menus: '/api/menu',
+		tickets: '/api/ticket',
 	},
 };

@@ -1,4 +1,4 @@
-import { KitchenSite } from '../enums/kitchen-site.enum';
+import { KitchenSiteDTO } from '../shared/services/kitchenSites/dto/kitchen-site.dto';
 import { Entity } from './entity.model';
 import { Meal } from './meal.model';
 
@@ -8,11 +8,12 @@ import { Meal } from './meal.model';
  * Each menu is associated to a meal, of which the unit price and current stock are known.
  */
 export class Menu extends Entity {
-	private readonly _kitchenSite: KitchenSite;
+	private readonly _kitchenSite: KitchenSiteDTO;
 	private readonly _date: string;
 	private readonly _meal: Meal;
 	private readonly _unitPrice: number;
 	private readonly _currentStock: number;
+	private readonly _name: string;
 
 	/**
 	 * The unique identifier of the menu.
@@ -22,9 +23,16 @@ export class Menu extends Entity {
 	}
 
 	/**
+	 * The name of the menu.
+	 */
+	public get name( ): string {
+		return this._name;
+	}
+
+	/**
 	 * The kitchen site where the menu is offered.
 	 */
-	public get kitchenSite( ): KitchenSite {
+	public get kitchenSite( ): KitchenSiteDTO {
 		return this._kitchenSite;
 	}
 
@@ -58,13 +66,15 @@ export class Menu extends Entity {
 
 	public constructor(
 		id: string,
-		kitchenSite: KitchenSite,
+		name: string,
+		kitchenSite: KitchenSiteDTO,
 		date: string,
 		meal: Meal,
 		unitPrice: number,
 		currentStock: number,
 	) {
 		super( id );
+		this._name = name;
 		this._kitchenSite = kitchenSite;
 		this._date = date;
 		this._meal = meal;
