@@ -1,14 +1,29 @@
-:host {
-	flex: 1 0 auto;
-	display: flex;
-	flex-flow: column nowrap;
-	align-items: center;
-	position: relative;
-	padding: 2.5rem;
+.search-box-holder {
+	width: 30%;
+	height: auto;
+	margin: 15px;
 }
 
-.page_title {
-	font-size: 48px;
-	color: hsla( 0, 0%, 0%, 0.75 );
-	margin-bottom: 2.5rem;
+.cards-holder {
+	height: auto;
+	margin-left: 10px;
+}
+
+.card-container {
+	margin-bottom: 15px;
+}
+
+.container {
+	display: flex;
+	margin: 15px;
+	width: auto;
+}
+
+.search-button {
+	margin-left: 20px;
+}
+
+.spinner {
+	margin-left: 30%;
+	margin-top: 10%;
 }

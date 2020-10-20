@@ -16,6 +16,8 @@
 					[kitchenSiteName]="menu.kitchenSite.name"
 					[menuIsInShoppingCart]="true"
 					[shouldDisplayCartActionButton]="true"
+					[consumptionType]="menu.consumptionType"
+					(consumptionTypeChange)="changeConsumptionType(menu,$event)"
 					(removeFromCartButtonClick)="removeFromCart(menu)"
 				></cu-menu-card>
 			</div>
@@ -29,7 +31,7 @@
 					<mat-card-content class= "summary-content">
 						<ul>
 							<li *ngFor="let menu of cartItems">
-								{{getSummaryOptionText(menu)}}
+								<mat-icon>fastfood</mat-icon>{{getSummaryOptionText(menu)}}
 							</li>
 						</ul>
 
@@ -164,10 +166,10 @@
 			<mat-card-content>
 				<ul class="checkout-list">
 					<li *ngFor="let menu of cartItems">
-						{{getSummaryOptionText(menu)}}
+						<mat-icon>fastfood</mat-icon> {{getSummaryOptionText(menu)}}
 					</li>
-					<li><strong>Método de pago: Tarjeta terminada en {{ getCardLastNumbers()}} </strong></li>
-					<li><strong>Total: $ {{getTotalAmount()}} </strong></li>
+					<li><mat-icon>payments</mat-icon><strong>Método de pago: Tarjeta terminada en {{ getCardLastNumbers()}} </strong></li>
+					<li><mat-icon>account_balance_wallet</mat-icon><strong>Total: $ {{getTotalAmount()}} </strong></li>
 				</ul>
 			</mat-card-content>
 	  	</div>

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Menu } from 'src/app/models/menu.model';
+import { menuBuilderFromStorage } from 'src/app/shared/utils/menu-builder';
 
 @Injectable({
 	providedIn: 'root',
@@ -17,7 +18,7 @@ export class CartService {
 			this.persistCartOnSession(cart);
 		} else {
 			try {
-				cart = JSON.parse(rawCart);
+				cart = menuBuilderFromStorage(JSON.parse(rawCart));
 			}
 			catch {
 				cart = [];
@@ -28,8 +29,7 @@ export class CartService {
 	}
 
 	public add(menu: Menu): Menu[] {
-		const existOnCart = this.cartState.find((cartItem) => cartItem.id === menu.id);
-		if (existOnCart) {
+		if (this.isInCart(menu)) {
 			return this.cartState;
 		}
 		this.cartState = this.cartState.concat([menu]);
@@ -38,8 +38,17 @@ export class CartService {
 	}
 
 	public remove(menuId: string): Menu[] {
-		this.cartState = this.cartState.filter((cartItem) => cartItem.id !== menuId);
+		this.removeWithoutPersistOnStorage(menuId);
 		this.persistCartOnSession(this.cartState);
+		return this.cartState;
+	}
+
+	public replace(menu: Menu): Menu[] {
+		const target: Menu | undefined = this.getReplacementFor(menu);
+		if (target) {
+			this.removeWithoutPersistOnStorage(target.id);
+			this.add(menu);
+		}
 		return this.cartState;
 	}
 
@@ -49,12 +58,36 @@ export class CartService {
 		return this.cartState;
 	}
 
+	public updateMenu(menu: Menu): Menu[] {
+		if (this.isInCart(menu)) {
+			this.removeWithoutPersistOnStorage(menu.id);
+			return this.add(menu);
+		}
+		return this.cartState;
+	}
+
 	public getCartItems(): Menu[] {
 		return this.cartState;
 	}
 
 	public getAmountOfItems(): number {
 		return this.cartState.length;
+	}
+
+	public isInCart(menu: Menu): boolean {
+		return this.cartState.some((cartMenu) => cartMenu.id === menu.id);
+	}
+
+	public canBeReplaced(menu: Menu): boolean {
+		return !!this.getReplacementFor(menu);
+	}
+
+	private getReplacementFor(menu: Menu): Menu | undefined {
+		return this.cartState.find((cartMenu) => cartMenu.date === menu.date && cartMenu.id !== menu.id);
+	}
+
+	private removeWithoutPersistOnStorage(menuId: string): void {
+		this.cartState = this.cartState.filter((cartItem) => cartItem.id !== menuId);
 	}
 
 	private persistCartOnSession(cart: Menu[]): void {

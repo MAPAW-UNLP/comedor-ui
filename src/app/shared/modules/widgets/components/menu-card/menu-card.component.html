@@ -38,7 +38,7 @@
 		>
 			<div class="menu_card__metadata_item" *ngIf="shouldDisplayDate">
 				<mat-icon class="menu_card__metadata_item_icon">event</mat-icon>
-				{{ date | date:'EEEE dd/MM/yyyy' }}
+				{{ formatDate(date) }}
 			</div>
 			<div class="menu_card__metadata_item" *ngIf="shouldDisplayKitchenSiteName">
 				<mat-icon class="menu_card__metadata_item_icon">place</mat-icon>
