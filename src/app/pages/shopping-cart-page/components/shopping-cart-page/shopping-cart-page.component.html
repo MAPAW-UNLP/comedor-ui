@@ -158,15 +158,16 @@
 	<mat-step>
 	  	<ng-template matStepLabel>Confirmar compra</ng-template>
 		<div>
-			<mat-card-title class="summary-title">
+			<mat-card-title>
 				<span>Resumen de compra</span>
 			</mat-card-title>
-			<mat-card-content class= "summary-content">
-				<ul>
+			<mat-card-content>
+				<ul class="checkout-list">
 					<li *ngFor="let menu of cartItems">
 						{{getSummaryOptionText(menu)}}
 					</li>
 					<li><strong>Método de pago: Tarjeta terminada en {{ getCardLastNumbers()}} </strong></li>
+					<li><strong>Total: $ {{getTotalAmount()}} </strong></li>
 				</ul>
 			</mat-card-content>
 	  	</div>
