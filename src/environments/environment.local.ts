@@ -17,5 +17,11 @@ export const environment: Environment = {
 		meals: '/api/meal',
 		menus: '/api/menu',
 		tickets: '/api/ticket',
+		dishList: '/api/dishRecipe/',
+		dishRetrieval: '/api/dishRecipe/{id}/',
+		dishCreation: '/api/dishRecipe/save/',
+		mealList: '/api/meal/',
+		mealRetrieval: '/api/meal/{id}/',
+		mealCreation: '/api/meal/save/',
 	},
 };

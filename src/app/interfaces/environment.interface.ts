@@ -34,12 +34,50 @@ export interface Environment {
 		 * Resource route of the authentication endpoint.
 		 */
 		readonly login: string;
+
+		/**
+		 * // EXPLAIN
+		 */
 		readonly ingredientRecipe: string;
+
+		/**
+		 * // EXPLAIN
+		 */
 		readonly dishRecipe: string;
 		readonly kitchenSite: string;
 		readonly meals: string;
 		readonly menus: string;
 		readonly tickets: string;
+
+		/**
+		 * Resource route of the dish listing endpoint.
+		 */
+		readonly dishList: string;
+
+		/**
+		 * Resource route of the dish retrieval endpoint.
+		 */
+		readonly dishRetrieval: string;
+
+		/**
+		 * Resource route of the dish creation endpoint.
+		 */
+		readonly dishCreation: string;
+
+		/**
+		 * Resource route of the meal listing endpoint.
+		 */
+		readonly mealList: string;
+
+		/**
+		 * Resource route of the meal retrieval endpoint.
+		 */
+		readonly mealRetrieval: string;
+
+		/**
+		 * Resource route of the meal creation endpoint.
+		 */
+		readonly mealCreation: string;
 
 	};
 

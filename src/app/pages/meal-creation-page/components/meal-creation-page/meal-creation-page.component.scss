@@ -12,3 +12,46 @@
 	color: hsla( 0, 0%, 0%, 0.75 );
 	margin-bottom: 2.5rem;
 }
+
+.dishes_section__dish_creator,
+.dishes_section__added_dish_row {
+	display: grid;
+	grid-template-columns: 15rem 15rem auto;
+	grid-auto-flow: row;
+	gap: 1rem;
+	align-items: center;
+}
+
+.dishes_section__added_dishes {
+	display: grid;
+	grid-template-columns: auto;
+	grid-auto-flow: row;
+	gap: 1rem;
+}
+
+.preferences_section {
+	padding: 2rem 0;
+	display: grid;
+	grid-template-columns: auto;
+	grid-auto-flow: row;
+	gap: 1rem
+}
+
+.meal_name_field {
+	width: 35rem;
+	margin-bottom: 2rem;
+}
+
+.observations_textarea {
+	min-height: 10rem;
+	resize: vertical;
+
+	&_field {
+		width: 35rem;
+	}
+}
+
+.submit_button {
+	display: block;
+	margin-top: 2rem;
+}

@@ -1,12 +1,13 @@
+import { DishItem } from '../interfaces/dish-item.interface';
 import { Entity } from './entity.model';
-import { DishRecipe } from '../interfaces/dish-recipe.interface';
+import { Ingredient } from './ingredient.model';
 
 /**
  * Model that represents an individual dish that can be part of a meal, with its own name and recipe.
  */
 export class Dish extends Entity {
 	private readonly _name: string;
-	private readonly _recipe: DishRecipe;
+	private readonly _items: DishItem[ ];
 
 	/**
 	 * The unique identifier of the dish.
@@ -23,29 +24,27 @@ export class Dish extends Entity {
 	}
 
 	/**
-	 * The recipe of the dish.
-	 *
-	 * It describes all the ingredients included in it, along with the amount required of each one.
+	 * The collection of items of the dish, each consisting of an ingredient and its amount.
 	 */
-	public get recipe( ): DishRecipe {
-		return this._recipe;
+	public get items( ): DishItem[ ] {
+		return this._items;
 	}
 
 	/**
 	 * The list of ingredients included in the dish.
 	 */
-	public get ingredients( ): string[ ] {
-		return this.recipe.map( ( dishRecipeEntry ) => dishRecipeEntry.ingredient );
+	public get ingredients( ): Ingredient[ ] {
+		return this.items.map( ( dishRecipeEntry ) => dishRecipeEntry.ingredient );
 	}
 
 	public constructor(
 		id: string,
 		name: string,
-		recipe: DishRecipe,
+		items: DishItem[ ],
 	) {
 		super( id );
 		this._name = name;
-		this._recipe = recipe;
+		this._items = items;
 	}
 
 }

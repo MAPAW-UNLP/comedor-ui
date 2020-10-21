@@ -1,6 +1,7 @@
 import { ConsumptionType } from '../enums/consumption-type.enum';
 import { KitchenSiteDTO } from '../shared/services/kitchenSites/dto/kitchen-site.dto';
 import { Entity } from './entity.model';
+import { KitchenSite } from './kitchen-site.model';
 import { Meal } from './meal.model';
 
 /**

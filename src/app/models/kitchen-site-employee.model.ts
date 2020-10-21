@@ -1,4 +1,4 @@
-import { KitchenSite } from '../enums/kitchen-site.enum';
+import { KitchenSite } from './kitchen-site.model';
 import { User } from './user.model';
 
 /**

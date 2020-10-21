@@ -1,5 +1,5 @@
 import { ClientCondition } from '../enums/client-type.enum';
-import { Faculty } from '../enums/faculty.enum';
+import { Faculty } from './faculty.model';
 import { User } from './user.model';
 
 /**

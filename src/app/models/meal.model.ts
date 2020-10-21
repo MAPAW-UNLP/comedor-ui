@@ -1,6 +1,7 @@
 import { MealItem } from '../interfaces/meal-item.interface';
 import { Dish } from './dish.model';
 import { Entity } from './entity.model';
+import { Ingredient } from './ingredient.model';
 
 /**
  * Model that represents a fixed combination of dishes available as a menu at a University Kitchen site.
@@ -10,6 +11,7 @@ export class Meal extends Entity {
 	private readonly _isSuitableForCeliacs: boolean;
 	private readonly _isSuitableForVegetarians: boolean;
 	private readonly _items: MealItem[ ];
+	private readonly _observations: string | undefined;
 
 	/**
 	 * The unique identifier of the meal.
@@ -48,10 +50,24 @@ export class Meal extends Entity {
 	}
 
 	/**
+	 * Optional information about the meal for the clients. It's possibly _undefined_.
+	 */
+	public get observations( ): string | undefined {
+		return this._observations;
+	}
+
+	/**
 	 * Collection of the dishes present in the meal.
 	 */
 	public get dishes( ): Dish[ ] {
 		return this.items.map( ( item ) => item.dish );
+	}
+
+	/**
+	 * Collection of the ingredients present in the meal.
+	 */
+	public get ingredients( ): Ingredient[ ] {
+		return this.dishes.map( ( dish ) => dish.ingredients ).flat( );
 	}
 
 	public constructor(
@@ -60,11 +76,13 @@ export class Meal extends Entity {
 		isSuitableForCeliacs: boolean,
 		isSuitableForVegetarians: boolean,
 		items: MealItem[ ],
+		observations: string | undefined,
 	) {
 		super( id );
 		this._name = name;
 		this._isSuitableForCeliacs = isSuitableForCeliacs;
 		this._isSuitableForVegetarians = isSuitableForVegetarians;
 		this._items = items;
+		this._observations = observations;
 	}
 }

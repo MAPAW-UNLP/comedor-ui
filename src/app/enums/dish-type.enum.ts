@@ -4,9 +4,9 @@
  * Eg: main dish, side dish, dessert
  */
 export enum DishType {
-	Appetizer = 'appetizer',
-	MainDish = 'main_dish',
-	SideDish = 'side_dish',
-	Dessert = 'dessert',
-	Drink = 'drink',
+	Appetizer = 'ENTRADA',
+	MainDish = 'PLATO_PRINCIPAL',
+	SideDish = 'GUARNICION',
+	Dessert = 'POSTRE',
+	Drink = 'BEBIDA',
 }

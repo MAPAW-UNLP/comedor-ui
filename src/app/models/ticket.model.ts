@@ -4,6 +4,7 @@ import { Menu } from './menu.model';
 import { Entity } from './entity.model';
 import { ConsumptionType } from '../enums/consumption-type.enum';
 import { KitchenSiteDTO } from '../shared/services/kitchenSites/dto/kitchen-site.dto';
+import { KitchenSite } from './kitchen-site.model';
 
 /**
  * Model that represents a ticket puchased by a specific client, who can exchange it for its associated meal at

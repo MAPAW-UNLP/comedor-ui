@@ -1,1 +1,156 @@
-<h2 class="page_title">Crear combo</h2>
+<form class="meal_creation_form" [formGroup]="mealCreationForm">
+	<mat-form-field class="meal_creation_form_field meal_name_field" appearance="standard">
+
+		<mat-label>Nombre del combo</mat-label>
+
+		<input
+			#mealNameInput
+			matInput
+			[formControlName]="mealNameFieldName"
+			placeholder="Ingresá el nombre del combo"
+		>
+
+		<mat-error
+			*ngIf="hasRequiredMealNameError"
+			class="meal_creation_form_field__error_message_container"
+			align="start"
+		>
+			<span>{{ requiredMealNameErrorMessage }}</span>
+		</mat-error>
+
+	</mat-form-field>
+
+	<section class="meal_creation_form__section dishes_section">
+
+		<h2 class="meal_creation_form__section_title">Platos</h2>
+
+		<div class="dishes_section__dish_creator">
+
+			<mat-form-field class="meal_creation_form_field" appearance="standard">
+
+				<mat-label>Tipo de plato</mat-label>
+
+				<input
+					#dishTypeInput
+					matInput
+					[formControlName]="dishTypeFieldName"
+					[matAutocomplete]="dishTypeAutocomplete"
+					placeholder="Ingresá el tipo del plato"
+				>
+				<mat-autocomplete #dishTypeAutocomplete="matAutocomplete">
+					<mat-option *ngFor="let label of filteredDishTypeOptionLabels" [value]="label">
+					  {{ label }}
+					</mat-option>
+				</mat-autocomplete>
+
+				<mat-error
+					*ngIf="hasRequiredDishTypeError"
+					class="meal_creation_form_field__error_message_container"
+					align="start"
+				>
+					<span>{{ requiredDishTypeErrorMessage }}</span>
+				</mat-error>
+				<mat-error
+					*ngIf="hasIncorrectDishTypeError"
+					class="meal_creation_form_field__error_message_container"
+					align="start"
+				>
+					<span>{{ incorrectDishTypeErrorMessage }}</span>
+				</mat-error>
+
+			</mat-form-field>
+
+			<mat-form-field class="meal_creation_form_field" appearance="standard">
+
+				<mat-label>Plato</mat-label>
+				<input
+					#dishInput
+					matInput
+					[formControlName]="dishFieldName"
+					[matAutocomplete]="dishAutocomplete"
+					placeholder="Ingresá el plato"
+				>
+				<mat-autocomplete #dishAutocomplete="matAutocomplete" [displayWith]="getDishName">
+					<mat-option *ngFor="let dish of filteredDishOptions" [value]="dish">
+					  {{ dish.name }}
+					</mat-option>
+				</mat-autocomplete>
+
+				<mat-error
+					*ngIf="hasRequiredDishError"
+					class="meal_creation_form_field__error_message_container"
+					align="start"
+				>
+					<span>{{ requiredDishErrorMessage }}</span>
+				</mat-error>
+				<mat-error
+					*ngIf="hasIncorrectDishError"
+					class="meal_creation_form_field__error_message_container"
+					align="start"
+				>
+					<span>{{ incorrectDishErrorMessage }}</span>
+				</mat-error>
+
+			</mat-form-field>
+
+			<button
+				mat-raised-button
+				color="accent"
+				(click)="addDish( )"
+				type="button"
+				[disabled]="!shouldEnableAddDishButton"
+			>
+				Agregar plato
+			</button>
+
+		</div>
+
+		<div class="dishes_section__added_dishes">
+			<div class="dishes_section__added_dish_row" *ngFor="let addedDish of addedDishes">
+				<div class="added_dish_row__dish_type">{{ addedDish.dishType }}</div>
+				<div class="added_dish_row__dish_name">{{ addedDish.dish.name }}</div>
+				<button
+					mat-raised-button
+					color="warn"
+					(click)="removeDish( addedDish.dish.id )"
+					type="button"
+				>
+					Eliminar plato
+				</button>
+			</div>
+		</div>
+
+	</section>
+
+	<section class="meal_creation_form__section preferences_section">
+		<h2 class="meal_creation_form__section_title">Preferencias</h2>
+		<mat-checkbox [formControlName]="isSuitableForCeliacsFieldName">
+			Es apto para celíacos
+		</mat-checkbox>
+		<mat-checkbox [formControlName]="isSuitableForVegetariansFieldName">
+			Es apto para vegetarianos
+		</mat-checkbox>
+	</section>
+
+	<mat-form-field class="meal_creation_form_field observations_textarea_field" appearance="fill">
+		<mat-label>Observaciones <em>(opcional)</em></mat-label>
+		<textarea
+			matInput
+			class="observations_textarea"
+			[formControlName]="observationsFieldName"
+			placeholder="Observaciones visibles para los clientes"
+		></textarea>
+	</mat-form-field>
+
+	<button
+		mat-raised-button
+		class="submit_button"
+		color="accent"
+		(click)="submitForm( )"
+		type="button"
+		[disabled]="!shouldEnableSubmitButton"
+	>
+		Crear combo
+	</button>
+
+</form>
