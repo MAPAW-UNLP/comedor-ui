@@ -12,6 +12,7 @@ import { Meal } from 'src/app/models/meal.model';
 import { MealCreationRequestDTO } from './dto/meal-creation-request.dto';
 import { MealResponseDTO } from './dto/meal-response.dto';
 import { MealListResponseDTO } from './dto/meal-list-response.dto';
+import { DishItem } from 'src/app/interfaces/dish-item.interface';
 
 /**
  * Service that provides queries for the meals in the system and commands to update them.
@@ -129,20 +130,20 @@ export class MealsService {
 			dto.name,
 			dto.suitableForCeliacs,
 			dto.suitableForVegetarians,
-			dto.items.map( ({ dish, dishType }) => ({
+			dto.items.map( ({ recipe: dishRecipe, type }): MealItem => ({
 				dish: new Dish(
-					dish.id.toString( ),
-					dish.name,
-					dish.items.map( ({ ingredient, quantity }) => ({
+					dishRecipe.id.toString( ),
+					dishRecipe.name,
+					dishRecipe.ingredients.map( ({ recipe: ingredientRecipe, quantity }): DishItem => ({
 						ingredient: new Ingredient(
-							ingredient.id.toString( ),
-							ingredient.name,
-							ingredient.measurementUnit,
+							ingredientRecipe.id.toString( ),
+							ingredientRecipe.name,
+							ingredientRecipe.measurement,
 						),
 						quantity: quantity,
 					})),
 				),
-				dishType: dishType,
+				dishType: type,
 			})),
 			dto.observations,
 		);

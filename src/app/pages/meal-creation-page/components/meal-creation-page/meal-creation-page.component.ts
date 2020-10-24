@@ -61,7 +61,7 @@ export class MealCreationPageComponent implements OnInit {
 		[ this._dishTypeFieldName ]: new FormControl( '', {
 			validators: [
 				Validators.required,
-				autocompleteValidator( this.dishTypeOptions.map( _ => _.label ) ),
+				autocompleteValidator( this.dishTypeOptions.map( (_) => _.label ) ),
 			],
 		}),
 		[ this._dishFieldName ]: new FormControl( '', {
@@ -227,7 +227,7 @@ export class MealCreationPageComponent implements OnInit {
 		});
 	}
 
-	public get addedDishes( ): { dish: Dish; dishType: DishType; }[ ] {
+	public get addedDishes( ): { dish: Dish; dishType: DishType }[ ] {
 		return this.addedDishesField.value;
 	}
 
@@ -284,12 +284,9 @@ export class MealCreationPageComponent implements OnInit {
 	}
 
 	public getDishTypeForLabel( label: string ): DishType {
-		console.log( label );
 		const dishTypeOption = this.dishTypeOptions
 			.find( ( opt ) => opt.label === label );
-		console.log( dishTypeOption );
 		const value = dishTypeOption?.value;
-		console.log( value );
 		return value as DishType;
 	}
 
@@ -318,7 +315,7 @@ export class MealCreationPageComponent implements OnInit {
 			.create(
 				this.mealNameField.value,
 				this.addedDishesField.value.map( ( entry: { dish: Dish; dishType: DishType } ) => <MealItem> ({
-					dish: this._availableDishes.find( _ => _.id === entry.dish.id ),
+					dish: this._availableDishes.find( (_) => _.id === entry.dish.id ),
 					dishType: this.getDishTypeForLabel( entry.dishType ),
 				})),
 				this.isSuitableForCeliacsField.value,
@@ -340,13 +337,24 @@ export class MealCreationPageComponent implements OnInit {
 					this.showSnackBar(
 						`El menú se creó exitosamente`
 					);
-					this.mealCreationForm.reset( );
+					this.resetForm( );
 				},
 				error: ( error: Error ) => {
+					console.log(error);
 					this.showSnackBar(
 						`Ocurió un error al crear el menú, intente nuevamente`
 					);
 				},
 			});
+	}
+
+	private resetForm( ) {
+		this.mealNameField.reset( '' );
+		this.addedDishesField.reset( [ ] );
+		this.observationsField.reset( '' );
+		this.isSuitableForCeliacsField.reset( false );
+		this.isSuitableForVegetariansField.reset( false );
+		this.dishField.reset( '' );
+		this.dishTypeField.reset( '' );
 	}
 }
