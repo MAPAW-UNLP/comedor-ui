@@ -216,15 +216,19 @@ export class MealCreationPageComponent implements OnInit {
 	}
 
 	public get filteredDishOptions( ): Dish[ ] {
-		const fieldText: string = this.dishField.value.name;
+		if ( typeof this.dishField.value !== 'string' ) {
+			return [ this.dishField.value ];
+		}
 
+		const fieldText: string = this.dishField.value;
 		if ( fieldText === '' ) {
 			return this._availableDishes;
 		}
 
-		return this._availableDishes.filter( ( dish ) => {
+		const filteredDishes = this._availableDishes.filter( ( dish ) => {
 			return this.fuzzySearchService.isFuzzilyIncludedInText( fieldText, dish.name );
 		});
+		return filteredDishes;
 	}
 
 	public get addedDishes( ): { dish: Dish; dishType: DishType }[ ] {
