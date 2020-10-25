@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, StaticProvider } from '@angular/core';
+import { ChangeDetectorRef, CUSTOM_ELEMENTS_SCHEMA, StaticProvider } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -44,6 +44,15 @@ describe( 'AuthenticationPageComponent', ( ) => {
 						useFactory: ( ): DeepPartial<MatSnackBar> => {
 							const _snackBar: DeepPartial<MatSnackBar> = {
 								open: jest.fn( ),
+							};
+							return _snackBar;
+						},
+					},
+					{
+						provide: ChangeDetectorRef,
+						useFactory: ( ): DeepPartial<ChangeDetectorRef> => {
+							const _snackBar: DeepPartial<ChangeDetectorRef> = {
+								detectChanges: jest.fn( ),
 							};
 							return _snackBar;
 						},

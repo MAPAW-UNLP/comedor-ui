@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -190,6 +190,7 @@ export class AuthenticationPageComponent implements AfterViewInit {
 		private readonly authService: AuthService,
 		private readonly router: Router,
 		private readonly snackBar: MatSnackBar,
+		private readonly changeDetectorRef: ChangeDetectorRef,
 	) { }
 
 	public ngAfterViewInit( ): void {
@@ -252,6 +253,7 @@ export class AuthenticationPageComponent implements AfterViewInit {
 	 */
 	private focusDniInput( ): void {
 		this._dniInputRef.nativeElement.focus( );
+		this.changeDetectorRef.detectChanges( );
 	}
 
 	/**
@@ -259,6 +261,7 @@ export class AuthenticationPageComponent implements AfterViewInit {
 	 */
 	private focusPasswordInput( ): void {
 		this._passwordInputRef.nativeElement.focus( );
+		this.changeDetectorRef.detectChanges( );
 	}
 
 	/**
