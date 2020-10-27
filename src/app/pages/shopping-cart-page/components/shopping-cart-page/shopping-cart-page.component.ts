@@ -11,6 +11,7 @@ import { TicketDTO } from 'src/app/shared/services/tickets/dto/ticket.dto';
 import { TicketsService } from 'src/app/shared/services/tickets/tickets.service';
 import { creditCardExpirancyValidator, creditCardNumberValidator } from 'src/app/shared/validators/credit-card.validator';
 import { consumptionTypeLabels } from 'src/app/constants/consumption-type-labels.constant';
+import { PageUrls } from 'src/app/constants/page-urls.constant';
 
 interface PaymentMethod {
 	id: string;
@@ -45,6 +46,10 @@ export class ShoppingCartPageComponent implements OnInit {
 
 	@ViewChild( 'stepper' )
 	public readonly stepperInputRef!: MatStepper;
+
+	public get pageUrls( ) {
+		return PageUrls;
+	}
 
 	public constructor(
 		private readonly _formBuilder: FormBuilder,

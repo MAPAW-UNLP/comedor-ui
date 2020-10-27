@@ -51,9 +51,9 @@
 	}
 
 	&__card_title {
-		$font-size: 16px;
+		$font-size: 24px;
 		$line-height: 1.25;
-		$max-lines: 3;
+		$max-lines: 2;
 
 		grid-row: 1 / span 1;
 		grid-column: 1 / span 1;

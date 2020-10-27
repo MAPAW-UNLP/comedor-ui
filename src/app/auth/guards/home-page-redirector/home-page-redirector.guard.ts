@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
+import { PageUrls } from 'src/app/constants/page-urls.constant';
 import { AuthService } from '../../services/auth/auth.service';
 import { UserRole } from '../../services/auth/enums/user-role.enum';
 
@@ -34,15 +35,15 @@ export class HomePageRedirectorGuard implements CanActivate {
 
 		switch ( authenticatedUserRole ) {
 			case UserRole.Client: {
-				this.router.navigate([ '/mis-tickets' ]);
+				this.router.navigate([ PageUrls.myTickets ]);
 				break;
 			}
 			case UserRole.KitchenSiteEmployee: {
-				this.router.navigate([ '/menus' ]);
+				this.router.navigate([ PageUrls.enabledCombosList ]);
 				break;
 			}
 			default: {
-				this.router.navigate([ '/pagina-no-encontrada' ]);
+				this.router.navigate([ PageUrls.pageNotFound ]);
 				break;
 			}
 		}

@@ -5,6 +5,7 @@ import { AuthenticatedKitchenSiteEmployeeRequiredGuard } from 'src/app/auth/guar
 import { AuthenticatedUserForbiddenGuard } from 'src/app/auth/guards/authenticated-user-forbidden/authenticated-user-forbidden.guard';
 import { AuthenticatedUserRequiredGuard } from 'src/app/auth/guards/authenticated-user-required/authenticated-user-required.guard';
 import { HomePageRedirectorGuard } from 'src/app/auth/guards/home-page-redirector/home-page-redirector.guard';
+import { PageUrls } from 'src/app/constants/page-urls.constant';
 import { ComedorUniversitarioRoutes } from 'src/app/interfaces/comedor-universitario-routes.interface';
 import { AuthenticationPageModule } from '../authentication-page/authentication-page.module';
 import { AuthenticationPageComponent } from '../authentication-page/components/authentication-page/authentication-page.component';
@@ -34,7 +35,7 @@ import { ShoppingCartPageModule } from '../shopping-cart-page/shopping-cart-page
 
 const routes: ComedorUniversitarioRoutes = [
 	{
-		path: 'ingresar',
+		path: PageUrls.authenticationPage,
 		component: AuthenticationPageComponent,
 		canActivate: [
 			AuthenticatedUserForbiddenGuard,
@@ -61,7 +62,7 @@ const routes: ComedorUniversitarioRoutes = [
 				// No "data" object as this route won't be loaded because of the home page redirector guard.
 			},
 			{
-				path: 'mis-tickets',
+				path: PageUrls.myTickets,
 				component: PurchasedTicketsPageComponent,
 				canActivate: [
 					AuthenticatedClientRequiredGuard,
@@ -81,47 +82,47 @@ const routes: ComedorUniversitarioRoutes = [
 				},
 			},
 			{
-				path: 'menus-disponibles',
+				path: PageUrls.availableCombosList,
 				component: MenuShopPageComponent,
 				canActivate: [
 					AuthenticatedClientRequiredGuard,
 				],
 				data: {
-					pageTitle: 'Menús disponibles',
+					pageTitle: 'Combos disponibles',
 				},
 			},
 			{
-				path: 'menus',
+				path: PageUrls.enabledCombosList,
 				component: MenusPageComponent,
 				canActivate: [
 					AuthenticatedKitchenSiteEmployeeRequiredGuard,
 				],
 				data: {
-					pageTitle: 'Lista de menús',
+					pageTitle: 'Combos habilitados',
 				},
 			},
 			{
-				path: 'menus/crear',
+				path: PageUrls.enableCombo,
 				component: MenuCreationPageComponent,
 				canActivate: [
 					AuthenticatedKitchenSiteEmployeeRequiredGuard,
 				],
 				data: {
-					pageTitle: 'Crear menú',
+					pageTitle: 'Habilitar combo',
 				},
 			},
 			{
-				path: 'combos',
+				path: PageUrls.combosList,
 				component: MealsPageComponent,
 				canActivate: [
 					AuthenticatedKitchenSiteEmployeeRequiredGuard,
 				],
 				data: {
-					pageTitle: 'Lista de combos',
+					pageTitle: 'Combos',
 				},
 			},
 			{
-				path: 'combos/crear',
+				path: PageUrls.createCombo,
 				component: MealCreationPageComponent,
 				canActivate: [
 					AuthenticatedKitchenSiteEmployeeRequiredGuard,
@@ -131,7 +132,7 @@ const routes: ComedorUniversitarioRoutes = [
 				},
 			},
 			{
-				path: 'platos/crear',
+				path: PageUrls.createDish,
 				component: DishCreationPageComponent,
 				canActivate: [
 					AuthenticatedKitchenSiteEmployeeRequiredGuard,
@@ -141,7 +142,7 @@ const routes: ComedorUniversitarioRoutes = [
 				},
 			},
 			{
-				path: 'ingredientes/crear',
+				path: PageUrls.createIngredient,
 				component: IngredientCreationPageComponent,
 				canActivate: [
 					AuthenticatedKitchenSiteEmployeeRequiredGuard,
@@ -151,7 +152,7 @@ const routes: ComedorUniversitarioRoutes = [
 				},
 			},
 			{
-				path: 'pagina-no-encontrada',
+				path: PageUrls.pageNotFound,
 				component: NotFoundPageComponent,
 				data: {
 					pageTitle: 'Página no encontrada',
@@ -161,7 +162,7 @@ const routes: ComedorUniversitarioRoutes = [
 	},
 	{
 		path: '**',
-		redirectTo: '/pagina-no-encontrada',
+		redirectTo: PageUrls.pageNotFound,
 	},
 ];
 

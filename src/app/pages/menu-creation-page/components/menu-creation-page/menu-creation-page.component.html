@@ -1,8 +1,5 @@
 <form class="creation_form" [formGroup]="menuCreationForm">
 	<mat-grid-list cols="4" rowHeight="100px">
-		<mat-grid-tile [colspan]="4" [rowspan]="1">
-			<h2 class="page_title">Crear menú</h2>
-		</mat-grid-tile>
 		<mat-grid-tile [colspan]="1" [rowspan]="1">
 			<mat-form-field appearance="standard">
 				<mat-label>Combo</mat-label>
@@ -16,7 +13,7 @@
 					[matAutocomplete]="auto"
 				>
 				<mat-hint align="start">
-					Ingresa el nombre del combo
+					Ingresá el nombre del combo
 				</mat-hint>
 				<mat-autocomplete #auto="matAutocomplete">
 					<mat-option *ngFor="let combo of filteredCombosOptions" [value]="combo.name">
@@ -33,7 +30,7 @@
 		</mat-grid-tile>
 		<mat-grid-tile [colspan]="1" [rowspan]="1">
 			<mat-form-field appearance="standard">
-				<mat-label>Anticipación mínima</mat-label>
+				<mat-label>Anticipación mínima de compra</mat-label>
 				<input
 					#anticipation
 					placeholder="0"
@@ -45,7 +42,7 @@
 					digitOnly
 				>
 				<mat-hint align="start">
-					Cantidad de dias de anticipación
+					Cantidad de días antes de la fecha de canje
 				</mat-hint>
 				<mat-error
 					*ngIf="this.anticipationField.hasError( 'required' ) || this.anticipationField.hasError( 'min' )"
@@ -194,7 +191,7 @@
 				[disabled]="isWaitingForServerResponse"
 				(click)="create()"
 			>
-				Crear
+				Habilitar combo
 			</button>
 		</mat-grid-tile>
 

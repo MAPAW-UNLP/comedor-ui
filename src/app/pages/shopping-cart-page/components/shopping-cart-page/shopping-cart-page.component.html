@@ -187,7 +187,7 @@
 		  </mat-card-title>
 	  </div>
 		<div *ngIf="buySucceded">
-		  <button mat-button mat-raised-button color="accent" (click)="router.navigate([ '/mis-tickets' ]);">Ir a mis tickets</button>
+		  <button mat-button mat-raised-button color="accent" (click)="router.navigate([ pageUrls.myTickets ]);">Ir a mis tickets</button>
 		</div>
 		<div *ngIf="!buySucceded">
 			<button mat-button mat-raised-button color="accent" (click)="returnToSummary()">Volver a intentar</button>

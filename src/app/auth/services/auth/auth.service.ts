@@ -6,6 +6,7 @@ import { StatusCodes } from 'http-status-codes';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError, map, mapTo, shareReplay, tap } from 'rxjs/operators';
 import { localStorageKeys } from 'src/app/constants/local-storage-keys.constant';
+import { PageUrls } from 'src/app/constants/page-urls.constant';
 import { User } from 'src/app/models/user.model';
 import { EnvironmentService } from 'src/app/pages/root/services/environment/environment.service';
 import { AuthModule } from '../../auth.module';
@@ -304,7 +305,7 @@ export class AuthService {
 	 * Redirects the user to the authentication page.
 	 */
 	private redirectUserToAuthenticationPage( ): void {
-		this.router.navigate([ '/ingresar' ]);
+		this.router.navigate([ PageUrls.authenticationPage ]);
 	}
 
 }

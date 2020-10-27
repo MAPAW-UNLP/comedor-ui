@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
+import { PageUrls } from 'src/app/constants/page-urls.constant';
 import { AuthService } from '../../services/auth/auth.service';
 
 /**
@@ -24,7 +25,7 @@ export class AuthenticatedUserRequiredGuard implements CanActivate {
 		const aUserIsAuthenticated: boolean = this.authService.aUserIsAuthenticatedSnapshot;
 
 		if ( !aUserIsAuthenticated ) {
-			this.router.navigate([ '/ingresar' ]);
+			this.router.navigate([ PageUrls.authenticationPage ]);
 		}
 
 		return aUserIsAuthenticated;

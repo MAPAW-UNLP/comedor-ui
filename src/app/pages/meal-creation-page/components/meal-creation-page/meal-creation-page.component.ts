@@ -267,11 +267,11 @@ export class MealCreationPageComponent implements OnInit {
 	public addDish( ): void {
 		const addedDishes = this.addedDishes ?? [ ];
 		this.addedDishesField.setValue([
-			...addedDishes,
 			{
 				dish: this.dishField.value,
 				dishType: this.dishTypeField.value,
-			}
+			},
+			...addedDishes,
 		]);
 		this.dishField.reset( '' );
 		this.dishTypeField.reset( '' );

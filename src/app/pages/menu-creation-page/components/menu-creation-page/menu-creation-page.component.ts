@@ -52,7 +52,7 @@ export class MenuCreationPageComponent{
 				Validators.min(1)
 			],
 		}),
-		[ this._stockFieldName ]: new FormControl( '', {
+		[ this._stockFieldName ]: new FormControl( '100', {
 			validators: [
 				Validators.required,
 				Validators.min(1)

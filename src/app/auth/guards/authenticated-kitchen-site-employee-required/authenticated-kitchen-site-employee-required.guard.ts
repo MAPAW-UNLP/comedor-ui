@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
+import { PageUrls } from 'src/app/constants/page-urls.constant';
 import { AuthService } from '../../services/auth/auth.service';
 import { UserRole } from '../../services/auth/enums/user-role.enum';
 
@@ -26,7 +27,7 @@ export class AuthenticatedKitchenSiteEmployeeRequiredGuard implements CanActivat
 		const hasRequiredRole = this.authService.authenticatedUserRoleSnapshot === UserRole.KitchenSiteEmployee;
 
 		if ( !hasRequiredRole ) {
-			this.router.navigate([ '/404' ]);
+			this.router.navigate([ PageUrls.pageNotFound ]);
 		}
 
 		return hasRequiredRole;

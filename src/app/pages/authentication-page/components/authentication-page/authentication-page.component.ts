@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/services/auth/auth.service';
 import { dniLength } from 'src/app/constants/dni-length.constant';
+import { PageUrls } from 'src/app/constants/page-urls.constant';
 import { dniLengthValidator } from 'src/app/shared/validators/dni-length.validator';
 
 /**
@@ -232,7 +233,7 @@ export class AuthenticationPageComponent implements AfterViewInit {
 						this.showSnackBar(
 							`Ingresaste al sistema como ${ userFullName }.`
 						);
-						this.router.navigate([ '/' ]);
+						this.router.navigate([ PageUrls.homePage ]);
 					}
 					else {
 						this._hasInvalidCredentials = true;

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth/auth.service';
+import { PageUrls } from 'src/app/constants/page-urls.constant';
 import { siteTitle } from 'src/app/constants/site-title.constant';
 import { PageTitleService } from 'src/app/pages/root/services/page-title/page-title.service';
 import { CartService } from 'src/app/shared/services/cart/cart.service';
@@ -70,6 +71,10 @@ export class PlatformComponent {
 	 */
 	public get aKitchenSiteEmployeeIsAuthenticated( ): boolean {
 		return this.authService.aKitchenSiteEmployeeIsAuthenticatedSnapshot;
+	}
+
+	public get pageUrls( ) {
+		return PageUrls;
 	}
 
 	public constructor(

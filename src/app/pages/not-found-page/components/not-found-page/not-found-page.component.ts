@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PageUrls } from 'src/app/constants/page-urls.constant';
 
 /**
  * Top-level component for the NotFoundPage module.
@@ -9,5 +10,9 @@ import { Component } from '@angular/core';
 	styleUrls: [ './not-found-page.component.scss' ],
 })
 export class NotFoundPageComponent {
+
+	public get pageUrls( ) {
+		return PageUrls;
+	}
 
 }
