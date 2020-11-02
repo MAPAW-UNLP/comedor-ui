@@ -13,32 +13,28 @@
 	margin-bottom: 2.5rem;
 }
 
-.dish_creation_form {
-	display: flex;
-	flex-flow: column nowrap;
+.ingredients_section__ingredients_creator,
+.ingredients_section__added_ingredient_row {
+	display: grid;
+	grid-template-columns: 15rem 15rem auto;
+	grid-auto-flow: row;
+	gap: 1rem;
+	align-items: center;
 }
 
-.dish_creation_form_field {
-	width: 20rem;
-	font-size: 16px;
+.ingredients_section__added_ingredients {
+	display: grid;
+	grid-template-columns: auto;
+	grid-auto-flow: row;
+	gap: 1rem;
+}
 
-	&__error_message_container {
-		display: flex;
-		flex-flow: row nowrap;
-		justify-content: space-between;
-	}
+.dish_name_field {
+	width: 35rem;
+	margin-bottom: 2rem;
+}
 
-	&__form_error {
-		margin: 2rem 0 0 0;
-	}
-
-	&__submit_button {
-		display: flex;
-		flex-flow: row nowrap;
-		justify-content: center;
-		margin: 2rem 0 0 0;
-		text-align: center;
-		text-transform: uppercase;
-	}
-
+.submit_button {
+	display: block;
+	margin-top: 2rem;
 }
