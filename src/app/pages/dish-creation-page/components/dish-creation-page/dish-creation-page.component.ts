@@ -1,4 +1,3 @@
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
@@ -6,6 +5,10 @@ import { FuzzySearchService } from 'src/app/shared/services/fuzzy-search/fuzzy-s
 import { IngredientsService } from 'src/app/shared/services/ingredients/ingredients.service';
 import { IngredientRecipeDTO } from 'src/app/shared/services/ingredients/dto/ingredient-recipe.dto';
 import { Subscription } from 'rxjs';
+import { DishesService } from 'src/app/shared/services/dishes/dishes.service';
+import { DishItem } from 'src/app/interfaces/dish-item.interface';
+import { tap } from 'rxjs/operators';
+import { Dish } from 'src/app/models/dish.model';
 
 /**
  * Top-level component of the IngredientsCreationPage module.
@@ -16,7 +19,10 @@ import { Subscription } from 'rxjs';
 	styleUrls: [ './dish-creation-page.component.scss' ],
 })
 export class DishCreationPageComponent implements AfterViewInit, OnDestroy {
-	private readonly _dishNameFieldName: string = 'ingredientNameField';
+	public readonly dishNameFieldName: string = 'dishNameField';
+	public readonly ingredientNameFieldName: string = 'ingredientNameField';
+	public readonly ingredientQuantityFieldName: string = 'ingredientQuantityField';
+	public readonly addedIngredientsFieldName: string = 'addedIngredientsField';
 
 	private _isWaitingForServerResponse: boolean = false;
 
@@ -25,9 +31,26 @@ export class DishCreationPageComponent implements AfterViewInit, OnDestroy {
 	public ingredients: IngredientRecipeDTO[] = [];
 
 	private readonly _dishCreationForm: FormGroup = new FormGroup({
-		[ this._dishNameFieldName ]: new FormControl( '', {
+		[ this.dishNameFieldName ]: new FormControl( '', {
 			validators: [
 				Validators.required,
+			],
+		}),
+		[ this.ingredientNameFieldName ]: new FormControl( '', {
+			validators: [
+				Validators.required,
+			],
+		}),
+		[ this.ingredientQuantityFieldName ]: new FormControl( '', {
+			validators: [
+				Validators.required,
+				Validators.min(0.001)
+			],
+		}),
+		[ this.addedIngredientsFieldName ]: new FormControl( [ ], {
+			validators: [
+				Validators.required,
+				Validators.minLength( 1 ),
 			],
 		}),
 	});
@@ -39,12 +62,20 @@ export class DishCreationPageComponent implements AfterViewInit, OnDestroy {
 		return this._dishCreationForm;
 	}
 
-	public get dishNameFieldName( ): string {
-		return this._dishNameFieldName;
-	}
-
 	public get dishNameField( ): AbstractControl {
 		return this.dishCreationForm.controls[ this.dishNameFieldName ];
+	}
+
+	public get ingredientNameField( ): AbstractControl {
+		return this.dishCreationForm.controls[ this.ingredientNameFieldName ];
+	}
+
+	public get ingredientQuantityField( ): AbstractControl {
+		return this.dishCreationForm.controls[ this.ingredientQuantityFieldName ];
+	}
+
+	public get addedIngredientsField( ): AbstractControl {
+		return this.dishCreationForm.controls[ this.addedIngredientsFieldName ];
 	}
 
 
@@ -52,8 +83,24 @@ export class DishCreationPageComponent implements AfterViewInit, OnDestroy {
 		return this.dishNameField.hasError( 'required' );
 	}
 
-	public get requiredDishNameErrorMessage( ): string {
-		return 'Tenés que ingresar el nombre del plato';
+	public get hasRequiredIngredientNameError( ): boolean {
+		return this.ingredientNameField.hasError( 'required' );
+	}
+
+	public get hasRequiredIngredientQuantityError( ): boolean {
+		return this.ingredientQuantityField.hasError( 'required' );
+	}
+
+	public get hasIncorrectIngredientNameError( ): boolean {
+		return this.ingredientNameField.hasError( 'autocomplete' );
+	}
+
+	public get hasInvalidIngredientQuantityFormatError(): boolean {
+		return this.ingredientQuantityField.hasError('pattern');
+	}
+
+	public get hasInvalidQuantityIngredientQuantityError(): boolean {
+		return this.ingredientQuantityField.hasError('min');
 	}
 
 
@@ -78,8 +125,60 @@ export class DishCreationPageComponent implements AfterViewInit, OnDestroy {
 			: 'Crear';
 	}
 
-	public get submitButtonIsDisabled( ): boolean {
-		return this.dishCreationForm.invalid || this.isWaitingForServerResponse;
+	public get submitButtonIsEnabled( ): boolean {
+		return this.dishNameField.valid
+			&& this.addedIngredientsField.valid;
+	}
+
+	public get requiredDishNameErrorMessage( ): string {
+		return 'Tenés que ingresar el nombre del plato';
+	}
+
+	public get requiredIngredientNameErrorMessage( ): string {
+		return 'Tenés que ingresar el nombre del ingrediente';
+	}
+
+	public get requiredIngredientQuantityErrorMessage( ): string {
+		return 'Tenés que ingresar la cantidad necesaria del ingrediente';
+	}
+
+	public get incorrectIngredientNameErrorMessage( ): string {
+		return 'Tenés que ingresar un ingrediente de la lista';
+	}
+
+	public get invalidIngredientQuantityFormatErrorMessage( ): string {
+		return 'Debe ser un numero con hasta 2 decimales y el separador de decimales debe ser el .';
+	}
+
+	public get invalidIngredientQuantityErrorMessage( ): string {
+		return 'La cantidad debe ser un mayor a 0';
+	}
+
+	public get filteredIngredientsOptions( ): IngredientRecipeDTO[ ] {
+		if (this.ingredientNameField.value == null) {
+			return this.ingredients;
+		}
+		if ( typeof this.ingredientNameField.value !== 'string' ) {
+			return [ this.ingredientNameField.value ];
+		}
+
+		const fieldText: string = this.ingredientNameField.value;
+		if ( fieldText === '' ) {
+			return this.ingredients;
+		}
+
+		const filteredIngredients = this.ingredients.filter( ( ingredient ) => {
+			return this.fuzzySearchService.isFuzzilyIncludedInText( fieldText, ingredient.name );
+		});
+		return filteredIngredients;
+	}
+
+	public get addedIngredients( ): { ingredient: IngredientRecipeDTO; quantity: Number }[ ] {
+		return this.addedIngredientsField.value;
+	}
+
+	public get shouldEnableAddIngredientButton( ): boolean {
+		return this.ingredientNameField.valid && this.ingredientQuantityField.valid;
 	}
 
 	public constructor(
@@ -87,10 +186,13 @@ export class DishCreationPageComponent implements AfterViewInit, OnDestroy {
 		private readonly fuzzySearchService: FuzzySearchService,
 		private readonly snackBar: MatSnackBar,
 		private readonly changeDetectorRef: ChangeDetectorRef,
-		private readonly route: ActivatedRoute,
+		private readonly dishService: DishesService
 	) {
 		this.ingredientsSubscription = this.ingredientsService.getAll().subscribe( (ingredients) => {
 			this.ingredients = ingredients;
+			this.ingredientNameField.setValidators([
+				Validators.required,
+			]);
 		});
 	}
 
@@ -105,11 +207,62 @@ export class DishCreationPageComponent implements AfterViewInit, OnDestroy {
 	}
 
 	public create(): void {
-		if ( this.dishCreationForm.invalid ) {
-			return;
-		}
 		this.isWaitingForServerResponse = true;
+		const dishName: string = this.dishNameField.value;
+		const ingredients: DishItem[] = this.addedIngredientsField.value;
+		this.dishService
+		.create(dishName, ingredients)
+		.pipe(
+			tap({
+				next: () => {
+					this.isWaitingForServerResponse = false;
+				},
+				error: () => {
+					this.isWaitingForServerResponse = false;
+				}
+			})
+		)
+		.subscribe({
+			next: (res: Dish) => {
+				this.showSnackBar(
+					`El plato se creó exitosamente`
+				);
+				this.dishCreationForm.reset( );
+			},
+			error: (err) => {
+				this.showSnackBar(
+					`Ocurió un error al crear el plato, intente nuevamente`
+				);
+			}
+		});
 
+	}
+
+	public addIngredient( ): void {
+		const addedIngredients = this.addedIngredients ?? [ ];
+		this.addedIngredientsField.setValue([
+			{
+				ingredient: this.ingredientNameField.value,
+				quantity: this.ingredientQuantityField.value,
+			},
+			...addedIngredients,
+		]);
+		this.ingredientNameField.reset( '' );
+		this.ingredientQuantityField.reset( '' );
+	}
+
+	public removeIngredient( ingredientId: string ): void {
+		const addedIngredients = this.addedIngredients ?? [ ];
+		const addedIngredientsWithoutRemoved = addedIngredients.filter( ( i ) => i.ingredient.id !== ingredientId );
+		this.addedIngredientsField.setValue( addedIngredientsWithoutRemoved );
+	}
+
+	public getIngredientName( ingredient: IngredientRecipeDTO ): string {
+		return ingredient?.name || '';
+	}
+
+	public getCurrentIngredientMeasurement(): string {
+		return this.ingredientNameField.value?.measurement || '';
 	}
 
 	/**

@@ -21,14 +21,114 @@
 		</mat-error>
 
 	</mat-form-field>
+	<section class="meal_creation_form__section dishes_section">
+		<h2 class="dish_creation_form__section_title">Ingredientes</h2>
+		<div class="ingredients_section__ingredients_creator">
+			<mat-form-field class="dish_creation_form_field" appearance="standard">
 
-	<button
-		mat-raised-button
-		class="dish_creation_form_field__submit_button"
-		[disabled]="submitButtonIsDisabled"
-		color="accent"
-		(click)="create( )"
-	>
-		{{ submitbuttonText }}
-	</button>
+				<mat-label>Ingrediente</mat-label>
+				<input
+					#ingredientNameInput
+					matInput
+					[formControlName]="ingredientNameFieldName"
+					[matAutocomplete]="ingredientAutocomplete"
+					placeholder="Ingresá el ingrediente"
+				>
+				<mat-autocomplete #ingredientAutocomplete="matAutocomplete" [displayWith]="getIngredientName">
+					<mat-option *ngFor="let ingredient of filteredIngredientsOptions" [value]="ingredient">
+					{{ ingredient.name }}
+					</mat-option>
+				</mat-autocomplete>
+
+				<mat-error
+					*ngIf="hasRequiredIngredientNameError"
+					class="dish_creation_form_field__error_message_container"
+					align="start"
+				>
+					<span>{{ requiredIngredientNameErrorMessage }}</span>
+				</mat-error>
+				<mat-error
+					*ngIf="hasIncorrectIngredientNameError"
+					class="dish_creation_form_field__error_message_container"
+					align="start"
+				>
+					<span>{{ incorrectIngredientNameErrorMessage }}</span>
+				</mat-error>
+
+			</mat-form-field>
+			<mat-form-field class="dish_creation_form_field" appearance="standard">
+				<mat-label>Cantidad</mat-label>
+					<input
+						#ingredientQuantityInput
+						matInput
+						[formControlName]="ingredientQuantityFieldName"
+						placeholder="Ingresá la cantidad del plato"
+						pattern="[0-9]+(\.[0-9]{1,2})?"
+					>
+					<mat-hint align="start">
+						Valor expresado en {{getCurrentIngredientMeasurement()}}
+					</mat-hint>
+
+					<mat-error
+						*ngIf="hasRequiredIngredientQuantityError"
+						class="ingredient_creation_form_field__error_message_container"
+						align="start"
+					>
+						<span>{{ requiredIngredientQuantityErrorMessage }}</span>
+					</mat-error>
+
+					<mat-error
+						*ngIf="hasInvalidIngredientQuantityFormatError"
+						class="ingredient_creation_form_field__error_message_container"
+						align="start"
+					>
+						<span>{{ invalidIngredientQuantityFormatErrorMessage }}</span>
+					</mat-error>
+
+					<mat-error
+						*ngIf="hasInvalidQuantityIngredientQuantityError"
+						class="ingredient_creation_form_field__error_message_container"
+						align="start"
+					>
+						<span>{{ invalidIngredientQuantityErrorMessage }}</span>
+					</mat-error>
+
+			</mat-form-field>
+
+
+			<button
+				mat-raised-button
+				color="accent"
+				(click)="addIngredient( )"
+				type="button"
+				[disabled]="!shouldEnableAddIngredientButton"
+			>
+				Agregar Ingrediente
+			</button>
+		</div>
+	</section>
+<div class="ingredients_section__added_ingredients">
+	<div class="ingredients_section__added_ingredient_row" *ngFor="let addedIngredient of addedIngredients">
+		<div class="added_ingredient_row__ingredient_name">{{ addedIngredient.ingredient.name }}</div>
+		<div class="added_ingredient_row__ingredient_quantity">{{ addedIngredient.quantity }} {{ addedIngredient.ingredient.measurement }}</div>
+		<button
+			mat-raised-button
+			color="warn"
+			(click)="removeIngredient( addedIngredient.ingredient.id )"
+			type="button"
+		>
+			Eliminar plato
+		</button>
+	</div>
+</div>
+
+<button
+	mat-raised-button
+	class="submit_button"
+	[disabled]="!submitButtonIsEnabled"
+	color="accent"
+	(click)="create( )"
+>
+	{{ submitbuttonText }}
+</button>
 </form>
