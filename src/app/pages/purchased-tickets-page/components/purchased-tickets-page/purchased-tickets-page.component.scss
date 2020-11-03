@@ -1,8 +1,37 @@
-:host {
-	flex: 1 0 auto;
+
+.buy-tickets-box-holder {
+	width: 30%;
+	position: fixed;
+	height: 120px;
+	top: 30%;
+	right: 15%;
+}
+
+.cards-holder {
+	height: auto;
+	margin: 15px;
+}
+
+.empty-tickets {
+	margin: 15px;
+	align-content: center;
+}
+
+.card-container {
+	margin-bottom: 15px;
+}
+
+.container {
 	display: flex;
-	flex-flow: column nowrap;
-	align-items: center;
-	position: relative;
-	padding: 2.5rem;
+	margin: 15px;
+	width: auto;
+}
+
+.search-button {
+	margin-left: 20px;
+}
+
+.spinner {
+	margin-left: 30%;
+	margin-top: 10%;
 }

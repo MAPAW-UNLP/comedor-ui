@@ -7,7 +7,7 @@ import { tap } from 'rxjs/operators';
 import { ConsumptionType } from 'src/app/enums/consumption-type.enum';
 import { Menu } from 'src/app/models/menu.model';
 import { CartService } from 'src/app/shared/services/cart/cart.service';
-import { TicketDTO } from 'src/app/shared/services/tickets/dto/ticket.dto';
+import { TicketToBuyDTO } from 'src/app/shared/services/tickets/dto/ticket-to-buy.dto';
 import { TicketsService } from 'src/app/shared/services/tickets/tickets.service';
 import { creditCardExpirancyValidator, creditCardNumberValidator } from 'src/app/shared/validators/credit-card.validator';
 import { consumptionTypeLabels } from 'src/app/constants/consumption-type-labels.constant';
@@ -117,7 +117,7 @@ export class ShoppingCartPageComponent implements OnInit {
 			return ;
 		}
 		this.isWaitingForServerResponse = true;
-		const items: TicketDTO[] = this.cartItems.map((ci) => {
+		const items: TicketToBuyDTO[] = this.cartItems.map((ci) => {
 			return {
 				menu: {
 					id: Number.parseInt(ci.id)

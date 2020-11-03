@@ -56,16 +56,22 @@
 			</div>
 		</div>
 
-		<mat-button-toggle-group
-			class="menu_card__consumption_type_selector"
-			*ngIf="shouldDisplayConsumptionTypeSelector"
-			[value]="consumptionType"
-			(change)="handleConsumptionTypeChange( $event )"
-		>
-			<mat-button-toggle *ngFor="let option of consumptionTypeOptions" [value]="option.value">
-				{{ option.label }}
-			</mat-button-toggle>
-		</mat-button-toggle-group>
+		<div *ngIf="shouldDisplayConsumptionTypeSelector">
+			<mat-button-toggle-group
+				class="menu_card__consumption_type_selector"
+				*ngIf="!readonly"
+				[value]="consumptionType"
+				(change)="handleConsumptionTypeChange( $event )"
+			>
+				<mat-button-toggle *ngFor="let option of consumptionTypeOptions" [value]="option.value">
+					{{ option.label }}
+				</mat-button-toggle>
+			</mat-button-toggle-group>
+			<div class="menu_card__metadata_item" *ngIf="readonly">
+				<mat-icon class="menu_card__metadata_item_icon">store</mat-icon>
+				{{ consumptionTypeLabel }}
+			</div>
+		</div>
 
 		<div class="menu_card__actions">
 			<button

@@ -27,4 +27,14 @@ export class TicketsService {
 				shareReplay( ),
 			);
 	}
+
+	public getMyTickets(): Observable<TicketDTO[]> {
+		const url: string = `${this.environmentService.getEndpoint( 'tickets' )}/pending`;
+		return this.httpClient
+			.get<TicketDTO[]>( url )
+			.pipe(
+				// Avoid sending multiple concurrent requests.
+				shareReplay( ),
+			);
+	}
 }

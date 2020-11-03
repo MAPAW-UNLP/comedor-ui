@@ -26,6 +26,7 @@ export class MenuCardComponent {
 	private _menuIsInShoppingCart: boolean | undefined;
 	private _anotherMenuIsInShoppingCartInSameDate: boolean | undefined;
 	private _shouldDisplayCartActionButton: boolean | undefined;
+	private _readonly: boolean = false;
 
 	private readonly _consumptionTypeChange = new EventEmitter<ConsumptionType>( );
 	private readonly _viewMoreButtonClick = new EventEmitter<void>( );
@@ -132,6 +133,7 @@ export class MenuCardComponent {
 	public get consumptionType( ): ConsumptionType | undefined {
 		return this._consumptionType;
 	}
+
 	@Input( )
 	public set consumptionType( value: ConsumptionType | undefined ) {
 		this._consumptionType = value;
@@ -178,6 +180,15 @@ export class MenuCardComponent {
 		this._shouldDisplayCartActionButton = value;
 	}
 
+	public get readonly( ): boolean | undefined {
+		return this._readonly;
+	}
+
+	@Input( )
+	public set readonly( value: boolean | undefined ) {
+		this._readonly = value || false;
+	}
+
 	/**
 	 * The price tag of the card.
 	 *
@@ -195,6 +206,10 @@ export class MenuCardComponent {
 			: ( this.price <= maximumRepresentablePrice )
 				? `$${ this.price },00`
 				: `$${ this.price }`;
+	}
+
+	public get consumptionTypeLabel(): string | undefined {
+		return this.consumptionTypeOptions.find((ct) => ct.value === this.consumptionType)?.label;
 	}
 
 	/**
