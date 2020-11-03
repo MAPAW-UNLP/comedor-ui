@@ -1,10 +1,8 @@
 import { ConsumptionType } from 'src/app/enums/consumption-type.enum';
+import { Menu } from 'src/app/models/menu.model';
 
 export interface TicketDTO {
-	menu: EntityID;
-	ticketType: ConsumptionType;
-}
-
-interface EntityID {
-	id: number;
+	menu: Menu;
+	type: ConsumptionType;
+	cosumed: Boolean;
 }

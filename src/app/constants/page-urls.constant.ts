@@ -3,7 +3,7 @@ export const PageUrls = {
 	homePage: '',
 	myTickets: 'mis-tickets',
 	shoppingCart: 'carro-de-compras',
-	availableCombosList: 'combos-disponibles',
+	buyTickets: 'comprar-tickets',
 	enabledCombosList: 'combos-habilitados',
 	enableCombo: 'combos/habilitar',
 	combosList: 'combos',

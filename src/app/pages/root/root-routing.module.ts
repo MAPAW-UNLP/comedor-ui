@@ -82,13 +82,13 @@ const routes: ComedorUniversitarioRoutes = [
 				},
 			},
 			{
-				path: PageUrls.availableCombosList,
+				path: PageUrls.buyTickets,
 				component: MenuShopPageComponent,
 				canActivate: [
 					AuthenticatedClientRequiredGuard,
 				],
 				data: {
-					pageTitle: 'Combos disponibles',
+					pageTitle: 'Comprar tickets',
 				},
 			},
 			{

@@ -1,0 +1,52 @@
+<div class="container" *ngIf="!isWaitingForServerResponse">
+	<div class="cards-holder" *ngIf="tickets.length">
+		<div class="card-container" *ngFor="let ticket of tickets">
+			<cu-menu-card
+				[cardTitle]="ticket.menu.name"
+				[price]="ticket.menu.unitPrice"
+				[date]="ticket.menu.date"
+				[kitchenSiteName]="ticket.menu.kitchenSite.name"
+				[shouldDisplayCartActionButton]="false"
+				[readonly]="true"
+				[consumptionType]="ticket.type"
+			></cu-menu-card>
+		</div>
+	</div>
+	<div class="buy-tickets-box-holder" *ngIf="tickets.length">
+		<mat-card>
+			<mat-card-title>
+				Comprá más tickets !
+			</mat-card-title>
+			<mat-card-subtitle>
+				Podés comprar haciendo click en el botón
+			</mat-card-subtitle>
+			<mat-card-actions>
+				<button
+					mat-raised-button
+					color="accent"
+					(click)="this.router.navigate([ pageUrls.buyTickets ]);"
+				>Comprar tickets</button>
+			</mat-card-actions>
+		</mat-card>
+	</div>
+	<div
+		class="empty-tickets"
+		*ngIf="tickets.length == 0 && !isWaitingForServerResponse">
+		<mat-card>
+			<mat-card-title>
+				No tenés tickets para canjear
+			</mat-card-title>
+			<mat-card-subtitle>
+				Podés comprar haciendo click en el botón
+			</mat-card-subtitle>
+			<mat-card-actions>
+				<button
+					mat-raised-button
+					color="accent"
+					(click)="this.router.navigate([ pageUrls.buyTickets ]);"
+				>Comprar tickets</button>
+			</mat-card-actions>
+		</mat-card>
+	</div>
+</div>
+<mat-spinner class="spinner" *ngIf="isWaitingForServerResponse"></mat-spinner>
