@@ -92,43 +92,43 @@ const routes: ComedorUniversitarioRoutes = [
 				},
 			},
 			{
-				path: PageUrls.enabledCombosList,
+				path: PageUrls.enabledMenusList,
 				component: MenusPageComponent,
 				canActivate: [
 					AuthenticatedKitchenSiteEmployeeRequiredGuard,
 				],
 				data: {
-					pageTitle: 'Combos habilitados',
+					pageTitle: 'Menús habilitados',
 				},
 			},
 			{
-				path: PageUrls.enableCombo,
+				path: PageUrls.enableMenu,
 				component: MenuCreationPageComponent,
 				canActivate: [
 					AuthenticatedKitchenSiteEmployeeRequiredGuard,
 				],
 				data: {
-					pageTitle: 'Habilitar combo',
+					pageTitle: 'Habilitar menu',
 				},
 			},
 			{
-				path: PageUrls.combosList,
+				path: PageUrls.menusList,
 				component: MealsPageComponent,
 				canActivate: [
 					AuthenticatedKitchenSiteEmployeeRequiredGuard,
 				],
 				data: {
-					pageTitle: 'Combos',
+					pageTitle: 'Listado de menus',
 				},
 			},
 			{
-				path: PageUrls.createCombo,
+				path: PageUrls.createMenu,
 				component: MealCreationPageComponent,
 				canActivate: [
 					AuthenticatedKitchenSiteEmployeeRequiredGuard,
 				],
 				data: {
-					pageTitle: 'Crear combo',
+					pageTitle: 'Crear Menu',
 				},
 			},
 			{

@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, OnDestroy, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { FuzzySearchService } from 'src/app/shared/services/fuzzy-search/fuzzy-search.service';
@@ -18,15 +18,16 @@ import { Dish } from 'src/app/models/dish.model';
 	templateUrl: './dish-creation-page.component.html',
 	styleUrls: [ './dish-creation-page.component.scss' ],
 })
-export class DishCreationPageComponent implements AfterViewInit, OnDestroy {
+export class DishCreationPageComponent implements AfterViewInit {
 	public readonly dishNameFieldName: string = 'dishNameField';
 	public readonly ingredientNameFieldName: string = 'ingredientNameField';
 	public readonly ingredientQuantityFieldName: string = 'ingredientQuantityField';
 	public readonly addedIngredientsFieldName: string = 'addedIngredientsField';
+	private readonly _createIngredientClicked = new EventEmitter<void>( );
+	private readonly _backToDishClicked = new EventEmitter<void>( );
+	public showIngredientCreation = false;
 
 	private _isWaitingForServerResponse: boolean = false;
-
-	private readonly ingredientsSubscription: Subscription;
 
 	public ingredients: IngredientRecipeDTO[] = [];
 
@@ -57,6 +58,27 @@ export class DishCreationPageComponent implements AfterViewInit, OnDestroy {
 
 	@ViewChild( 'dishNameInput' )
 	private readonly _dishNameInputRef!: ElementRef<HTMLInputElement>;
+
+	@Output( )
+	public get createIngredient(): EventEmitter<void> {
+		return this._createIngredientClicked;
+	}
+
+	@Output( )
+	public get backToDishCreation(): EventEmitter<void> {
+		return this._backToDishClicked;
+	}
+
+	public handleCreateIngredientClick(): void {
+		this.showIngredientCreation = true;
+		this._createIngredientClicked.emit();
+	}
+
+	public handleBackToDishCreationClick(): void {
+		this.showIngredientCreation = false;
+		this.retrieveIngredients();
+		this._backToDishClicked.emit();
+	}
 
 	public get dishCreationForm( ): FormGroup {
 		return this._dishCreationForm;
@@ -188,18 +210,16 @@ export class DishCreationPageComponent implements AfterViewInit, OnDestroy {
 		private readonly changeDetectorRef: ChangeDetectorRef,
 		private readonly dishService: DishesService
 	) {
-		this.ingredientsSubscription = this.ingredientsService.getAll().subscribe( (ingredients) => {
+		this.retrieveIngredients();
+	}
+
+	public retrieveIngredients(): void {
+		this.ingredientsService.getAll().subscribe( (ingredients) => {
 			this.ingredients = ingredients;
 			this.ingredientNameField.setValidators([
 				Validators.required,
 			]);
 		});
-	}
-
-	public ngOnDestroy(): void {
-		if (this.ingredientsSubscription) {
-			this.ingredientsSubscription.unsubscribe();
-		}
 	}
 
 	public ngAfterViewInit( ): void {
@@ -283,5 +303,4 @@ export class DishCreationPageComponent implements AfterViewInit, OnDestroy {
 		};
 		this.snackBar.open( message, closeButtonText, snackBarConfiguration );
 	}
-
 }

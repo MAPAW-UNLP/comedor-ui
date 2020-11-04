@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { IngredientCreationPageModule } from '../ingredient-creation-page/ingredient-creation-page.module';
 import { DishCreationPageComponent } from './components/dish-creation-page/dish-creation-page.component';
 
 /**
@@ -15,6 +16,7 @@ import { DishCreationPageComponent } from './components/dish-creation-page/dish-
 		CommonModule,
 		ReactiveFormsModule,
 		SharedModule,
+		IngredientCreationPageModule
 	],
 	exports: [
 		DishCreationPageComponent,
