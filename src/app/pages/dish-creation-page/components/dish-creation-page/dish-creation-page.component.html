@@ -1,6 +1,5 @@
-<h2 class="page_title">Platos</h2>
-
-<form class="creation_form" [formGroup]="dishCreationForm">
+<form class="creation_form" [formGroup]="dishCreationForm" *ngIf="!showIngredientCreation">
+	<h2 class="page_title">Platos</h2>
 	<mat-form-field class="dish_creation_form_field" appearance="standard">
 
 		<mat-label>Nombre</mat-label>
@@ -105,6 +104,14 @@
 			>
 				Agregar Ingrediente
 			</button>
+			<button
+				mat-raised-button
+				color="accent"
+				(click)="handleCreateIngredientClick()"
+				type="button"
+			>
+				Crear Ingrediente
+			</button>
 		</div>
 	</section>
 <div class="ingredients_section__added_ingredients">
@@ -132,3 +139,15 @@
 	{{ submitbuttonText }}
 </button>
 </form>
+<div *ngIf="showIngredientCreation">
+	<button
+
+		mat-raised-button
+		class="submit_button"
+		color="accent"
+		(click)="handleBackToDishCreationClick()"
+	>
+		Volver
+	</button>
+	<cu-ingredient-creation-page></cu-ingredient-creation-page>
+</div>

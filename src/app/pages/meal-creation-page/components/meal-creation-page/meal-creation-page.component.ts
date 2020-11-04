@@ -29,6 +29,8 @@ export class MealCreationPageComponent implements OnInit {
 	private readonly _isSuitableForCeliacsFieldName: string = 'isSuitableForCeliacsField';
 	private readonly _isSuitableForVegetariansFieldName: string = 'isSuitableForVegetariansField';
 	private readonly _observationsFieldName: string = 'observationsField';
+	public showDishCreation: boolean = false;
+	public displayBackButton: boolean = true;
 
 	private readonly _dishTypeOptions: DishTypeAutocompleteOption[ ] = [
 		{
@@ -251,6 +253,10 @@ export class MealCreationPageComponent implements OnInit {
 	) { }
 
 	public ngOnInit( ): void {
+		this.retrieveDishes();
+	}
+
+	private retrieveDishes(): void {
 		this.dishesService.findAll( )
 			.pipe( first( ) )
 			.subscribe({
@@ -309,6 +315,15 @@ export class MealCreationPageComponent implements OnInit {
 			&& this.addedDishesField.valid;
 	}
 
+	public createDish(): void {
+		this.showDishCreation = true;
+	}
+
+	public backToMealCreation(): void {
+		this.showDishCreation = false;
+		this.retrieveDishes();
+	}
+
 	public submitForm( ): void {
 		if (!this.canSubmitForm) {
 			return ;
@@ -360,5 +375,9 @@ export class MealCreationPageComponent implements OnInit {
 		this.isSuitableForVegetariansField.reset( false );
 		this.dishField.reset( '' );
 		this.dishTypeField.reset( '' );
+	}
+
+	public setShowBackButton(value: boolean) {
+		this.displayBackButton = value;
 	}
 }
