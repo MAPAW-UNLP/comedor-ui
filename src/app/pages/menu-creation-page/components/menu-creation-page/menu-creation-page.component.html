@@ -2,10 +2,10 @@
 	<mat-grid-list cols="4" rowHeight="100px">
 		<mat-grid-tile [colspan]="1" [rowspan]="1">
 			<mat-form-field appearance="standard">
-				<mat-label>Combo</mat-label>
+				<mat-label>Menú</mat-label>
 				<input
 					#comboAutocomplete
-					placeholder="Seleccioná un combo"
+					placeholder="Seleccioná un menú"
 					matInput
 					type="text"
 					appearance="fill"
@@ -13,7 +13,7 @@
 					[matAutocomplete]="auto"
 				>
 				<mat-hint align="start">
-					Ingresá el nombre del combo
+					Ingresá el nombre del menú
 				</mat-hint>
 				<mat-autocomplete #auto="matAutocomplete">
 					<mat-option *ngFor="let combo of filteredCombosOptions" [value]="combo.name">
@@ -24,7 +24,7 @@
 					*ngIf="this.comboField.hasError( 'required' ) || this.comboField.hasError( 'autocomplete' )"
 					align="start"
 				>
-					<span>Debes seleccionar un combo de la lista</span>
+					<span>Debes seleccionar un menú de la lista</span>
 				</mat-error>
 			</mat-form-field>
 		</mat-grid-tile>
@@ -191,7 +191,7 @@
 				[disabled]="isWaitingForServerResponse"
 				(click)="create()"
 			>
-				Habilitar combo
+				Habilitar menú
 			</button>
 		</mat-grid-tile>
 

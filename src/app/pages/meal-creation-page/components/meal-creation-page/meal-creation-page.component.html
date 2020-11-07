@@ -1,13 +1,13 @@
 <form class="meal_creation_form" [formGroup]="mealCreationForm" *ngIf="!showDishCreation">
 	<mat-form-field class="meal_creation_form_field meal_name_field" appearance="standard">
 
-		<mat-label>Nombre del combo</mat-label>
+		<mat-label>Nombre del menú</mat-label>
 
 		<input
 			#mealNameInput
 			matInput
 			[formControlName]="mealNameFieldName"
-			placeholder="Ingresá el nombre del combo"
+			placeholder="Ingresá el nombre del menú"
 		>
 
 		<mat-error
@@ -158,7 +158,7 @@
 		type="button"
 		[disabled]="!shouldEnableSubmitButton"
 	>
-		Crear combo
+		Crear Menú
 	</button>
 
 </form>
