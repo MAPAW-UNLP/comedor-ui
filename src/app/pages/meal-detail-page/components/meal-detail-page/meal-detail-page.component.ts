@@ -4,6 +4,8 @@ import { Location } from '@angular/common';
 import { Meal } from 'src/app/models/meal.model';
 import { MealsService } from 'src/app/shared/services/meals/meals.service';
 import { AuthService } from 'src/app/auth/services/auth/auth.service';
+import { DishType } from 'src/app/enums/dish-type.enum';
+import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
 
 @Component({
 	selector: 'cu-meal-detail-page',
@@ -15,6 +17,14 @@ export class MealDetailPageComponent implements OnInit {
 	private readonly ID_PARAM_NAME = 'id';
 	public meal: Meal | undefined = undefined;
 	public isWaitingForServerResponse: boolean = true;
+
+	public readonly dishTypeOptions: StringMap = {
+		[DishType.Appetizer]: 'Entrada',
+		[DishType.MainDish]: 'Plato principal',
+		[DishType.SideDish]: 'Guarnición',
+		[DishType.Drink]: 'Bebida',
+		[DishType.Dessert]: 'Postre',
+	};
 
 	public constructor(
 		private readonly route: ActivatedRoute,
