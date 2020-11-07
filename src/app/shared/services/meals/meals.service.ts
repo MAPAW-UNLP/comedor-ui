@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { shareReplay } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, shareReplay } from 'rxjs/operators';
 import { EnvironmentService } from 'src/app/pages/root/services/environment/environment.service';
 import { MealDTO } from './dto/meal.dto';
 import { map } from 'rxjs/operators';
@@ -37,17 +37,6 @@ export class MealsService {
 			);
 	}
 
-	public get(mealId: string): Observable<MealDTO> {
-		const url: string = `${this.environmentService.getEndpoint( 'meals' )}/`;
-		const params = { id: mealId };
-		return this.httpClient
-			.get<MealDTO>( url, { params })
-			.pipe(
-				// Avoid sending multiple concurrent requests.
-				shareReplay( ),
-			);
-	}
-
 	// /**
 	//  * Returns an observable that emits the list of all the meals if the server response is successful, or an
 	//  * error otherwise.
@@ -68,14 +57,24 @@ export class MealsService {
 	 *
 	 * @param id the id of the Meal to emit.
 	 */
-	public findById( id: string ): Observable<Meal> {
+	public findById( id: string ): Observable<Meal | undefined> {
 		let url: string = this.environmentService.getEndpoint( 'mealRetrieval' );
 		url = url.replace( '{id}', id );
 
 		return this.httpClient
 			.get<MealResponseDTO>( url )
 			.pipe(
-				map( ( dto ) => this.extractMealFromDTO( dto ) ),
+				catchError( ( error: HttpErrorResponse ) => {
+					return of(undefined);
+				}),
+				map( ( dto: MealResponseDTO | undefined) => {
+					if(dto){
+						return this.extractMealFromDTO( dto );
+					} else {
+						return undefined;
+					}
+
+				} ),
 			);
 	}
 
@@ -124,7 +123,7 @@ export class MealsService {
 	/**
 	 * Returns an instance of Meal created from the provided DTO.
 	 */
-	private extractMealFromDTO( dto: MealResponseDTO ): Meal {
+	private extractMealFromDTO( dto: MealResponseDTO): Meal {
 		return new Meal(
 			dto.id.toString( ),
 			dto.name,
