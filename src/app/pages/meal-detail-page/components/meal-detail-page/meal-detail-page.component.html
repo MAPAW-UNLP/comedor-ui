@@ -31,7 +31,7 @@
 				</li>
 			</ul>
 		</div>
-		<div class="-ingredients -section">
+		<div class="-ingredients -section" *ngIf="authService.aKitchenSiteEmployeeIsAuthenticatedSnapshot">
 			<h2 class="-title">Ingredientes</h2>
 			<ul>
 				<li class="-ingredient" *ngFor="let ingWithQuantity of meal.ingredientsWithQuantity">

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Meal } from 'src/app/models/meal.model';
 import { MealsService } from 'src/app/shared/services/meals/meals.service';
+import { AuthService } from 'src/app/auth/services/auth/auth.service';
 
 @Component({
 	selector: 'cu-meal-detail-page',
@@ -18,7 +19,8 @@ export class MealDetailPageComponent implements OnInit {
 	public constructor(
 		private readonly route: ActivatedRoute,
 		private readonly mealService: MealsService,
-		public readonly location: Location
+		public readonly location: Location,
+		public readonly authService: AuthService,
 	) { }
 
 	public ngOnInit() {
@@ -26,7 +28,6 @@ export class MealDetailPageComponent implements OnInit {
 			const mealId = params[this.ID_PARAM_NAME];
 			this.mealService.findById(mealId).subscribe((meal: Meal | undefined) => {
 				this.meal = meal;
-				console.log(meal);
 				this.isWaitingForServerResponse = false;
 			});
 		});
