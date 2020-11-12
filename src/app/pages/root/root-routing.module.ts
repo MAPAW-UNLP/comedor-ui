@@ -15,6 +15,8 @@ import { IngredientCreationPageComponent } from '../ingredient-creation-page/com
 import { IngredientCreationPageModule } from '../ingredient-creation-page/ingredient-creation-page.module';
 import { MealCreationPageComponent } from '../meal-creation-page/components/meal-creation-page/meal-creation-page.component';
 import { MealCreationPageModule } from '../meal-creation-page/meal-creation-page.module';
+import { MealDetailPageComponent } from '../meal-detail-page/components/meal-detail-page/meal-detail-page.component';
+import { MealDetailPageModule } from '../meal-detail-page/meal-detail-page.module';
 import { MealsPageComponent } from '../meals-page/components/meals-page/meals-page.component';
 import { MealsPageModule } from '../meals-page/meals-page.module';
 import { MenuCreationPageComponent } from '../menu-creation-page/components/menu-creation-page/menu-creation-page.component';
@@ -108,7 +110,7 @@ const routes: ComedorUniversitarioRoutes = [
 					AuthenticatedKitchenSiteEmployeeRequiredGuard,
 				],
 				data: {
-					pageTitle: 'Habilitar menu',
+					pageTitle: 'Habilitar menú',
 				},
 			},
 			{
@@ -118,7 +120,7 @@ const routes: ComedorUniversitarioRoutes = [
 					AuthenticatedKitchenSiteEmployeeRequiredGuard,
 				],
 				data: {
-					pageTitle: 'Listado de menus',
+					pageTitle: 'Listado de menús',
 				},
 			},
 			{
@@ -128,7 +130,17 @@ const routes: ComedorUniversitarioRoutes = [
 					AuthenticatedKitchenSiteEmployeeRequiredGuard,
 				],
 				data: {
-					pageTitle: 'Crear Menu',
+					pageTitle: 'Crear Menú',
+				},
+			},
+			{
+				path: PageUrls.menuDetail,
+				component: MealDetailPageComponent,
+				canActivate: [
+					AuthenticatedUserRequiredGuard,
+				],
+				data: {
+					pageTitle: 'Detalle de menú',
 				},
 			},
 			{
@@ -181,6 +193,7 @@ const routes: ComedorUniversitarioRoutes = [
 		MenuCreationPageModule,
 		MealsPageModule,
 		MealCreationPageModule,
+		MealDetailPageModule,
 		DishCreationPageModule,
 		IngredientCreationPageModule,
 		RouterModule.forRoot( routes ),

@@ -121,7 +121,7 @@ export class MenuCreationPageComponent{
 			.find( ( option ) => option.name === name );
 
 		if ( combo === undefined ) {
-			throw new Error( `There's no combo with label "${ name }".` );
+			throw new Error( `There's no menu with label "${ name }".` );
 		}
 		else {
 			return combo;

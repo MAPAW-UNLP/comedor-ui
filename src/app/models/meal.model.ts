@@ -1,3 +1,4 @@
+import { DishItem } from '../interfaces/dish-item.interface';
 import { MealItem } from '../interfaces/meal-item.interface';
 import { Dish } from './dish.model';
 import { Entity } from './entity.model';
@@ -69,6 +70,18 @@ export class Meal extends Entity {
 	public get ingredients( ): Ingredient[ ] {
 		return this.dishes.map( ( dish ) => dish.ingredients ).flat( );
 	}
+
+	/**
+	 * Collection of the ingredients present in the meal.
+	 */
+	public get ingredientsWithQuantity( ): { ingredient: Ingredient; quantity: number}[ ] {
+		return this.dishes.map( ( dish ) => {
+			return dish.items.map((i: DishItem) => {
+				return { quantity: i.quantity, ingredient: i.ingredient };
+			});
+		}).flat( );
+	}
+
 
 	public constructor(
 		id: string,

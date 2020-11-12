@@ -1,0 +1,48 @@
+:host {
+	flex: 1 0 auto;
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: left;
+	position: relative;
+	padding: 2.5rem;
+}
+.meal-detail {
+	margin-top: 25px;
+
+	.-section {
+		margin-top: 25px;
+		.-title {
+			padding-bottom: 10px;
+		}
+	}
+
+	.-diets-info {
+		.-diet {
+			margin-right: 60px;
+		}
+	}
+
+	.-dishes {
+		.-dish {
+			margin-left: 25px;
+			.-type {
+				margin-right: 50px;
+			}
+		}
+	}
+
+	.-ingredients {
+		.-ingredient {
+			margin-left: 25px;
+			.-name {
+				width: 100px;
+				display: inline-block;
+			}
+			.-separator {
+				width: 100px;
+				display: inline-block;
+				border-bottom: 2px dotted black;
+			}
+		}
+	}
+}

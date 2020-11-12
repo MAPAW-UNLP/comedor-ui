@@ -1,0 +1,53 @@
+<div class="container">
+	<button
+		mat-raised-button
+		class="back-button"
+		color="accent"
+		(click)="this.location.back()"
+		type="button"
+	> Volver</button>
+	<div class="meal-detail" *ngIf="meal && !isWaitingForServerResponse">
+		<h1 class="-title">{{meal.name}}</h1>
+		<div class="-diets-info -section">
+			<span class="-diet">
+				Es apto para celíacos
+				<mat-checkbox [disabled]="true" [checked]="meal.isSuitableForCeliacs"></mat-checkbox>
+			</span>
+			<span class="-diet">
+				Es apto para vegetarianos
+				<mat-checkbox [disabled]="true" [checked]="meal.isSuitableForVegetarians"></mat-checkbox>
+			</span>
+		</div>
+		<div class="-observations -section" *ngIf="meal.observations">
+			<h2 class="-title">Observaciones</h2>
+			<p class="-observation">{{meal.observations}}</p>
+		</div>
+		<div class="-dishes -section">
+			<h2 class="-title">Platos</h2>
+			<ul>
+				<li class="-dish" *ngFor="let mealItem of meal.items">
+					<span class="-type"> {{ dishTypeOptions[mealItem.dishType] }} </span>
+					<span class="-name"> {{mealItem.dish.name}}</span>
+				</li>
+			</ul>
+		</div>
+		<div class="-ingredients -section" *ngIf="authService.aKitchenSiteEmployeeIsAuthenticatedSnapshot">
+			<h2 class="-title">Ingredientes</h2>
+			<ul>
+				<li class="-ingredient" *ngFor="let ingWithQuantity of meal.ingredientsWithQuantity">
+					<span class="-name"> {{ ingWithQuantity.ingredient.name }} </span>
+					<span class="-separator"></span>
+					<span class="-quantity"> {{ingWithQuantity.quantity}} {{ ingWithQuantity.ingredient.measurementUnit }} </span>
+				</li>
+			</ul>
+		</div>
+		<div class="-commentary-box -section">
+			<div class="-left-comment -section"></div>
+			<div class="-user-comments -section"></div>
+		</div>
+	</div>
+	<div class="meal-not-found" *ngIf="!meal && !isWaitingForServerResponse">
+		<h1>El menú que estas buscando no existe !</h1>
+	</div>
+	<mat-spinner class="spinner" *ngIf="isWaitingForServerResponse"></mat-spinner>
+</div>

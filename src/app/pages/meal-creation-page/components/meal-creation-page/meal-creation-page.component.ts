@@ -182,7 +182,7 @@ export class MealCreationPageComponent implements OnInit {
 	}
 
 	public get requiredMealNameErrorMessage( ): string {
-		return 'Tenés que ingresar el nombre del combo';
+		return 'Tenés que ingresar el nombre del menú';
 	}
 
 	public get requiredDishTypeErrorMessage( ): string {

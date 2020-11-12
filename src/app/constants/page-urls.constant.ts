@@ -8,6 +8,7 @@ export const PageUrls = {
 	enableMenu: 'menus/habilitar',
 	menusList: 'menus',
 	createMenu: 'menus/crear',
+	menuDetail: 'menu/:id',
 	createDish: 'platos/crear',
 	createIngredient: 'ingredientes/crear',
 	pageNotFound: 'pagina-no-encontrada',
