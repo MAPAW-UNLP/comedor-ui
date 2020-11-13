@@ -11,5 +11,6 @@ export const PageUrls = {
 	menuDetail: 'menu/:id',
 	createDish: 'platos/crear',
 	createIngredient: 'ingredientes/crear',
+	ticketExchange: 'tickets/canjear',
 	pageNotFound: 'pagina-no-encontrada',
 };

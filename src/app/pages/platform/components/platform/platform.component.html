@@ -68,6 +68,14 @@
 				<mat-icon matListIcon>library_add</mat-icon>
 				<h3 matLine>Habilitar Menú</h3>
 			</mat-list-item>
+			<mat-list-item
+				tabindex="0"
+				(click)="handleNavigationFromSidenav( pageUrls.ticketExchange )"
+				(keydown.enter)="handleNavigationFromSidenav( pageUrls.ticketExchange )"
+			>
+				<mat-icon matListIcon>restaurant</mat-icon>
+				<h3 matLine>Canjear tickets</h3>
+			</mat-list-item>
 			<mat-divider></mat-divider>
 			<mat-list-item
 				tabindex="0"
