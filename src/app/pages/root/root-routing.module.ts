@@ -33,6 +33,8 @@ import { PurchasedTicketsPageComponent } from '../purchased-tickets-page/compone
 import { PurchasedTicketsPageModule } from '../purchased-tickets-page/purchased-tickets-page.module';
 import { ShoppingCartPageComponent } from '../shopping-cart-page/components/shopping-cart-page/shopping-cart-page.component';
 import { ShoppingCartPageModule } from '../shopping-cart-page/shopping-cart-page.module';
+import { TicketExchangePageComponent } from '../ticket-exchange-page/components/ticket-exchange-page/ticket-exchange-page.component';
+import { TicketExchangePageModule } from '../ticket-exchange-page/ticket-exchange-page.module';
 
 
 const routes: ComedorUniversitarioRoutes = [
@@ -164,6 +166,16 @@ const routes: ComedorUniversitarioRoutes = [
 				},
 			},
 			{
+				path: PageUrls.ticketExchange,
+				component: TicketExchangePageComponent,
+				canActivate: [
+					AuthenticatedKitchenSiteEmployeeRequiredGuard,
+				],
+				data: {
+					pageTitle: 'Canjear tickets',
+				},
+			},
+			{
 				path: PageUrls.pageNotFound,
 				component: NotFoundPageComponent,
 				data: {
@@ -196,6 +208,7 @@ const routes: ComedorUniversitarioRoutes = [
 		MealDetailPageModule,
 		DishCreationPageModule,
 		IngredientCreationPageModule,
+		TicketExchangePageModule,
 		RouterModule.forRoot( routes ),
 	],
 	exports: [

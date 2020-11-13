@@ -1,0 +1,113 @@
+<div>
+	<div class="container">
+		<div class="search-box-holder">
+			<form [formGroup]="searchFormGroup" #searchForm>
+				<mat-card>
+					<mat-card-content>
+						<div>
+							<mat-form-field appearance="standard">
+								<mat-label>Sede</mat-label>
+								<mat-select formControlName="kitchenSite">
+									<mat-option *ngFor="let kitchenSite of kitchenSites" [value]="kitchenSite.id">
+									{{kitchenSite.name}}
+									</mat-option>
+								</mat-select>
+								<mat-error
+									*ngIf="this.searchFormGroup.get('kitchenSite')?.hasError( 'required' )"
+									align="start"
+								>
+									<span>Seleccioná una sede</span>
+								</mat-error>
+							</mat-form-field>
+						</div>
+						<div>
+							<mat-form-field>
+								<input
+									#dniInput
+									matInput
+									formControlName="dni"
+									maxlength="8"
+									inputmode="numeric"
+									pattern="[0-9]*"
+									placeholder="DNI"
+									digitOnly
+								>
+
+								<mat-hint align="end">
+									{{ dniDigitCountToExpected }}
+								</mat-hint>
+
+								<mat-error
+									*ngIf="hasRequiredDniError"
+									align="start"
+								>
+									<span>{{ requiredDniErrorMessage }}</span>
+									<span class="dniDigitCount">{{ dniDigitCountToExpected }}</span>
+								</mat-error>
+
+								<mat-error
+									*ngIf="hasDniLengthError"
+									align="start"
+								>
+									<span>{{ dniLengthErrorMessage }}</span>
+									<span class="dniDigitCount">{{ dniDigitCountToExpected }}</span>
+								</mat-error>
+							</mat-form-field>
+						</div>
+						<div>
+							<mat-form-field appearance="standard">
+								<input
+									#datepicker
+									matInput
+									readonly
+									[min]="minDate"
+									[matDatepicker]="picker"
+									[matDatepickerFilter]="datePickerFilter"
+									placeholder="Selecciona una fecha"
+									formControlName="date"
+								>
+								<mat-error
+									*ngIf="this.searchFormGroup.get('date')?.hasError( 'required' )"
+									align="start"
+								>
+									<span>Seleccioná una fecha</span>
+								</mat-error>
+								<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+								<mat-datepicker #picker></mat-datepicker>
+							</mat-form-field>
+							<span class="search-button">
+								<button
+								type="submit"
+								mat-button
+								mat-raised-button
+								color="accent"
+								(click)="search()">Buscar
+								</button>
+							</span>
+						</div>
+					</mat-card-content>
+				</mat-card>
+			</form>
+		</div>
+		<div class=container>
+			<div class="cards-holder" *ngIf="menus.length && !isWaitingForServerResponse">
+				<div class="card-container" *ngFor="let menu of menus">
+					<cu-menu-card
+						[cardTitle]="menu.name"
+						[price]="menu.unitPrice"
+						[date]="menu.date"
+						[kitchenSiteName]="menu.kitchenSite.name"
+					></cu-menu-card>
+				</div>
+			</div>
+			<div *ngIf="menus.length == 0 && !isWaitingForServerResponse && !isFirstPaint">
+				<mat-card>
+					<mat-card-content>
+						No encontramos ticket para el DNI ingresado, probá con otra sede o fecha
+					</mat-card-content>
+				</mat-card>
+			</div>
+		</div>
+		<mat-spinner class="spinner" *ngIf="isWaitingForServerResponse"></mat-spinner>
+	</div>
+</div>
