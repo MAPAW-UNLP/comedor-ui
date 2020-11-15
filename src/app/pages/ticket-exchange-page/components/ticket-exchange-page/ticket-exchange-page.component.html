@@ -92,12 +92,13 @@
 		<div class=container>
 			<div class="cards-holder" *ngIf="menus.length && !isWaitingForServerResponse">
 				<div class="card-container" *ngFor="let menu of menus">
-					<cu-menu-card
+					<cu-exchange-card
 						[cardTitle]="menu.name"
-						[price]="menu.unitPrice"
 						[date]="menu.date"
 						[kitchenSiteName]="menu.kitchenSite.name"
-					></cu-menu-card>
+						[consumptionType]="menu.consumptionType"
+						[shouldDisplayCartActionButton]="true"
+					></cu-exchange-card>
 				</div>
 			</div>
 			<div *ngIf="menus.length == 0 && !isWaitingForServerResponse && !isFirstPaint">
