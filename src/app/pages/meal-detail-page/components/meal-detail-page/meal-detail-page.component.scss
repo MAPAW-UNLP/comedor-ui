@@ -23,10 +23,30 @@
 	}
 
 	.-dishes {
+		display: flex;
+		flex-flow: column nowrap;
+		align-items: flex-start;
+		ul {
+			display: flex;
+			flex-flow: column nowrap;
+			list-style-type: none;
+			font-size: 16px;
+		}
 		.-dish {
-			margin-left: 25px;
+			flex: 0 0 auto;
+			display: flex;
+			flex-flow: row nowrap;
+			border: 1px solid hsl( 0, 0%, 70% );
 			.-type {
-				margin-right: 50px;
+				flex: 0 0 auto;
+				min-width: 10rem;
+				padding: 0.25rem 0.5rem;
+				background: hsl( 0, 0%, 85% );
+				font-weight: 700;
+			}
+			.-name {
+				flex: 0 0 auto;
+				padding: 0.25rem 0.5rem;
 			}
 		}
 	}

@@ -5,7 +5,9 @@
 		color="accent"
 		(click)="this.location.back()"
 		type="button"
-	> Volver</button>
+	>
+		Volver
+	</button>
 	<div class="meal-detail" *ngIf="meal && !isWaitingForServerResponse">
 		<h1 class="-title">{{meal.name}}</h1>
 		<div class="-diets-info -section">
@@ -26,8 +28,8 @@
 			<h2 class="-title">Platos</h2>
 			<ul>
 				<li class="-dish" *ngFor="let mealItem of meal.items">
-					<span class="-type"> {{ dishTypeOptions[mealItem.dishType] }} </span>
-					<span class="-name"> {{mealItem.dish.name}}</span>
+					<div class="-type">{{ dishTypeOptions[ mealItem.dishType ] }}</div>
+					<div class="-name">{{ mealItem.dish.name }}</div>
 				</li>
 			</ul>
 		</div>
