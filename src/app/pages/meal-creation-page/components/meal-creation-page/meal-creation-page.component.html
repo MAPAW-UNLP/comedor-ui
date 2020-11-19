@@ -22,7 +22,20 @@
 
 	<section class="meal_creation_form__section dishes_section">
 
-		<h2 class="meal_creation_form__section_title">Platos</h2>
+		<header class="meal_creation_form__section_header">
+			<h2 class="meal_creation_form__section_title">Platos</h2>
+
+			<button
+				mat-raised-button
+				class="meal_creation_form__call_to_action"
+				color="accent"
+				(click)="createDish( )"
+				type="button"
+			>
+				Crear un plato nuevo
+			</button>
+		</header>
+
 
 		<div class="dishes_section__dish_creator">
 
@@ -101,14 +114,6 @@
 				[disabled]="!shouldEnableAddDishButton"
 			>
 				Agregar plato
-			</button>
-			<button
-				mat-raised-button
-				color="accent"
-				(click)="createDish( )"
-				type="button"
-			>
-				Crear plato
 			</button>
 
 		</div>

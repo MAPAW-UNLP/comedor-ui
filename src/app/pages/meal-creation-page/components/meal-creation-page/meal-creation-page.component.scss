@@ -13,6 +13,19 @@
 	margin-bottom: 2.5rem;
 }
 
+.meal_creation_form {
+
+	&__section_header {
+		display: flex;
+		flex-flow: row nowrap;
+		align-items: baseline;
+	}
+
+	&__section_title {
+		margin-right: 2rem;
+	}
+}
+
 .dishes_section__dish_creator,
 .dishes_section__added_dish_row {
 	display: grid;
@@ -34,7 +47,7 @@
 	display: grid;
 	grid-template-columns: auto;
 	grid-auto-flow: row;
-	gap: 1rem
+	gap: 1rem;
 }
 
 .meal_name_field {
