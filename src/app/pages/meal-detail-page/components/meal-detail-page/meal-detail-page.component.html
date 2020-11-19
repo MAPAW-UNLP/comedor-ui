@@ -33,16 +33,6 @@
 				</li>
 			</ul>
 		</div>
-		<div class="-ingredients -section" *ngIf="authService.aKitchenSiteEmployeeIsAuthenticatedSnapshot">
-			<h2 class="-title">Ingredientes</h2>
-			<ul>
-				<li class="-ingredient" *ngFor="let ingWithQuantity of meal.ingredientsWithQuantity">
-					<span class="-name"> {{ ingWithQuantity.ingredient.name }} </span>
-					<span class="-separator"></span>
-					<span class="-quantity"> {{ingWithQuantity.quantity}} {{ ingWithQuantity.ingredient.measurementUnit }} </span>
-				</li>
-			</ul>
-		</div>
 		<div class="-commentary-box -section">
 			<div class="-left-comment -section"></div>
 			<div class="-user-comments -section"></div>
