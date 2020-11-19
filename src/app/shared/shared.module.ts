@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { MaterialModule } from './modules/material/material.module';
 import { WidgetsModule } from './modules/widgets/widgets.module';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { StarRatingModule } from 'angular-star-rating';
 
 /**
  * Module that exports all the reusable dependencies in the application.
@@ -10,11 +11,13 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 	imports: [
 		MaterialModule,
 		WidgetsModule,
+		StarRatingModule.forRoot( ),
 	],
 	exports: [
 		MaterialModule,
 		WidgetsModule,
-		MatMomentDateModule
+		MatMomentDateModule,
+		StarRatingModule,
 	],
 })
 export class SharedModule { }

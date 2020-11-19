@@ -29,6 +29,8 @@
     "@angular/router": "~10.1.2",
     "@auth0/angular-jwt": "^5.0.1",
     "@uiowa/digit-only": "^2.2.0",
+    "angular-star-rating": "^4.0.0-beta.3",
+    "css-star-rating": "^1.2.4",
     "express": "^4.17.1",
     "font-awesome": "^4.7.0",
     "http-proxy": "^1.18.1",
