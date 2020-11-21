@@ -9,6 +9,7 @@
 				[shouldDisplayCartActionButton]="false"
 				[readonly]="true"
 				[consumptionType]="ticket.type"
+				(viewMoreButtonClick)="visitDetailPage(ticket.menu.meal.id)"
 			></cu-menu-card>
 		</div>
 	</div>

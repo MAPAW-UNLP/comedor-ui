@@ -29,4 +29,9 @@ export class PurchasedTicketsPageComponent {
 		});
 	}
 
+	public visitDetailPage( mealId: string ): void {
+		const url = PageUrls.menuDetail.replace( ':id', mealId );
+		this.router.navigate([url]);
+	}
+
 }

@@ -155,4 +155,9 @@ export class ShoppingCartPageComponent implements OnInit {
 		menu.consumptionType = type;
 		this.cartService.updateMenu(menu);
 	}
+
+	public visitDetailPage( mealId: string ): void {
+		const url = PageUrls.menuDetail.replace( ':id', mealId );
+		this.router.navigate([url]);
+	}
 }

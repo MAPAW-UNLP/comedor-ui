@@ -19,6 +19,7 @@
 					[consumptionType]="menu.consumptionType"
 					(consumptionTypeChange)="changeConsumptionType(menu,$event)"
 					(removeFromCartButtonClick)="removeFromCart(menu)"
+					(viewMoreButtonClick)="visitDetailPage(menu.meal.id)"
 				></cu-menu-card>
 			</div>
 		</div>
