@@ -51,18 +51,15 @@
 		}
 	}
 
-	.-ingredients {
-		.-ingredient {
-			margin-left: 25px;
-			.-name {
-				width: 100px;
-				display: inline-block;
-			}
-			.-separator {
-				width: 100px;
-				display: inline-block;
-				border-bottom: 2px dotted black;
-			}
+	section.reviews {
+		display: flex;
+		flex-flow: column nowrap;
+		width: 40rem;
+		margin-top: 2rem;
+
+		.review_editor {
+			margin-bottom: 1rem;
 		}
+
 	}
 }

@@ -34,8 +34,30 @@
 			</ul>
 		</div>
 		<section class="reviews">
-			<cu-menu-review-editor></cu-menu-review-editor>
-			<cu-menu-review-card [rating]="3" [commentary]="'impecable papa'" [userName]="'Pato'"></cu-menu-review-card>
+			<h2 class="title">Calificaciones</h2>
+			<cu-menu-review-editor
+				class="review_editor"
+			></cu-menu-review-editor>
+			<div class="review_list">
+				<cu-menu-review-card
+					class="review_card"
+					[rating]="3"
+					[commentary]="'impecable papa'"
+					[userName]="'Pato'"
+				></cu-menu-review-card>
+				<cu-menu-review-card
+					class="review_card"
+					[rating]="3"
+					[commentary]="'impecable papa'"
+					[userName]="'Pato'"
+				></cu-menu-review-card>
+				<cu-menu-review-card
+					class="review_card"
+					[rating]="3"
+					[commentary]="'impecable papa'"
+					[userName]="'Pato'"
+				></cu-menu-review-card>
+			</div>
 		</section>
 	</div>
 	<div class="meal-not-found" *ngIf="!meal && !isWaitingForServerResponse">
