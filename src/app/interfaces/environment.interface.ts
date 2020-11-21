@@ -79,6 +79,9 @@ export interface Environment {
 		 */
 		readonly mealCreation: string;
 
+		readonly evaluationList: string;
+		readonly evaluationCreation: string;
+
 	};
 
 }

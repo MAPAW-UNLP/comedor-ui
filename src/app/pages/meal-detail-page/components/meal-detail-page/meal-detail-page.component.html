@@ -36,26 +36,16 @@
 		<section class="reviews">
 			<h2 class="title">Calificaciones</h2>
 			<cu-menu-review-editor
+				*ngIf="displayEditor"
 				class="review_editor"
+				(save)="saveReview( $event )"
 			></cu-menu-review-editor>
 			<div class="review_list">
 				<cu-menu-review-card
+					*ngFor="let evaluation of evaluations"
 					class="review_card"
-					[rating]="3"
-					[commentary]="'impecable papa'"
-					[userName]="'Pato'"
-				></cu-menu-review-card>
-				<cu-menu-review-card
-					class="review_card"
-					[rating]="3"
-					[commentary]="'impecable papa'"
-					[userName]="'Pato'"
-				></cu-menu-review-card>
-				<cu-menu-review-card
-					class="review_card"
-					[rating]="3"
-					[commentary]="'impecable papa'"
-					[userName]="'Pato'"
+					[rating]="evaluation.rating"
+					[commentary]="evaluation.commentary"
 				></cu-menu-review-card>
 			</div>
 		</section>
