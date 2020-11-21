@@ -1,0 +1,18 @@
+<mat-card class="menu_review_card">
+	<header class="menu_review_card__header">
+		<h3 class="menu_review_card__title">
+			Calificación de {{ userName }}
+		</h3>
+		<star-rating
+			class="menu_review_card__stars"
+			staticColor="ok"
+			[readOnly]="true"
+			[rating]="rating"
+		></star-rating>
+	</header>
+	<section class="menu_review_card__body">
+		<p class="menu_review_editor__commentary">
+			{{ commentary }}
+		</p>
+	</section>
+</mat-card>

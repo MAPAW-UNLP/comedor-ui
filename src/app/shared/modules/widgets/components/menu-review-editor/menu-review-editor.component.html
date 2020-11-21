@@ -1,0 +1,35 @@
+<mat-card class="menu_review_editor">
+	<header class="menu_review_editor__header">
+		<h3 class="menu_review_editor__title">
+			Agregar una calificación
+		</h3>
+		<star-rating
+			class="menu_review_editor__stars"
+			staticColor="ok"
+			(ratingChange)="handleRatingChangeEvent( $event )"
+		></star-rating>
+	</header>
+	<section class="menu_review_editor__body">
+		<mat-form-field class="menu_review_editor__commentary_field" appearance="fill">
+			<mat-label class="menu_review_editor__commentary_field_label">
+				Comentarios <em>(opcional)</em>
+			</mat-label>
+			<textarea
+				matInput
+				class="menu_review_editor__textarea"
+				[(ngModel)]="commentary"
+			></textarea>
+		</mat-form-field>
+	</section>
+	<footer class="menu_review_editor__footer">
+		<button
+			mat-raised-button
+			class="menu_review_editor__save_button"
+			color="accent"
+			[disabled]="!hasRating"
+			(click)="handleSaveButtonClick( )"
+		>
+			Confirmar calificación
+		</button>
+	</footer>
+</mat-card>

@@ -33,10 +33,10 @@
 				</li>
 			</ul>
 		</div>
-		<div class="-commentary-box -section">
-			<div class="-left-comment -section"></div>
-			<div class="-user-comments -section"></div>
-		</div>
+		<section class="reviews">
+			<cu-menu-review-editor></cu-menu-review-editor>
+			<cu-menu-review-card [rating]="3" [commentary]="'impecable papa'" [userName]="'Pato'"></cu-menu-review-card>
+		</section>
 	</div>
 	<div class="meal-not-found" *ngIf="!meal && !isWaitingForServerResponse">
 		<h1>El menú que estas buscando no existe !</h1>

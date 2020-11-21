@@ -11,7 +11,6 @@ import { StarRatingModule } from 'angular-star-rating';
 	imports: [
 		MaterialModule,
 		WidgetsModule,
-		StarRatingModule.forRoot( ),
 	],
 	exports: [
 		MaterialModule,

@@ -1,0 +1,39 @@
+.menu_review_card {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: stretch;
+	position: relative;
+
+	&__header {
+		flex: 0 0 auto;
+		display: flex;
+		flex-flow: row nowrap;
+		align-items: stretch;
+		position: relative;
+	}
+
+	&__title {
+		margin: 0 0.5rem 0 0;
+		font-size: 16px;
+		font-weight: bold;
+		line-height: 1.5;
+	}
+
+	&__stars {
+
+	}
+
+	&__body {
+		flex: 0 0 auto;
+		display: flex;
+		flex-flow: column nowrap;
+		margin-top: 1rem;
+	}
+
+	&__commentary {
+		flex: 0 0 auto;
+		display: flex;
+		flex-flow: column nowrap;
+	}
+
+}

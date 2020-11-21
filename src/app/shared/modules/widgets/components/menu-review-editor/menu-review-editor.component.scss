@@ -1,0 +1,62 @@
+.menu_review_editor {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: stretch;
+	position: relative;
+
+	&__header {
+		flex: 0 0 auto;
+		display: flex;
+		flex-flow: row nowrap;
+		align-items: stretch;
+		position: relative;
+	}
+
+	&__title {
+		margin: 0 0.5rem 0 0;
+		font-size: 16px;
+		font-weight: bold;
+		line-height: 1.5;
+	}
+
+	&__stars {
+
+	}
+
+	&__body {
+		flex: 0 0 auto;
+		display: flex;
+		flex-flow: column nowrap;
+		margin-top: 1rem;
+	}
+
+	&__commentary_field {
+		flex: 0 0 auto;
+		display: flex;
+		flex-flow: column nowrap;
+	}
+
+	&__commentary_field_label {
+
+	}
+
+	&__textarea {
+		width: 100%;
+		min-height: 5rem;
+		padding: 0.25rem;
+		font-size: 14px;
+		line-height: 1.5;
+		resize: vertical;
+	}
+
+	&__footer {
+		flex: 0 0 auto;
+		display: flex;
+		flex-flow: row nowrap;
+	}
+
+	&__save_button {
+		margin-left: auto;
+	}
+
+}
