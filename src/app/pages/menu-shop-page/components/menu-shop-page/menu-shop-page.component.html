@@ -71,6 +71,7 @@
 						(addToCartButtonClick)="cartService.add(menu)"
 						(replaceInCartButtonClick)="cartService.replace(menu)"
 						(consumptionTypeChange)="changeConsumptionType(menu,$event)"
+						(viewMoreButtonClick)="navigateToDetailView(menu.meal.id)"
 					></cu-menu-card>
 				</div>
 			</div>

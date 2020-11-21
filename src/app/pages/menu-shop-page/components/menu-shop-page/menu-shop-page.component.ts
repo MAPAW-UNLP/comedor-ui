@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import moment, { Moment } from 'moment';
 import { tap } from 'rxjs/operators';
+import { PageUrls } from 'src/app/constants/page-urls.constant';
 import { ConsumptionType } from 'src/app/enums/consumption-type.enum';
 import { Menu } from 'src/app/models/menu.model';
 import { CartService } from 'src/app/shared/services/cart/cart.service';
@@ -33,6 +35,7 @@ export class MenuShopPageComponent {
 		private readonly menusService: MenusService,
 		private readonly kitchenSiteService: KitchenSitesService,
 		private readonly snackBar: MatSnackBar,
+		private readonly router: Router,
 	) {
 		this.menus = [];
 		this.searchFormGroup = this._formBuilder.group({
@@ -98,5 +101,10 @@ export class MenuShopPageComponent {
 	public changeConsumptionType(menu: Menu, type: ConsumptionType): void {
 		menu.consumptionType = type;
 		this.cartService.updateMenu(menu);
+	}
+
+	public navigateToDetailView( mealId: string ): void {
+		const url: string = PageUrls.menuDetail.replace( ':id', mealId );
+		this.router.navigate([ url ]);
 	}
 }
