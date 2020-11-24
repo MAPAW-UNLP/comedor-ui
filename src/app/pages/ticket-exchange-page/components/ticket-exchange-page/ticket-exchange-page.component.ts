@@ -4,6 +4,7 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import moment, { Moment } from 'moment';
 import { tap } from 'rxjs/operators';
 import { dniLength } from 'src/app/constants/dni-length.constant';
+import { AbTestingService } from 'src/app/shared/services/abTesting/ab-testing-service';
 import { KitchenSiteDTO } from 'src/app/shared/services/kitchenSites/dto/kitchen-site.dto';
 import { KitchenSitesService } from 'src/app/shared/services/kitchenSites/kitchen-sites.service';
 import { TicketDTO } from 'src/app/shared/services/tickets/dto/ticket.dto';
@@ -33,7 +34,8 @@ export class TicketExchangePageComponent {
 		private readonly _formBuilder: FormBuilder,
 		private readonly ticketsService: TicketsService,
 		private readonly kitchenSiteService: KitchenSitesService,
-		private readonly snackBar: MatSnackBar
+		private readonly snackBar: MatSnackBar,
+		private readonly AbTestingService: AbTestingService
 	) {
 		this.searchFormGroup = this._formBuilder.group({
 			date: ['', [Validators.required]],
@@ -87,6 +89,7 @@ export class TicketExchangePageComponent {
 	}
 
 	public search(): void {
+		console.log(this.AbTestingService.getBranch());
 		if (this.searchFormGroup.invalid) {
 			return ;
 		}
