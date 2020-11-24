@@ -90,18 +90,20 @@
 			</form>
 		</div>
 		<div class=container>
-			<div class="cards-holder" *ngIf="menus.length && !isWaitingForServerResponse">
-				<div class="card-container" *ngFor="let menu of menus">
+			<div class="cards-holder" *ngIf="!!ticket && !isWaitingForServerResponse">
+				<div class="card-container">
 					<cu-exchange-card
-						[cardTitle]="menu.name"
-						[date]="menu.date"
-						[kitchenSiteName]="menu.kitchenSite.name"
-						[consumptionType]="menu.consumptionType"
-						[shouldDisplayCartActionButton]="true"
+						[cardTitle]="ticket.menu.name"
+						[date]="ticket.menu.date"
+						[kitchenSiteName]="ticket.menu.kitchenSite.name"
+						[consumptionType]="ticket.type"
+						[shouldDisplayCartActionButton]="!ticketConsumed"
+						[isConsuming]="isConsumingTicket"
+						(actionButtonClick)="consumeTicket(ticket.id)"
 					></cu-exchange-card>
 				</div>
 			</div>
-			<div *ngIf="menus.length == 0 && !isWaitingForServerResponse && !isFirstPaint">
+			<div *ngIf="!ticket && !isWaitingForServerResponse && !isFirstPaint">
 				<mat-card>
 					<mat-card-content>
 						No encontramos ticket para el DNI ingresado, probá con otra sede o fecha

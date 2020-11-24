@@ -22,6 +22,7 @@ export class ExchangeCardComponent {
 	private _kitchenSiteName: string | undefined;
 	private _consumptionType: ConsumptionType | undefined;
 	private _shouldDisplayCartActionButton: boolean | undefined;
+	private _isConsuming: boolean | undefined;
 
 	private readonly _actionButtonClick = new EventEmitter<void>( );
 
@@ -116,6 +117,15 @@ export class ExchangeCardComponent {
 	@Input( )
 	public set shouldDisplayCartActionButton( value: boolean | undefined ) {
 		this._shouldDisplayCartActionButton = value;
+	}
+
+
+	public get isConsuming( ): boolean | undefined {
+		return this._isConsuming ?? false;
+	}
+	@Input( )
+	public set isConsuming( value: boolean | undefined ) {
+		this._isConsuming = value;
 	}
 
 	public get consumptionTypeLabel(): string | undefined {

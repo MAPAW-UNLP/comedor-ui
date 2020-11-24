@@ -42,7 +42,9 @@
 		</div>
 
 		<div class="menu_card__actions">
-			<button
+			<mat-spinner class="spinner" *ngIf="isConsuming"></mat-spinner>
+			<div *ngIf="!isConsuming">
+				<button
 				mat-raised-button
 				class="menu_card__action_button"
 				*ngIf="shouldDisplayCartActionButton"
@@ -58,6 +60,7 @@
 			>
 				<mat-icon class="menu_card__action_button_icon">done</mat-icon> Canjeado
 			</strong>
+			</div>
 		</div>
 
 	</div>

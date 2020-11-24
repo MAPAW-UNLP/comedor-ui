@@ -4,10 +4,10 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import moment, { Moment } from 'moment';
 import { tap } from 'rxjs/operators';
 import { dniLength } from 'src/app/constants/dni-length.constant';
-import { Menu } from 'src/app/models/menu.model';
 import { KitchenSiteDTO } from 'src/app/shared/services/kitchenSites/dto/kitchen-site.dto';
 import { KitchenSitesService } from 'src/app/shared/services/kitchenSites/kitchen-sites.service';
-import { MenusService } from 'src/app/shared/services/menus/menus.service';
+import { TicketDTO } from 'src/app/shared/services/tickets/dto/ticket.dto';
+import { TicketsService } from 'src/app/shared/services/tickets/tickets.service';
 import { dniLengthValidator } from 'src/app/shared/validators/dni-length.validator';
 
 /**
@@ -20,20 +20,21 @@ import { dniLengthValidator } from 'src/app/shared/validators/dni-length.validat
 })
 export class TicketExchangePageComponent {
 
-	public menus: Menu[] = [];
+	public ticket: TicketDTO | undefined;
 	public kitchenSites: KitchenSiteDTO[] = [];
 	public searchFormGroup!: FormGroup;
 	public readonly minDate = moment();
 	public isWaitingForServerResponse = false;
 	public isFirstPaint: boolean = true;
+	public isConsumingTicket: boolean = false;
+	public ticketConsumed: boolean = false;
 
 	public constructor(
 		private readonly _formBuilder: FormBuilder,
-		private readonly menusService: MenusService,
+		private readonly ticketsService: TicketsService,
 		private readonly kitchenSiteService: KitchenSitesService,
 		private readonly snackBar: MatSnackBar
 	) {
-		this.menus = [];
 		this.searchFormGroup = this._formBuilder.group({
 			date: ['', [Validators.required]],
 			kitchenSite: ['', [Validators.required]],
@@ -89,29 +90,54 @@ export class TicketExchangePageComponent {
 		if (this.searchFormGroup.invalid) {
 			return ;
 		}
+		this.ticketConsumed = false;
 		this.isFirstPaint = false;
 		this.isWaitingForServerResponse = true;
 		const kitchenSiteId: number  = this.searchFormGroup.get('kitchenSite')?.value;
 		const dniNumber: number  = this.searchFormGroup.get('dni')?.value;
 		const date: Moment = this.searchFormGroup.get('date')?.value;
-		this.menusService.search(date.format('YYYY-MM-DD'), kitchenSiteId)
-		.pipe(
-			tap({
-				next: ( ) => {
-					this.isWaitingForServerResponse = false;
+		if (dniNumber && date && kitchenSiteId) {
+			this.ticketsService.search(date.format('YYYY-MM-DD'), dniNumber.toString(), kitchenSiteId)
+			.pipe(
+				tap({
+					next: ( ) => {
+						this.isWaitingForServerResponse = false;
+					},
+					error: ( ) => {
+						this.isWaitingForServerResponse = false;
+					},
+				}),
+			)
+			.subscribe({
+				next: ( response: TicketDTO ) => {
+					this.ticket = response;
+					this.ticketConsumed = this.ticket.consumed;
 				},
-				error: ( ) => {
-					this.isWaitingForServerResponse = false;
+				error: ( error: Error ) => {
+					this.showSnackBar(
+						`Ocurió un error al buscar el ticket, intente nuevamente`
+					);
 				},
-			}),
-		)
+			});
+		}
+	}
+
+	public consumeTicket(id: number): void {
+		this.isConsumingTicket = true;
+		this.ticketsService.consume(id)
 		.subscribe({
-			next: ( response: Menu[] ) => {
-				this.menus = response;
+			next: ( response: any ) => {
+				this.isFirstPaint = true;
+				this.isConsumingTicket = false;
+				this.ticketConsumed = true;
+				this.showSnackBar(
+					`El ticket se canjeó correctamente`
+				);
 			},
 			error: ( error: Error ) => {
+				this.isConsumingTicket = false;
 				this.showSnackBar(
-					`Ocurió un error al buscar el ticket, intente nuevamente`
+					`Ocurió un error al canjear el ticket, intente nuevamente`
 				);
 			},
 		});
