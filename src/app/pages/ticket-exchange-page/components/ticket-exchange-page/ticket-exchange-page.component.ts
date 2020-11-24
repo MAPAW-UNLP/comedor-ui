@@ -89,7 +89,6 @@ export class TicketExchangePageComponent {
 	}
 
 	public search(): void {
-		console.log(this.AbTestingService.getBranch());
 		if (this.searchFormGroup.invalid) {
 			return ;
 		}

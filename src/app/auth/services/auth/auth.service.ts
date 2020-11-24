@@ -171,8 +171,8 @@ export class AuthService {
 					const accessToken = authenticationResponseDTO.accessToken;
 					this.storeAccessTokenInLocalStorage( accessToken );
 					this.loadAuthenticatedUserInService( accessToken );
-					const rand = (Math.round((Math.random() * 5)) % 2);
-					if (rand === 0 ) {
+					const dniAsNumber = parseInt(username);
+					if (dniAsNumber % 2 === 0 ) {
 						this.storeAbBranchInLocalStorage('CTRL');
 					} else {
 						this.storeAbBranchInLocalStorage('TEST');
