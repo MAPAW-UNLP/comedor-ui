@@ -171,6 +171,12 @@ export class AuthService {
 					const accessToken = authenticationResponseDTO.accessToken;
 					this.storeAccessTokenInLocalStorage( accessToken );
 					this.loadAuthenticatedUserInService( accessToken );
+					const rand = (Math.round((Math.random() * 5)) % 2);
+					if (rand === 0 ) {
+						this.storeAbBranchInLocalStorage('CTRL');
+					} else {
+						this.storeAbBranchInLocalStorage('TEST');
+					}
 				}),
 				mapTo( true ),
 
@@ -196,6 +202,7 @@ export class AuthService {
 		this.deleteAccessTokenFromLocalStorage( );
 		this.clearAuthenticatedUserInService( );
 		this.redirectUserToAuthenticationPage( );
+		this.deleteAbBranchFromLocalStorage( );
 	}
 
 	/**
@@ -287,10 +294,24 @@ export class AuthService {
 	}
 
 	/**
+	 * Stores AB branch in local storage.
+	 */
+	private storeAbBranchInLocalStorage( branch: string ): void {
+		localStorage.setItem( localStorageKeys.abBranch, branch );
+	}
+
+	/**
 	 * Deletes the access token from local storage.
 	 */
 	private deleteAccessTokenFromLocalStorage( ): void {
 		localStorage.removeItem( localStorageKeys.accessToken );
+	}
+
+	/**
+	 * Deletes the AB branch from local storage.
+	 */
+	private deleteAbBranchFromLocalStorage( ): void {
+		localStorage.removeItem( localStorageKeys.abBranch );
 	}
 
 	/**
