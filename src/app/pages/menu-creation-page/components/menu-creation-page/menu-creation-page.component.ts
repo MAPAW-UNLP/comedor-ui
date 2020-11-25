@@ -12,6 +12,7 @@ import { MealDTO } from 'src/app/shared/services/meals/dto/meal.dto';
 import { MenusService } from 'src/app/shared/services/menus/menus.service';
 import { MenuCreationRequestDTO } from 'src/app/shared/services/menus/dto/menu-creation-request.dto';
 import { tap } from 'rxjs/operators';
+import { AbTestingService } from 'src/app/shared/services/abTesting/ab-testing-service';
 
 /**
  * Top-level component of the MenuCreationPage module.
@@ -83,6 +84,7 @@ export class MenuCreationPageComponent{
 		private readonly kitchenSitesService: KitchenSitesService,
 		private readonly mealsService: MealsService,
 		private readonly menusService: MenusService,
+		public readonly abTestingService: AbTestingService,
 		private readonly snackBar: MatSnackBar,
 	) {
 		this.kitchenSitesService.getAll().subscribe( (r) => {
@@ -212,6 +214,20 @@ export class MenuCreationPageComponent{
 	public create(): void {
 		if (this.menuCreationForm.invalid) {
 			return ;
+		}
+
+		const abBranch = this.abTestingService.getBranch();
+
+		if (abBranch === 'CTRL') {
+			const dateNotConfirmed = this.datepickerInputRef.nativeElement.value;
+			let confirm = true;
+			if (dateNotConfirmed) {
+				confirm = window.confirm(`La fecha ${dateNotConfirmed} no está agregada, quieres continuar?`);
+			}
+
+			if (!confirm) {
+				return;
+			}
 		}
 
 		this.isWaitingForServerResponse = true;
