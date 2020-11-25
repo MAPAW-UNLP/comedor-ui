@@ -1,7 +1,7 @@
 <form class="creation_form" [formGroup]="menuCreationForm">
 	<mat-grid-list cols="4" rowHeight="100px">
-		<mat-grid-tile [colspan]="1" [rowspan]="1">
-			<mat-form-field appearance="standard">
+		<mat-grid-tile [colspan]="4" [rowspan]="1">
+			<mat-form-field appearance="standard" class="fullwidth">
 				<mat-label>Menú</mat-label>
 				<input
 					#comboAutocomplete
@@ -28,6 +28,8 @@
 				</mat-error>
 			</mat-form-field>
 		</mat-grid-tile>
+	</mat-grid-list>
+	<mat-grid-list cols="4" rowHeight="100px">
 		<mat-grid-tile [colspan]="1" [rowspan]="1">
 			<mat-form-field appearance="standard">
 				<mat-label>Anticipación mínima de compra</mat-label>
