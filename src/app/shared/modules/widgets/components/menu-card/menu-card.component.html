@@ -34,13 +34,15 @@
 
 		<div
 			class="menu_card__metadata menu_card__date_and_kitchen_site_name"
-			*ngIf="shouldDisplayDateAndKitchenSiteName"
+			*ngIf="shouldDisplayDate"
 		>
-			<div class="menu_card__metadata_item" *ngIf="shouldDisplayDate">
+			<div class="menu_card__metadata_item">
 				<mat-icon class="menu_card__metadata_item_icon">event</mat-icon>
-				{{ formatDate(date) }}
+				<strong>{{ formatDate(date) }}</strong>
 			</div>
-			<div class="menu_card__metadata_item" *ngIf="shouldDisplayKitchenSiteName">
+		</div>
+		<div class="menu_card__metadata menu_card__date_and_kitchen_site_name" *ngIf="shouldDisplayKitchenSiteName">
+			<div class="menu_card__metadata_item">
 				<mat-icon class="menu_card__metadata_item_icon">place</mat-icon>
 				{{ kitchenSiteName }}
 			</div>

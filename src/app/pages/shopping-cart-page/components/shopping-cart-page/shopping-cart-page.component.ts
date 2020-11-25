@@ -2,16 +2,16 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
-import moment, { Moment } from 'moment';
 import { tap } from 'rxjs/operators';
 import { ConsumptionType } from 'src/app/enums/consumption-type.enum';
 import { Menu } from 'src/app/models/menu.model';
 import { CartService } from 'src/app/shared/services/cart/cart.service';
 import { TicketToBuyDTO } from 'src/app/shared/services/tickets/dto/ticket-to-buy.dto';
 import { TicketsService } from 'src/app/shared/services/tickets/tickets.service';
-import { creditCardExpirancyValidator, creditCardNumberValidator } from 'src/app/shared/validators/credit-card.validator';
+import { creditCardNumberValidator } from 'src/app/shared/validators/credit-card.validator';
 import { consumptionTypeLabels } from 'src/app/constants/consumption-type-labels.constant';
 import { PageUrls } from 'src/app/constants/page-urls.constant';
+import moment from 'moment';
 
 interface PaymentMethod {
 	id: string;
@@ -36,6 +36,10 @@ export class ShoppingCartPageComponent implements OnInit {
 	public isWaitingForServerResponse = false;
 	public lastStepMessage: string = '';
 	public buySucceded: boolean = false;
+	// tslint:disable-next-line: no-magic-numbers
+	public validMonths = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+	public validYears: number[] = [];
+	public cardIsExpired = false;
 
 	public paymentMethods: PaymentMethod[] = [
 		{
@@ -56,15 +60,23 @@ export class ShoppingCartPageComponent implements OnInit {
 		public readonly cartService: CartService,
 		public readonly ticketService: TicketsService,
 		public readonly router: Router,
-	) { }
+	) {
+		const today = moment();
+		for (let index = 1; index < 10; index++) {
+			this.validYears.push(today.year());
+			today.add(1, 'year');
+		}
+	}
 
 	public ngOnInit() {
 
 		this.cardInfoFormGroup = this._formBuilder.group({
 			name: ['', Validators.required],
 			cardNumber: ['', [Validators.required, creditCardNumberValidator]],
-			expirancy: ['', [Validators.required, creditCardExpirancyValidator]],
-			ccv: ['', [Validators.required]]
+			expirancy: ['', [Validators.required]],
+			expirancyMonth: ['', [Validators.required]],
+			expirancyYear: ['', [Validators.required]],
+			ccv: ['', [Validators.required]],
 		});
 		this.paymentMethodFormGroup = this._formBuilder.group({
 			paymentMethod: ['', Validators.required]
@@ -98,11 +110,6 @@ export class ShoppingCartPageComponent implements OnInit {
 		this.cartItems = this.cartService.remove(menu.id);
 	}
 
-
-	public get expirancyDigitCountToExpected( ): string {
-		return `${ this.cardInfoFormGroup.get('expirancy')?.value?.length || 0 } / 4`;
-	}
-
 	public get ccvDigitCountToExpected( ): string {
 		return `${ this.cardInfoFormGroup.get('ccv')?.value?.length || 0 } / 3`;
 	}
@@ -112,8 +119,33 @@ export class ShoppingCartPageComponent implements OnInit {
 		return cardNumber ? cardNumber.slice(cardNumber.length - 4, cardNumber.length ).join('') : '';
 	}
 
+	public updateExpirancy(): void {
+		const today = moment();
+		const expirancyMonth = this.cardInfoFormGroup.get('expirancyMonth')?.value;
+		const expirancyYear = this.cardInfoFormGroup.get('expirancyYear')?.value;
+		if (expirancyMonth && expirancyYear) {
+			if (expirancyYear === today.year() && expirancyMonth < (today.month() + 1)) {
+				this.cardInfoFormGroup.get('expirancy')?.setValue(null);
+			} else {
+				this.cardInfoFormGroup.get('expirancy')?.setValue('good');
+			}
+			this.cardInfoFormGroup.get('expirancy')?.markAsDirty();
+		} else {
+			return;
+		}
+	}
+
 	public buy(): void {
-		if (this.cardInfoFormGroup.invalid || this.paymentMethodFormGroup.invalid) {
+		const today = moment();
+		const expirancyMonth = this.cardInfoFormGroup.get('expirancyMonth')?.value;
+		const expirancyYear = this.cardInfoFormGroup.get('expirancyYear')?.value;
+		if (expirancyYear === today.year() && expirancyMonth < today.month()) {
+			this.cardIsExpired = true;
+		} else {
+			this.cardInfoFormGroup.get('expirancy')?.setValue('good');
+			this.cardIsExpired = false;
+		}
+		if (this.cardInfoFormGroup.invalid || this.paymentMethodFormGroup.invalid || this.cardIsExpired) {
 			return ;
 		}
 		this.isWaitingForServerResponse = true;

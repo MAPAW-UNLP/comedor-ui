@@ -23,7 +23,16 @@
 	<section class="meal_creation_form__section dishes_section">
 
 		<header class="meal_creation_form__section_header">
-			<h2 class="meal_creation_form__section_title">Platos</h2>
+			<h2 class="meal_creation_form__section_title">Platos
+				<mat-icon
+					matListIcon
+					matTooltip="Un plato esta compuesto por un tipo que indica su rol y un plato que es una comida. Ej Guarnición - Ensalada"
+					[matTooltipPosition]="'after'"
+					aria-label="Button that displays a tooltip in various positions"
+				>
+					info
+				</mat-icon>
+			</h2>
 
 			<button
 				mat-raised-button
