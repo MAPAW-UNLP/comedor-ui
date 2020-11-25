@@ -1,0 +1,36 @@
+<div class=container>
+	<div class="cards-holder" *ngIf="meals.length && !isWaitingForServerResponse">
+		<div class="card-container" *ngFor="let meal of meals">
+			<cu-menu-card
+				[cardTitle]="meal.name"
+				[shouldDisplayCartActionButton]="false"
+				(viewMoreButtonClick)="navigateToDetailView(meal.id)"
+			></cu-menu-card>
+		</div>
+	</div>
+	<div *ngIf="meals.length == 0 && !isWaitingForServerResponse">
+		<mat-card>
+			<mat-card-content>
+				No hay menús cargados en el sistema
+			</mat-card-content>
+		</mat-card>
+	</div>
+</div>
+<mat-spinner class="spinner" *ngIf="isWaitingForServerResponse"></mat-spinner>
+<div class="create-menus" *ngIf="!isWaitingForServerResponse">
+	<mat-card>
+		<mat-card-title>
+			Crea menús
+		</mat-card-title>
+		<mat-card-subtitle>
+			Podés crear menúes haciendo click en el botón
+		</mat-card-subtitle>
+		<mat-card-actions>
+			<button
+				mat-raised-button
+				color="accent"
+				(click)="this.router.navigate([ pageUrls.createMenu ]);"
+			>Crear menú</button>
+		</mat-card-actions>
+	</mat-card>
+</div>

@@ -1,8 +1,27 @@
-:host {
-	flex: 1 0 auto;
+.spinner {
+	margin-left: 30%;
+	margin-top: 10%;
+}
+
+.cards-holder {
+	height: auto;
+	margin-left: 10px;
+}
+
+.card-container {
+	margin-bottom: 15px;
+}
+
+.container {
 	display: flex;
-	flex-flow: column nowrap;
-	align-items: center;
-	position: relative;
-	padding: 2.5rem;
+	margin: 15px;
+	width: auto;
+}
+
+.create-menus {
+	width: 30%;
+	position: fixed;
+	height: 120px;
+	top: 30%;
+	right: 15%;
 }
