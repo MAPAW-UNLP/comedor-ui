@@ -97,7 +97,7 @@ const routes: ComedorUniversitarioRoutes = [
 			},
 			{
 				path: PageUrls.enabledMenusList,
-				component: MenusPageComponent,
+				component: MenuShopPageComponent,
 				canActivate: [
 					AuthenticatedKitchenSiteEmployeeRequiredGuard,
 				],
