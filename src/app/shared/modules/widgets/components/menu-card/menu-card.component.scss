@@ -86,7 +86,6 @@
 		grid-template-columns: auto auto;
 		grid-auto-rows: auto;
 		gap: 1.5rem;
-		color: hsl( 0, 0%, 40% );
 	}
 
 	&__metadata_item {
@@ -102,7 +101,7 @@
 	}
 
 	&__date_and_kitchen_site_name {
-		grid-row: 2 / span 1;
+		//grid-row: 2 / span 1;
 		grid-column: 1 / span 2;
 	}
 
