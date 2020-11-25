@@ -248,7 +248,7 @@ export class MenuCreationPageComponent{
 		.subscribe({
 			next: ( response: any ) => {
 				this.showSnackBar(
-					`El menú se creó exitosamente`
+					`El menú ahora está a la venta en las fechas indicadas.`
 				);
 				this.menuCreationForm.reset( );
 			},

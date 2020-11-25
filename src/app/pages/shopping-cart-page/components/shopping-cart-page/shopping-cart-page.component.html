@@ -104,51 +104,71 @@
 		<mat-grid-list cols="6" rowHeight="100px">
 			<mat-grid-tile colspan="1">
 				<mat-form-field>
-					<mat-label>Vencimiento</mat-label>
-					<input 	matInput
-							formControlName="expirancy"
-							placeholder="MMAA"
-							required
-							minlength="4"
-							maxlength="4"
-							inputmode="numeric"
-							digitOnly
+					<mat-label>Mes de vencimiento</mat-label>
+					<mat-select formControlName="expirancyMonth"
+						(selectionChange)="updateExpirancy()"
 					>
-					<mat-hint align="end">
-						{{ expirancyDigitCountToExpected }}
-					</mat-hint>
+						<mat-option *ngFor="let month of validMonths" [value]="month">
+						{{month}}
+						</mat-option>
+					</mat-select>
 					<mat-error
-						*ngIf="this.cardInfoFormGroup.get('expirancy')?.hasError('required') || this.cardInfoFormGroup.get('expirancy')?.hasError('invalidCardExpirancyFormat')"
+						*ngIf="this.cardInfoFormGroup.get('expirancyMonth')?.hasError('required')"
 						align="start"
 					>
-						<span>Ingresa la fecha de vencimiento en formato MMAA</span>
+						<span>Ingresa el mes de vencimiento de tu tarjeta</span>
 					</mat-error>
-					<mat-error
-						*ngIf="this.cardInfoFormGroup.get('expirancy')?.hasError('invalidCardExpirancy')"
-						align="start"
-					>
-						<span>La tarjeta está vencida</span>
-					</mat-error>
-			  	</mat-form-field>
+				</mat-form-field>
 			</mat-grid-tile>
 			<mat-grid-tile colspan="1">
-			  <mat-form-field>
-				<mat-label>CCV</mat-label>
-				<input 	matInput
-						formControlName="ccv"
-						placeholder="CCV"
-						required
-						minlength="3"
-						maxlength="3"
-						inputmode="numeric"
-						pattern="[0-9]*"
-						digitOnly
-				>
-				<mat-hint align="end">
-					{{ ccvDigitCountToExpected }}
-				</mat-hint>
-			  </mat-form-field>
+				<mat-form-field>
+					<mat-label>Año de vencimiento</mat-label>
+
+					<mat-select formControlName="expirancyYear"
+						(selectionChange)="updateExpirancy()"
+					>
+						<mat-option *ngFor="let year of validYears" [value]="year">
+						{{year}}
+						</mat-option>
+					</mat-select>
+					<mat-error
+						*ngIf="this.cardInfoFormGroup.get('expirancyYear')?.hasError('required')"
+						align="start"
+					>
+						<span>Ingresa el año de vencimiento de tu tarjeta</span>
+					</mat-error>
+				</mat-form-field>
 			</mat-grid-tile>
+			<mat-grid-tile>
+				<mat-error
+						*ngIf="this.cardInfoFormGroup.get('expirancy')?.hasError('required') && this.cardInfoFormGroup.get('expirancy')?.dirty"
+						align="start"
+				><span>
+					Tu tarjeta está vencida, prueba con otra.
+				</span>
+			</mat-error>
+			</mat-grid-tile>
+		</mat-grid-list>
+		<mat-grid-list cols="6" rowHeight="100px">
+			<mat-grid-tile colspan="1">
+				<mat-form-field>
+				  <mat-label>CCV</mat-label>
+				  <input
+				  	matInput
+					formControlName="ccv"
+					placeholder="CCV"
+					required
+					minlength="3"
+					maxlength="3"
+					inputmode="numeric"
+					pattern="[0-9]*"
+					digitOnly
+				  >
+				  <mat-hint align="end">
+					  {{ ccvDigitCountToExpected }}
+				  </mat-hint>
+				</mat-form-field>
+			  </mat-grid-tile>
 		</mat-grid-list>
 		<mat-grid-list cols="6" rowHeight="100px">
 			<mat-grid-tile colspan="1">

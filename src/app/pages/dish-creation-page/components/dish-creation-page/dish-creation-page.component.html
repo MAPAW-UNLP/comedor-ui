@@ -20,8 +20,19 @@
 		</mat-error>
 
 	</mat-form-field>
-	<section class="meal_creation_form__section dishes_section">
-		<h2 class="dish_creation_form__section_title">Ingredientes</h2>
+	<section class="dish_creation_form__section ingredients_section">
+		<header class="dish_creation_form__section_header">
+			<h2 class="dish_creation_form__section_title">Ingredientes</h2>
+			<button
+			mat-raised-button
+			color="accent"
+			(click)="handleCreateIngredientClick()"
+			type="button"
+			>
+				Crear un ingrediente nuevo
+			</button>
+		</header>
+
 		<div class="ingredients_section__ingredients_creator">
 			<mat-form-field class="dish_creation_form_field" appearance="standard">
 
@@ -103,14 +114,6 @@
 				[disabled]="!shouldEnableAddIngredientButton"
 			>
 				Agregar Ingrediente
-			</button>
-			<button
-				mat-raised-button
-				color="accent"
-				(click)="handleCreateIngredientClick()"
-				type="button"
-			>
-				Crear Ingrediente
 			</button>
 		</div>
 	</section>
