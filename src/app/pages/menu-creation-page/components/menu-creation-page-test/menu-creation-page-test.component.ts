@@ -72,6 +72,7 @@ export class MenuCreationPageTESTComponent{
 		[ this._sellingDatesFieldName ]: new FormControl( [], {
 			validators: [
 				Validators.required,
+				Validators.minLength( 1 ),
 			],
 		}),
 	});
@@ -212,16 +213,6 @@ export class MenuCreationPageTESTComponent{
 	public create(): void {
 		if (this.menuCreationForm.invalid) {
 			return ;
-		}
-
-		const dateNotConfirmed = this.datepickerInputRef.nativeElement.value;
-		let confirm = true;
-		if (dateNotConfirmed) {
-			confirm = window.confirm(`La fecha ${dateNotConfirmed} no está agregada, quieres continuar?`);
-		}
-
-		if (!confirm) {
-			return;
 		}
 
 		this.isWaitingForServerResponse = true;

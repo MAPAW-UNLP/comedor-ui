@@ -130,11 +130,17 @@
 			</mat-form-field>
 		</mat-grid-tile>
 	</mat-grid-list>
-	<mat-grid-list cols="5" rowHeight="100px">
-	<mat-grid-tile [colspan]="1" [rowspan]="1">
+	<div class="selling-dates-header">
 		<h2>Fechas de venta</h2>
-	</mat-grid-tile>
-	</mat-grid-list>
+		<mat-icon
+			class="info-icon"
+			matListIcon
+			matTooltip="Selecciona todas las fechas para las cuales querés que esté disponible el menú para su compra."
+			[matTooltipPosition]="'after'"
+		>
+			info
+		</mat-icon>
+	</div>
 	<mat-grid-list cols="4" rowHeight="100px">
 		<mat-grid-tile [colspan]="1" [rowspan]="1">
 			<mat-form-field appearance="standard">
@@ -163,23 +169,13 @@
 			</button>
 		</mat-grid-tile>
 	</mat-grid-list>
-	<mat-grid-list cols="4" rowHeight="20px" *ngIf="this.sellingDatesField.value?.length">
-		<mat-grid-tile [colspan]="1" [rowspan]="1">
-			<label>Fechas elegidas</label>
-		</mat-grid-tile>
-	</mat-grid-list>
-	<mat-grid-list cols="4" rowHeight="20px" *ngIf="this.sellingDatesField.invalid">
-		<mat-grid-tile [colspan]="1" [rowspan]="1">
-			<label>Elige al menos una fecha</label>
-		</mat-grid-tile>
-	</mat-grid-list>
 	<mat-grid-list cols="4" rowHeight="100px" *ngFor="let selectedDate of this.sellingDatesField?.value">
 		<mat-grid-tile [colspan]="1" [rowspan]="1">
 			<label>{{ formatDate(selectedDate) }}</label>
 		</mat-grid-tile>
 		<mat-grid-tile [colspan]="1" [rowspan]="1">
 			<button mat-raised-button color="warn" type="button" (click)="removeDate(selectedDate)">
-				Eliminar
+				Eliminar fecha
 			</button>
 		</mat-grid-tile>
 
@@ -190,7 +186,7 @@
 				mat-raised-button
 				color="accent"
 				type="submit"
-				[disabled]="isWaitingForServerResponse"
+				[disabled]="isWaitingForServerResponse || this.menuCreationForm.invalid"
 				(click)="create()"
 			>
 				Habilitar menú
