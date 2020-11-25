@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { MenuCreationPageCTRLComponent } from './components/menu-creation-page-ctrl/menu-creation-page-ctrl.component';
+import { MenuCreationPageTESTComponent } from './components/menu-creation-page-test/menu-creation-page-test.component';
 import { MenuCreationPageComponent } from './components/menu-creation-page/menu-creation-page.component';
 
 /**
@@ -10,6 +12,8 @@ import { MenuCreationPageComponent } from './components/menu-creation-page/menu-
 @NgModule({
 	declarations: [
 		MenuCreationPageComponent,
+		MenuCreationPageCTRLComponent,
+		MenuCreationPageTESTComponent,
 	],
 	imports: [
 		CommonModule,
