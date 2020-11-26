@@ -68,13 +68,22 @@
 				<mat-icon matListIcon>library_add</mat-icon>
 				<h3 matLine>Habilitar Menú</h3>
 			</mat-list-item>
+			<mat-divider></mat-divider>
 			<mat-list-item
 				tabindex="0"
 				(click)="handleNavigationFromSidenav( pageUrls.ticketExchange )"
 				(keydown.enter)="handleNavigationFromSidenav( pageUrls.ticketExchange )"
 			>
-				<mat-icon matListIcon>restaurant</mat-icon>
+				<mat-icon matListIcon>fact_check</mat-icon>
 				<h3 matLine>Canjear tickets</h3>
+			</mat-list-item>
+			<mat-list-item
+				tabindex="0"
+				(click)="handleNavigationFromSidenav( pageUrls.salesSummary )"
+				(keydown.enter)="handleNavigationFromSidenav( pageUrls.salesSummary )"
+			>
+				<mat-icon matListIcon>receipt_long</mat-icon>
+				<h3 matLine>Resumen de ventas</h3>
 			</mat-list-item>
 			<mat-divider></mat-divider>
 			<mat-list-item

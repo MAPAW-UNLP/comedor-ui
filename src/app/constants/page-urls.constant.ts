@@ -12,5 +12,6 @@ export const PageUrls = {
 	createDish: 'platos/crear',
 	createIngredient: 'ingredientes/crear',
 	ticketExchange: 'tickets/canjear',
+	salesSummary: 'resumen-de-ventas',
 	pageNotFound: 'pagina-no-encontrada',
 };

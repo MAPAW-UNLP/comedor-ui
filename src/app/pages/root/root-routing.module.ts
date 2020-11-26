@@ -31,6 +31,8 @@ import { PlatformComponent } from '../platform/components/platform/platform.comp
 import { PlatformModule } from '../platform/platform.module';
 import { PurchasedTicketsPageComponent } from '../purchased-tickets-page/components/purchased-tickets-page/purchased-tickets-page.component';
 import { PurchasedTicketsPageModule } from '../purchased-tickets-page/purchased-tickets-page.module';
+import { SalesSummaryComponent } from '../sales-summary/components/sales-summary/sales-summary.component';
+import { SalesSummaryModule } from '../sales-summary/sales-summary.module';
 import { ShoppingCartPageComponent } from '../shopping-cart-page/components/shopping-cart-page/shopping-cart-page.component';
 import { ShoppingCartPageModule } from '../shopping-cart-page/shopping-cart-page.module';
 import { TicketExchangePageComponent } from '../ticket-exchange-page/components/ticket-exchange-page/ticket-exchange-page.component';
@@ -182,6 +184,16 @@ const routes: ComedorUniversitarioRoutes = [
 					pageTitle: 'Página no encontrada',
 				},
 			},
+			{
+				path: PageUrls.salesSummary,
+				component: SalesSummaryComponent,
+				canActivate: [
+					AuthenticatedKitchenSiteEmployeeRequiredGuard,
+				],
+				data: {
+					pageTitle: 'Resumen de ventas',
+				},
+			},
 		],
 	},
 	{
@@ -209,6 +221,7 @@ const routes: ComedorUniversitarioRoutes = [
 		DishCreationPageModule,
 		IngredientCreationPageModule,
 		TicketExchangePageModule,
+		SalesSummaryModule,
 		RouterModule.forRoot( routes ),
 	],
 	exports: [
