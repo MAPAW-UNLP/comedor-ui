@@ -1,1 +1,82 @@
-<p>sales-summary works!</p>
+<div>
+	<div class="container">
+		<div class="search-box-holder">
+			<form [formGroup]="searchFormGroup" #searchForm>
+				<mat-card>
+					<mat-card-content>
+						<div>
+							<mat-form-field appearance="standard">
+								<mat-label>Sede</mat-label>
+								<mat-select formControlName="kitchenSite">
+									<mat-option *ngFor="let kitchenSite of kitchenSites" [value]="kitchenSite.id">
+									{{kitchenSite.name}}
+									</mat-option>
+								</mat-select>
+								<mat-error
+									*ngIf="this.searchFormGroup.get('kitchenSite')?.hasError( 'required' )"
+									align="start"
+								>
+									<span>Debes seleccionar una sede</span>
+								</mat-error>
+							</mat-form-field>
+						</div>
+						<div>
+							<mat-form-field appearance="standard">
+								<input
+									#datepicker
+									matInput
+									readonly
+									[matDatepicker]="picker"
+									[matDatepickerFilter]="datePickerFilter"
+									placeholder="Selecciona una fecha"
+									formControlName="date"
+								>
+								<mat-error
+									*ngIf="this.searchFormGroup.get('date')?.hasError( 'required' )"
+									align="start"
+								>
+									<span>Debes seleccionar una fecha</span>
+								</mat-error>
+								<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+								<mat-datepicker #picker></mat-datepicker>
+							</mat-form-field>
+							<span class="search-button">
+								<button
+								type="submit"
+								mat-button
+								mat-raised-button
+								color="accent"
+								(click)="search()">Buscar
+								</button>
+							</span>
+						</div>
+					</mat-card-content>
+				</mat-card>
+			</form>
+		</div>
+		<div class="info">
+			<mat-card *ngIf="!hasSalesReports && !isFirstRender">
+				No hay ventas para la fecha y sede ingresadas.
+			</mat-card>
+			<ng-container *ngIf="hasSalesReports">
+				<h2 class="info-title">Menús vendidos</h2>
+				<mat-card class="meal-sale" *ngFor="let meal of salesReports.meals">
+					<h3>{{meal.name}} ({{meal.cantSales	}} vendidos)</h3>
+					<h4>Ingredientes</h4>
+					<ul class="ingredient-list">
+						<li *ngFor="let ingredient of meal.ingredients">
+							<span>{{ingredient.name}} ({{ingredient.quantity}} {{ingredient.measurement}})</span>
+						</li>
+					</ul>
+				</mat-card>
+				<h2 class="info-title" style="margin-top: 1rem;">Ingredientes necesarios totales</h2>
+				<ul class="ingredient-list">
+					<li *ngFor="let ingredient of salesReports.ingredients">
+						<span>{{ingredient.name}} ({{ingredient.quantity}} {{ingredient.measurement}})</span>
+					</li>
+				</ul>
+			</ng-container>
+		</div>
+		<mat-spinner class="spinner" *ngIf="isWaitingForServerResponse"></mat-spinner>
+	</div>
+</div>

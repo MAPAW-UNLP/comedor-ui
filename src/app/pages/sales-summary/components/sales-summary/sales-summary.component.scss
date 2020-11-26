@@ -1,0 +1,49 @@
+.search-box-holder {
+	width: 30%;
+	height: auto;
+	margin: 15px;
+}
+
+.cards-holder {
+	height: auto;
+	margin-left: 10px;
+}
+
+.card-container {
+	margin-bottom: 15px;
+}
+
+.container {
+	display: flex;
+	margin: 15px;
+	width: auto;
+}
+
+.search-button {
+	margin-left: 20px;
+}
+
+.spinner {
+	margin-left: 30%;
+	margin-top: 10%;
+}
+
+.info {
+	flex: 1 0 auto;
+	display: flex;
+	flex-flow: column nowrap;
+	position: relative;
+	margin: 1rem;
+}
+
+.info-title {
+
+}
+
+.meal-sale {
+	padding: 1rem;
+}
+
+.ingredient-list {
+	padding-left: 1rem;
+}

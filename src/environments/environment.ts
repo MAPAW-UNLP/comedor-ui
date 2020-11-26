@@ -27,5 +27,6 @@ export const environment: Environment = {
 		mealCreation: '/api/meal/save/',
 		evaluationCreation: '/api/meal/evaluate',
 		evaluationList: '/api/meal/{id}/evaluation/',
+		salesReports: '/api/menu/reportMenus',
 	},
 };

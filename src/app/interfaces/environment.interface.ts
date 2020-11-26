@@ -81,6 +81,7 @@ export interface Environment {
 
 		readonly evaluationList: string;
 		readonly evaluationCreation: string;
+		readonly salesReports: string;
 
 	};
 
