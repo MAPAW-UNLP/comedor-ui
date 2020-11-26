@@ -11,6 +11,13 @@ import { map } from 'rxjs/operators';
 import { MenuReview } from 'src/app/shared/modules/widgets/components/menu-review-editor/interfaces/menu-review.interface';
 import { UserRole } from 'src/app/auth/services/auth/enums/user-role.enum';
 
+type Evaluation = {
+	rating: number;
+	commentary?: string;
+	clientId: number;
+	clientName: string;
+};
+
 @Component({
 	selector: 'cu-meal-detail-page',
 	templateUrl: './meal-detail-page.component.html',
@@ -21,7 +28,7 @@ export class MealDetailPageComponent implements OnInit {
 	private readonly ID_PARAM_NAME = 'id';
 	public meal: Meal | undefined = undefined;
 	public isWaitingForServerResponse: boolean = true;
-	public evaluations: { rating: number; commentary?: string; clientId: number }[ ] = [ ];
+	public evaluations: Evaluation[ ] = [ ];
 
 	public readonly dishTypeOptions: StringMap = {
 		[DishType.Appetizer]: 'Entrada',
@@ -63,10 +70,11 @@ export class MealDetailPageComponent implements OnInit {
 			this.evaluationService
 				.getAllForMeal( mealId )
 				.pipe(
-					map( ( list ) => list.map( ( item ) => ({
+					map( ( list ) => list.map( ( item ): Evaluation => ({
 						rating: item.score,
 						commentary: item.comments ?? undefined,
-						clientId: item.idClient
+						clientId: item.idClient,
+						clientName: item.clientName,
 					})))
 				)
 				.subscribe(( evaluations ) => {
@@ -83,6 +91,7 @@ export class MealDetailPageComponent implements OnInit {
 					clientId: dto.idClient,
 					rating: dto.score,
 					commentary: dto.comments,
+					clientName: dto.clientName,
 				});
 			}
 		});
