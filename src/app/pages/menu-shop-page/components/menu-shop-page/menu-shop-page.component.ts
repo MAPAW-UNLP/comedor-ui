@@ -25,7 +25,6 @@ import { MenusService } from 'src/app/shared/services/menus/menus.service';
 export class MenuShopPageComponent {
 
 	private readonly noTicketsMessage = 'No hay menús disponibles para la fecha y sede elegida, pruebe con otra fecha o sede.';
-	private readonly ticketAlreadyBoughtMessage = 'Ya tienes comprado un ticket para la fecha y sede elegida, prueba en otra fecha';
 	private readonly errorGettingTicketsMessage = `Ocurió un error al cargar los menús, intente nuevamente`;
 	public menus: Menu[] = [];
 	public kitchenSites: KitchenSiteDTO[] = [];
@@ -105,7 +104,7 @@ export class MenuShopPageComponent {
 			},
 			error: ( error: HttpErrorResponse ) => {
 				if (error.status === 403) {
-					this.emptyTicketsMessage = this.ticketAlreadyBoughtMessage;
+					this.emptyTicketsMessage = error.error?.message || this.errorGettingTicketsMessage;
 				} else {
 					this.emptyTicketsMessage = this.errorGettingTicketsMessage;
 				}

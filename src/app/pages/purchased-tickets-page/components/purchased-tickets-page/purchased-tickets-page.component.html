@@ -1,6 +1,7 @@
 <div class="container" *ngIf="!isWaitingForServerResponse">
 	<div class="cards-holder" *ngIf="tickets.length">
-		<div class="card-container" *ngFor="let ticket of tickets">
+		<div class="card-container" *ngFor="let ticket of tickets; last as last">
+			<h2>Tu ticket para el {{formatDate(ticket.menu.date)}}</h2>
 			<cu-menu-card
 				[cardTitle]="ticket.menu.name"
 				[price]="ticket.menu.unitPrice"
@@ -11,6 +12,7 @@
 				[consumptionType]="ticket.type"
 				(viewMoreButtonClick)="visitDetailPage(ticket.menu.meal.id)"
 			></cu-menu-card>
+			<mat-divider class="divider" *ngIf="!last"></mat-divider>
 		</div>
 	</div>
 	<div class="buy-tickets-box-holder" *ngIf="tickets.length">
