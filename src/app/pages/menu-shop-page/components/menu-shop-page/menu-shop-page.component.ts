@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
@@ -23,12 +24,17 @@ import { MenusService } from 'src/app/shared/services/menus/menus.service';
 })
 export class MenuShopPageComponent {
 
+	private readonly noTicketsMessage = 'No hay menús disponibles para la fecha y sede elegida, pruebe con otra fecha o sede.';
+	private readonly ticketAlreadyBoughtMessage = 'Ya tienes comprado un ticket para la fecha y sede elegida, prueba en otra fecha';
+	private readonly errorGettingTicketsMessage = `Ocurió un error al cargar los menús, intente nuevamente`;
 	public menus: Menu[] = [];
 	public kitchenSites: KitchenSiteDTO[] = [];
 	public searchFormGroup!: FormGroup;
 	public readonly minDate = moment();
 	public isWaitingForServerResponse = false;
 	public isFirstPaint: boolean = true;
+	public emptyTicketsMessage: string | null = null;
+
 
 	public constructor(
 		private readonly _formBuilder: FormBuilder,
@@ -73,6 +79,7 @@ export class MenuShopPageComponent {
 		if (this.searchFormGroup.invalid) {
 			return ;
 		}
+		this.emptyTicketsMessage = null;
 		this.isFirstPaint = false;
 		this.isWaitingForServerResponse = true;
 		const kitchenSiteId: number  = this.searchFormGroup.get('kitchenSite')?.value;
@@ -90,12 +97,18 @@ export class MenuShopPageComponent {
 		)
 		.subscribe({
 			next: ( response: Menu[] ) => {
-				this.menus = response;
+				if (response.length) {
+					this.menus = response;
+				} else {
+					this.emptyTicketsMessage = this.noTicketsMessage;
+				}
 			},
-			error: ( error: Error ) => {
-				this.showSnackBar(
-					`Ocurió un error al cargar los menús, intente nuevamente`
-				);
+			error: ( error: HttpErrorResponse ) => {
+				if (error.status === 403) {
+					this.emptyTicketsMessage = this.ticketAlreadyBoughtMessage;
+				} else {
+					this.emptyTicketsMessage = this.errorGettingTicketsMessage;
+				}
 			},
 		});
 	}

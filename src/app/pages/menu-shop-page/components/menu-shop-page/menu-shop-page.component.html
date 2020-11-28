@@ -75,10 +75,10 @@
 					></cu-menu-card>
 				</div>
 			</div>
-			<div *ngIf="menus.length == 0 && !isWaitingForServerResponse && !isFirstPaint">
+			<div *ngIf="emptyTicketsMessage !== null && !isWaitingForServerResponse && !isFirstPaint">
 				<mat-card>
 					<mat-card-content>
-						No hay menús disponibles para la fecha y sede elegida, pruebe con otra fecha o sede.
+						{{emptyTicketsMessage}}
 					</mat-card-content>
 				</mat-card>
 			</div>
