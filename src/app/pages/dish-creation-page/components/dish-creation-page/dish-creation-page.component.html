@@ -23,14 +23,6 @@
 	<section class="dish_creation_form__section ingredients_section">
 		<header class="dish_creation_form__section_header">
 			<h2 class="dish_creation_form__section_title">Ingredientes</h2>
-			<button
-			mat-raised-button
-			color="accent"
-			(click)="handleCreateIngredientClick()"
-			type="button"
-			>
-				Crear un ingrediente nuevo
-			</button>
 		</header>
 
 		<div class="ingredients_section__ingredients_creator">
@@ -45,6 +37,16 @@
 					placeholder="Ingresá el ingrediente"
 				>
 				<mat-autocomplete #ingredientAutocomplete="matAutocomplete" [displayWith]="getIngredientName">
+					<mat-option *ngIf="filteredIngredientsOptions.length === 0">
+						<button
+							mat-button
+							color="primary"
+							(click)="handleCreateIngredientClick()"
+							type="button"
+							>
+								Crear un ingrediente nuevo
+						</button>
+					</mat-option>
 					<mat-option *ngFor="let ingredient of filteredIngredientsOptions" [value]="ingredient">
 					{{ ingredient.name }}
 					</mat-option>
