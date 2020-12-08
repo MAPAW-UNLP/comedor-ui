@@ -187,6 +187,7 @@
 		Volver
 	</button>
 	<cu-dish-creation-page
+		(dishCreated)="onDishCreated()"
 		(createIngredient)="setShowBackButton(false)"
 		(backToDishCreation)="setShowBackButton(true)"
 	></cu-dish-creation-page>
