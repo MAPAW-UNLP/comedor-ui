@@ -32,16 +32,6 @@
 					info
 				</mat-icon>
 			</h2>
-
-			<button
-				mat-raised-button
-				class="meal_creation_form__call_to_action"
-				color="accent"
-				(click)="createDish( )"
-				type="button"
-			>
-				Crear un plato nuevo
-			</button>
 		</header>
 
 
@@ -92,6 +82,17 @@
 					placeholder="Ingresá el plato"
 				>
 				<mat-autocomplete #dishAutocomplete="matAutocomplete" [displayWith]="getDishName">
+					<mat-option *ngIf="filteredDishOptions.length === 0">
+						<button
+							mat-button
+							class="meal_creation_form__call_to_action"
+							color="primary"
+							(click)="createDish( )"
+							type="button"
+						>
+							Crear un plato nuevo
+						</button>
+					</mat-option>
 					<mat-option *ngFor="let dish of filteredDishOptions" [value]="dish">
 					  {{ dish.name }}
 					</mat-option>
@@ -186,6 +187,7 @@
 		Volver
 	</button>
 	<cu-dish-creation-page
+		(dishCreated)="onDishCreated()"
 		(createIngredient)="setShowBackButton(false)"
 		(backToDishCreation)="setShowBackButton(true)"
 	></cu-dish-creation-page>

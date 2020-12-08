@@ -380,4 +380,8 @@ export class MealCreationPageComponent implements OnInit {
 	public setShowBackButton(value: boolean) {
 		this.displayBackButton = value;
 	}
+
+	public onDishCreated() {
+		this.backToMealCreation();
+	}
 }

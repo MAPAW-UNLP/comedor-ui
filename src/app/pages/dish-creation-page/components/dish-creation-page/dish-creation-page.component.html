@@ -23,14 +23,6 @@
 	<section class="dish_creation_form__section ingredients_section">
 		<header class="dish_creation_form__section_header">
 			<h2 class="dish_creation_form__section_title">Ingredientes</h2>
-			<button
-			mat-raised-button
-			color="accent"
-			(click)="handleCreateIngredientClick()"
-			type="button"
-			>
-				Crear un ingrediente nuevo
-			</button>
 		</header>
 
 		<div class="ingredients_section__ingredients_creator">
@@ -45,6 +37,16 @@
 					placeholder="Ingresá el ingrediente"
 				>
 				<mat-autocomplete #ingredientAutocomplete="matAutocomplete" [displayWith]="getIngredientName">
+					<mat-option *ngIf="filteredIngredientsOptions.length === 0">
+						<button
+							mat-button
+							color="primary"
+							(click)="handleCreateIngredientClick()"
+							type="button"
+							>
+								Crear un ingrediente nuevo
+						</button>
+					</mat-option>
 					<mat-option *ngFor="let ingredient of filteredIngredientsOptions" [value]="ingredient">
 					{{ ingredient.name }}
 					</mat-option>
@@ -72,13 +74,13 @@
 						#ingredientQuantityInput
 						matInput
 						[formControlName]="ingredientQuantityFieldName"
-						placeholder="Ingresá la cantidad del plato"
+						placeholder="1.2"
 						pattern="[0-9]+(\.[0-9]{1,2})?"
+						autocomplete="off"
 					>
 					<mat-hint align="start">
-						Valor expresado en {{getCurrentIngredientMeasurement()}}
+						Valor expresado en <strong>{{getCurrentIngredientMeasurement()}}</strong>
 					</mat-hint>
-
 					<mat-error
 						*ngIf="hasRequiredIngredientQuantityError"
 						class="ingredient_creation_form_field__error_message_container"
@@ -104,7 +106,7 @@
 					</mat-error>
 
 			</mat-form-field>
-
+			<p><strong>Unidad: {{getCurrentIngredientMeasurement()}}</strong></p>
 
 			<button
 				mat-raised-button
@@ -152,5 +154,7 @@
 	>
 		Volver
 	</button>
-	<cu-ingredient-creation-page></cu-ingredient-creation-page>
+	<cu-ingredient-creation-page
+		(ingredientCreated)="onIngredientCreated()"
+	></cu-ingredient-creation-page>
 </div>

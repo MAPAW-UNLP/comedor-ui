@@ -1,12 +1,33 @@
+<div class="search-meal">
+	<form class="search-form" [formGroup]="searchForm">
+		<mat-form-field class="search-form-full-width">
+		  <mat-label>Buscador</mat-label>
+		  <input
+			  matInput
+			  placeholder="Nombre"
+			  formControlName='searchInput'
+			  autocomplete="off"
+			  >
+		</mat-form-field>
+		<button mat-button color="primary" (click)="searchMeals()" type='button'>Buscar</button>
+	  </form>
+</div>
 <div class=container>
-	<div class="cards-holder" *ngIf="meals.length && !isWaitingForServerResponse">
-		<div class="card-container" *ngFor="let meal of meals">
+	<div class="cards-holder" *ngIf="currentMeals.length && !isWaitingForServerResponse">
+		<div class="card-container" *ngFor="let meal of currentMeals; trackBy: trackItem">
 			<cu-menu-card
 				[cardTitle]="meal.name"
 				[shouldDisplayCartActionButton]="false"
 				(viewMoreButtonClick)="navigateToDetailView(meal.id)"
 			></cu-menu-card>
 		</div>
+	</div>
+	<div *ngIf="currentMeals.length == 0 &&  meals.length != 0 && !isWaitingForServerResponse">
+		<mat-card>
+			<mat-card-content>
+				No existen menús que coincidan con la búsqueda
+			</mat-card-content>
+		</mat-card>
 	</div>
 	<div *ngIf="meals.length == 0 && !isWaitingForServerResponse">
 		<mat-card>

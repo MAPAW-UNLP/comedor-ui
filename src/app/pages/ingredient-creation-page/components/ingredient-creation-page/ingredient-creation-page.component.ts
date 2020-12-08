@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { tap } from 'rxjs/operators';
@@ -20,6 +20,7 @@ import { MeasurementUnitAutocompleteOption } from './interfaces/measurement-unit
 export class IngredientCreationPageComponent implements AfterViewInit {
 	private readonly _ingredientNameFieldName: string = 'ingredientNameField';
 	private readonly _measurementUnitFieldName: string = 'measurementUnitField';
+	private readonly _ingredientCreated = new EventEmitter<void>( );
 	private readonly _measurementUnitOptions: MeasurementUnitAutocompleteOption[ ] = [
 		{
 			value: MeasurementUnit.CubicCentimetre,
@@ -59,6 +60,11 @@ export class IngredientCreationPageComponent implements AfterViewInit {
 	});
 
 	private _isWaitingForServerResponse: boolean = false;
+
+	@Output( )
+	public get ingredientCreated(): EventEmitter<void> {
+		return this._ingredientCreated;
+	}
 
 	@ViewChild( 'ingredientNameInput' )
 	private readonly _ingredientNameInputRef!: ElementRef<HTMLInputElement>;
@@ -195,6 +201,7 @@ export class IngredientCreationPageComponent implements AfterViewInit {
 						`El ingrediente se creó exitosamente`
 					);
 					this.ingredientCreationForm.reset( );
+					this.ingredientCreated.emit();
 				},
 				error: ( error: Error ) => {
 					this.showSnackBar(

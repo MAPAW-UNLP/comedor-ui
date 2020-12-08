@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, OnDestroy, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { FuzzySearchService } from 'src/app/shared/services/fuzzy-search/fuzzy-search.service';
@@ -24,6 +24,7 @@ export class DishCreationPageComponent implements AfterViewInit {
 	public readonly ingredientQuantityFieldName: string = 'ingredientQuantityField';
 	public readonly addedIngredientsFieldName: string = 'addedIngredientsField';
 	private readonly _createIngredientClicked = new EventEmitter<void>( );
+	private readonly _dishCreated = new EventEmitter<void>( );
 	private readonly _backToDishClicked = new EventEmitter<void>( );
 	public showIngredientCreation = false;
 
@@ -55,6 +56,11 @@ export class DishCreationPageComponent implements AfterViewInit {
 			],
 		}),
 	});
+
+	@Output( )
+	public get dishCreated(): EventEmitter<void> {
+		return this._dishCreated;
+	}
 
 	@ViewChild( 'dishNameInput' )
 	private readonly _dishNameInputRef!: ElementRef<HTMLInputElement>;
@@ -248,6 +254,7 @@ export class DishCreationPageComponent implements AfterViewInit {
 					`El plato se creó exitosamente`
 				);
 				this.dishCreationForm.reset( );
+				this.dishCreated.emit();
 			},
 			error: (err) => {
 				this.showSnackBar(
@@ -302,5 +309,9 @@ export class DishCreationPageComponent implements AfterViewInit {
 			verticalPosition: 'bottom',
 		};
 		this.snackBar.open( message, closeButtonText, snackBarConfiguration );
+	}
+
+	public onIngredientCreated(): void {
+		this.handleBackToDishCreationClick();
 	}
 }
