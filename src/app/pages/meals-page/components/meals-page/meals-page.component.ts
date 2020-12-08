@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PageUrls } from 'src/app/constants/page-urls.constant';
 import { Meal } from 'src/app/models/meal.model';
@@ -34,7 +34,6 @@ export class MealsPageComponent {
 		private readonly mealsService: MealsService,
 		public readonly router: Router,
 		private readonly fuzzySearchService: FuzzySearchService,
-		private readonly changeDetectorRef: ChangeDetectorRef
 	) {
 		this.mealsService.findAll()
 		.subscribe({
