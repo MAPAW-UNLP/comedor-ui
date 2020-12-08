@@ -2,7 +2,7 @@
  * Enum that contains the names of the measurement units used to quantify the ingredients of meals.
  */
 export enum MeasurementUnit {
-	Unit = 'unity',
+	Unit = 'unit',
 	Kilogram = 'kg',
 	Gram = 'g',
 	Litre = 'l',
