@@ -52,6 +52,10 @@ export class MealDetailPageComponent implements OnInit {
 		return !this.isAlreadyEvaluated && this.authService.aClientIsAuthenticatedSnapshot;
 	}
 
+	public get anEmployeeIsAuthenticated( ): boolean {
+		return this.authService.aKitchenSiteEmployeeIsAuthenticatedSnapshot;
+	}
+
 	public constructor(
 		private readonly route: ActivatedRoute,
 		private readonly mealService: MealsService,

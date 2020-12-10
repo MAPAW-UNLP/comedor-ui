@@ -30,6 +30,12 @@
 				<li class="-dish" *ngFor="let mealItem of meal.items">
 					<div class="-type">{{ dishTypeOptions[ mealItem.dishType ] }}</div>
 					<div class="-name">{{ mealItem.dish.name }}</div>
+					<ul class="ingredients" *ngIf="anEmployeeIsAuthenticated">
+						<h3><strong>Ingredientes</strong></h3>
+						<li *ngFor="let item of mealItem.dish._items">
+							{{ item.ingredient._name }} ({{ item.quantity }}{{ item.ingredient._measurementUnit }})
+						</li>
+					</ul>
 				</li>
 			</ul>
 		</div>

@@ -48,10 +48,19 @@
 				flex: 0 0 auto;
 				padding: 0.25rem 0.5rem;
 			}
+			.ingredients {
+				flex: 0 0 auto;
+				padding: 0.25rem 0.5rem;
+				background: hsl( 0, 0%, 95% );
+				display: flex;
+				flex-flow: column nowrap;
+				list-style-type: square;
+				list-style-position: inside;
+			}
 		}
 	}
 
-	section.reviews {
+	section.reviews, section.ingredientes {
 		display: flex;
 		flex-flow: column nowrap;
 		width: 40rem;
