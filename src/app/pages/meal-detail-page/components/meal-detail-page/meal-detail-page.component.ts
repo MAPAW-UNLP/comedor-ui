@@ -29,6 +29,7 @@ export class MealDetailPageComponent implements OnInit {
 	public meal: Meal | undefined = undefined;
 	public isWaitingForServerResponse: boolean = true;
 	public evaluations: Evaluation[ ] = [ ];
+	private ratingDraft: number = 0;
 
 	public readonly dishTypeOptions: StringMap = {
 		[DishType.Appetizer]: 'Entrada',
@@ -97,8 +98,24 @@ export class MealDetailPageComponent implements OnInit {
 					commentary: dto.comments,
 					clientName: dto.clientName,
 				});
+				this.ratingDraft = 0;
 			}
 		});
+	}
+
+	public ratingChanged(event: number): void {
+		this.ratingDraft = event;
+	}
+
+	public handleBack(): void {
+		let confirm = true;
+		if(this.ratingDraft) {
+			confirm = window.confirm(`Su calificación del menú no ha sido confirmada, quieres continuar?`);
+		}
+		if(confirm) {
+			this.location.back();
+		}
+
 	}
 
 }
