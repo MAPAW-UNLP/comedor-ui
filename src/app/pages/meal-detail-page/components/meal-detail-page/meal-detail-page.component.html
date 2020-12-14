@@ -3,7 +3,7 @@
 		mat-raised-button
 		class="back-button"
 		color="accent"
-		(click)="this.location.back()"
+		(click)="handleBack()"
 		type="button"
 	>
 		Volver
@@ -45,6 +45,7 @@
 				*ngIf="displayEditor"
 				class="review_editor"
 				(save)="saveReview( $event )"
+				(ratingChanged)="ratingChanged($event)"
 			></cu-menu-review-editor>
 			<div class="review_list">
 				<cu-menu-review-card

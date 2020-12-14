@@ -1,8 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import moment, { Moment } from 'moment';
 import { tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/services/auth/auth.service';
@@ -34,23 +33,48 @@ export class MenuShopPageComponent {
 	public isFirstPaint: boolean = true;
 	public emptyTicketsMessage: string | null = null;
 
-
 	public constructor(
 		private readonly _formBuilder: FormBuilder,
 		public readonly cartService: CartService,
 		private readonly menusService: MenusService,
 		private readonly kitchenSiteService: KitchenSitesService,
-		private readonly snackBar: MatSnackBar,
 		private readonly router: Router,
-		public readonly authService: AuthService
+		public readonly authService: AuthService,
+		private route: ActivatedRoute
 	) {
 		this.menus = [];
+		const queryParams = this.route.snapshot.queryParams;
+		const dateParam = queryParams['date'] || '';
+		let date: Moment | null = null
+		if(dateParam) {
+			const dateAsMoment = moment(dateParam);
+			if(dateAsMoment.isValid()) {
+				date = dateAsMoment;
+			}
+		}
 		this.searchFormGroup = this._formBuilder.group({
-			date: ['', [Validators.required]],
-			kitchenSite: ['', [Validators.required]]
+			date: [date || '', [Validators.required]],
+			kitchenSite: ['' , [Validators.required]]
 		});
 		this.kitchenSiteService.getAll().subscribe((sites: KitchenSiteDTO[]) => {
 			this.kitchenSites = sites;
+			const kitchenSiteId = parseInt(queryParams['kitchen_site']) || ''
+			const paramKitchenSite = sites.find( s => s.id === kitchenSiteId)
+			if(paramKitchenSite){
+				this.searchFormGroup.get('kitchenSite')?.setValue(paramKitchenSite.id)
+			}
+			if(paramKitchenSite && date) {
+				this.search()
+			} else {
+				this.searchFormGroup.reset();
+				this.router.navigate(
+					[],
+					{
+					  relativeTo: this.route,
+					  queryParams: { date: null, kitchen_site: null },
+					  queryParamsHandling: 'merge'
+					});
+			}
 		});
 	}
 
@@ -64,16 +88,6 @@ export class MenuShopPageComponent {
 		return (date.day() !== 0 && date.day() !== 6);
 	}
 
-	private showSnackBar( message: string ): void {
-		const closeButtonText: string = 'CERRAR';
-		const snackBarConfiguration: MatSnackBarConfig = {
-			duration: 10000,
-			horizontalPosition: 'start',
-			verticalPosition: 'bottom',
-		};
-		this.snackBar.open( message, closeButtonText, snackBarConfiguration );
-	}
-
 	public search(): void {
 		if (this.searchFormGroup.invalid) {
 			return ;
@@ -82,8 +96,15 @@ export class MenuShopPageComponent {
 		this.isFirstPaint = false;
 		this.isWaitingForServerResponse = true;
 		const kitchenSiteId: number  = this.searchFormGroup.get('kitchenSite')?.value;
-		const date: Moment = this.searchFormGroup.get('date')?.value;
-		this.menusService.search(date.format('YYYY-MM-DD'), kitchenSiteId)
+		const date: string = this.searchFormGroup.get('date')?.value.format('YYYY-MM-DD');
+		this.router.navigate(
+			[],
+			{
+			  relativeTo: this.route,
+			  queryParams: { date, kitchen_site: kitchenSiteId },
+			  queryParamsHandling: 'merge'
+			});
+		this.menusService.search(date, kitchenSiteId)
 		.pipe(
 			tap({
 				next: ( ) => {
